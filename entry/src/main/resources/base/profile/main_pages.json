@@ -1,6 +1,14 @@
 {
   "src": [
     "pages/Index",
-    "pages/Second"
+    "pages/Second",
+    "pages/StudyView",
+    "pages/LayoutPage",
+    "pages/ColumnPage",
+    "pages/RowPage",
+    "pages/ScrollPage",
+    "pages/StackPage",
+    "pages/FlexPage",
+    "pages/RelativeContainerPage"
   ]
 }

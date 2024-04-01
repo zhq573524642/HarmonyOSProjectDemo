@@ -4,7 +4,7 @@ import router from '@ohos.router'
 @Component
 struct Second {
   @State message: string = 'Hello World'
-  private buttonColor: Color = Color.Green
+  @State private buttonColor: Color = Color.Green
 
   build() {
     Row() {
@@ -45,8 +45,8 @@ struct Second {
         .type(ButtonType.Circle)
         .backgroundColor(this.buttonColor)
         .onClick(() => {
-            this.buttonColor=Color.Red
-
+          this.buttonColor = Color.Red
+          router.pushUrl({ url: 'pages/StudyView' })
         })
         .width('60%')
         .height('20%')
