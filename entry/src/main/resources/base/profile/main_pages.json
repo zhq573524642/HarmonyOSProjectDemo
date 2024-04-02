@@ -9,6 +9,10 @@
     "pages/ScrollPage",
     "pages/StackPage",
     "pages/FlexPage",
-    "pages/RelativeContainerPage"
+    "pages/RelativeContainerPage",
+    "pages/list/ListPage",
+    "pages/list/ListHandlePage",
+    "pages/GridPage",
+    "pages/SwiperPage"
   ]
 }
