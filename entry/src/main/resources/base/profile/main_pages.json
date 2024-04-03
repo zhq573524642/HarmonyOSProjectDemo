@@ -13,6 +13,9 @@
     "pages/list/ListPage",
     "pages/list/ListHandlePage",
     "pages/GridPage",
-    "pages/SwiperPage"
+    "pages/SwiperPage",
+    "pages/CommonComponentPage",
+    "pages/VideoPlayPage",
+    "pages/PopupMenuPage"
   ]
 }

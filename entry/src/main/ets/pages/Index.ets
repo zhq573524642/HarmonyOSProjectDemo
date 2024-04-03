@@ -24,6 +24,18 @@ struct Index {
                 .onClick(() => {
                   router.pushUrl({ url: 'pages/LayoutPage' })
                 })
+              CommonButton({ text: '常用组件' })
+                .onClick(() => {
+                  router.pushUrl({ url: 'pages/CommonComponentPage' })
+                })
+              CommonButton({ text: '视频播放' })
+                .onClick(() => {
+                  router.pushUrl({ url: 'pages/VideoPlayPage' })
+                })
+              CommonButton({ text: '气泡和菜单' })
+                .onClick(() => {
+                  router.pushUrl({ url: 'pages/PopupMenuPage' })
+                })
               //带边框的View
               Column() {
                 //文本View
