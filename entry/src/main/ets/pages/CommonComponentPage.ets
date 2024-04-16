@@ -1,4 +1,5 @@
 import promptAction from '@ohos.promptAction'
+import router from '@ohos.router'
 import { CommonButton, CommonTitle } from './component/MyComponent'
 
 @Entry

@@ -16,6 +16,10 @@
     "pages/SwiperPage",
     "pages/CommonComponentPage",
     "pages/VideoPlayPage",
-    "pages/PopupMenuPage"
+    "pages/PopupMenuPage",
+    "pages/TabsPage",
+    "pages/ImagePage",
+    "pages/ShapePage",
+    "pages/AnimationPage"
   ]
 }

@@ -7,6 +7,14 @@
     {
       "name": "button_color",
       "value": "#00ff00"
+    },
+    {
+      "name": "tab_select",
+      "value": "#42B8FC"
+    },
+    {
+      "name": "tab_unselect",
+      "value": "#bfbfbf"
     }
   ]
 }

@@ -1,6 +1,6 @@
 import router from '@ohos.router';
 import { CircleView } from '../pages/component/TitleComponent'
-import { CommonButton } from './component/MyComponent';
+import { CommonButton, CommonTitle } from './component/MyComponent';
 
 @Entry
 @Component
@@ -9,6 +9,7 @@ struct Index {
   @State circleBgColor: Color = Color.Red
   @State setW: number = 50
   @State setH: number = 50
+  @State showBackParam: string = '页面返回参数在这里显示'
 
   build() {
     //垂直布局
@@ -35,6 +36,46 @@ struct Index {
               CommonButton({ text: '气泡和菜单' })
                 .onClick(() => {
                   router.pushUrl({ url: 'pages/PopupMenuPage' })
+                })
+              Text(this.showBackParam)
+                .margin(8)
+                .fontSize(15)
+              CommonButton({ text: 'router页面跳转并传递参数' })
+                .onClick(() => {
+                  jumpPageWithParams()
+                })
+              CommonButton({ text: '顶部Tabs' })
+                .onClick(() => {
+                  router.pushUrl({ url: 'pages/TabsPage',
+                    params: {
+                      tabType: 1
+                    } })
+                })
+              CommonButton({ text: '底部Tabs' })
+                .onClick(() => {
+                  router.pushUrl({ url: 'pages/TabsPage',
+                    params: {
+                      tabType: 2
+                    } })
+                })
+              CommonButton({ text: '自定义底部Tabs' })
+                .onClick(() => {
+                  router.pushUrl({ url: 'pages/TabsPage',
+                    params: {
+                      tabType: 3
+                    } })
+                })
+              CommonButton({ text: '图片显示Image' })
+                .onClick(() => {
+                  router.pushUrl({ url: 'pages/ImagePage' })
+                })
+              CommonButton({ text: '几何图形Shape' })
+                .onClick(() => {
+                  router.pushUrl({ url: 'pages/ShapePage' })
+                })
+              CommonButton({ text: '动画' })
+                .onClick(() => {
+                  router.pushUrl({ url: 'pages/AnimationPage' })
                 })
               //带边框的View
               Column() {
@@ -122,17 +163,6 @@ struct Index {
           }
           .alignItems(VerticalAlign.Center) //水平布局在垂直方向的位置
           .width('100%')
-          //水平布局2
-          Row() {
-            Image("https://ts1.cn.mm.bing.net/th/id/R-C.6b5df1bfe0e4778a44dba0753" +
-            "cd169c8?rik=QRQIMqvjWRCO5Q&riu=http%3a%2f%2fpic39.nipic.com%2f20140321%2f8" +
-            "857347_232251363165_2.jpg")
-              .width(100)
-              .height(100)
-          }
-          .alignItems(VerticalAlign.Center)
-          .backgroundColor(Color.Yellow)
-          .width('100%')
         }
         .width('100%')
 
@@ -152,6 +182,9 @@ struct Index {
 
   onPageShow() {
     console.log('===页面打开')
+    let params = router.getParams()
+    this.showBackParam = params?.['name']
+
   }
 
   onPageHide() {
@@ -162,6 +195,31 @@ struct Index {
     console.log('===点击返回')
     return false
   }
+}
+
+class Person {
+  name: string;
+  age: number;
+}
+
+class Student {
+  id: number;
+  info: Person;
+}
+
+function jumpPageWithParams() {
+  let student: Student = {
+    id: 12,
+    info: {
+      name: '张三',
+      age: 18
+    }
+  }
+
+  router.pushUrl({ url: 'pages/Second',
+    params: student }, router.RouterMode.Single, (error) => {
+
+  })
 }
 
 @Component

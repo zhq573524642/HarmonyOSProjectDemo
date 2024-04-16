@@ -1,73 +1,66 @@
 import router from '@ohos.router'
+import promptAction from '@ohos.promptAction';
+import { CommonButton } from './component/MyComponent';
 
 @Entry
 @Component
 struct Second {
-  @State message: string = 'Hello World'
-  @State private buttonColor: Color = Color.Green
+  private params: object = router.getParams();
 
   build() {
-    Row() {
-      Column() {
-        Text(this.message)
-          .fontSize(50)
-          .fontWeight(FontWeight.Bold)
-        Button() {
-          Text('页面2的按钮')
-            .fontSize(20)
-            .fontColor(Color.Green)
-            .fontWeight(FontWeight.Bold)
-        }
-        .type(ButtonType.Capsule)
-        .backgroundColor('#ff00ff')
-        .margin({
-          top: 30, bottom: 30
-        })
-        .width('50%')
-        .height('5%')
+    Column() {
+      Text('传来的参数：\n' +
+      this.params?.['id'] + '\n' +
+      this.params?.['info']?.['name'] + '\n' +
+      this.params?.['info']?.['age'])
+        .fontSize(15)
+        .fontColor(Color.Black)
+      CommonButton({ text: '返回Index页面并携带参数' })
         .onClick(() => {
-          console.info('第二个页面点击按钮成功')
+          router.back({
+            url: 'pages/Index',
+            params: {
+              name: '返回携带的参数'
+            }
+          })
+        })
+      CommonButton({ text: '返回页面增加系统提示框' })
+        .onClick(() => {
           try {
-            router.back()
-            console.info('第二个页面返回成功')
+            router.showAlertBeforeBackPage({
+              message: '是否要返回？'
+            })
           } catch (e) {
-            console.error('返回第一个页面错误：${e.code}--${e.message}')
+            console.debug('====返回错误' + e)
           }
+          router.back() //必须加这句
         })
-
-        Button() {
-          Text('按钮2')
-            .fontColor(Color.Blue)
-            .fontSize(20)
-            .fontWeight(FontWeight.Bold)
-            .fontStyle(FontStyle.Italic)
-        }
-        .type(ButtonType.Circle)
-        .backgroundColor(this.buttonColor)
+      CommonButton({ text: '返回页面自定义弹窗' })
         .onClick(() => {
-          this.buttonColor = Color.Red
-          router.pushUrl({ url: 'pages/StudyView' })
+          promptAction.showDialog({
+            title:'温馨提示',
+            message: '确定要返回吗？',
+            buttons: [
+              {
+                text: '取消',
+                color: '#00ff00'
+              },
+              {
+                text: '确定',
+                color: '#ff00ff'
+              }
+            ]
+          }).then((result) => {
+            if (result.index == 0) {
+              console.info('===点击了取消')
+            } else if (result.index == 1) {
+              router.back()
+            }
+          }).catch((error) => {
+            console.info('===错误' + error)
+          })
         })
-        .width('60%')
-        .height('20%')
-        // .onClick(function(){
-        //   //...
-        // }.bind(this))
-        // .onClick(this.myClick.bind(this))
-        // .onClick(this.fn)
-      }
-      // .width('100%')
-
-    }
-    .height('100%')
-  }
-
-  //成员函数
-  myClick(): void {
-    //...
-  }
-  //声明的箭头函数,不需要bind(this)
-  fn = () => {
-    //...
+    }.height('100%')
+    .width('100%')
   }
 }
