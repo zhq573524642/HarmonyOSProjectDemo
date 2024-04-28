@@ -8,6 +8,7 @@ struct AnimationPage {
   @State anim1Flag: boolean = false
   @State btnColor: Color = Color.Red
 
+
   build() {
 
     Column() {
@@ -99,4 +100,6 @@ struct AnimationPage {
     }
     .width('100%')
   }
+
+
 }

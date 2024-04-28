@@ -21,13 +21,25 @@ struct Index {
           //水平布局1
           Row() {
             Column() {
-              CommonButton({ text: '布局' })
+              CommonButton({text:'状态管理测试'})
+                .onClick(()=>{
+                  router.pushUrl({ url: 'pages/StateTestPage' })
+                })
+              CommonButton({ text: '容器组件' })
                 .onClick(() => {
-                  router.pushUrl({ url: 'pages/LayoutPage' })
+                  router.pushUrl({ url: 'pages/container/ContainerComponentPage' })
                 })
               CommonButton({ text: '常用组件' })
                 .onClick(() => {
                   router.pushUrl({ url: 'pages/CommonComponentPage' })
+                })
+              CommonButton({ text: '绘制组件' })
+                .onClick(() => {
+                  router.pushUrl({ url: 'pages/canvas/BaseCanvasPage' })
+                })
+              CommonButton({ text: '二维码' })
+                .onClick(() => {
+                  router.pushUrl({ url: 'pages/QCodePage' })
                 })
               CommonButton({ text: '视频播放' })
                 .onClick(() => {
@@ -157,7 +169,6 @@ struct Index {
 
             }
             .alignItems(HorizontalAlign.Center) //垂直布局在水平方向的位置
-            .backgroundColor(Color.Green)
             .width('100%')
             .height('100%')
           }

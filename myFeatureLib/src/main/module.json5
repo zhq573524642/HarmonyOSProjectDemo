@@ -1,0 +1,27 @@
+{
+  "module": {
+    "name": "myFeatureLib",
+    "type": "feature",
+    "description": "$string:module_desc",
+    "mainElement": "MyFeatureLibAbility",
+    "deviceTypes": [
+      "phone",
+      "tablet"
+    ],
+    "deliveryWithInstall": true,
+    "installationFree": false,
+    "pages": "$profile:main_pages",
+    "abilities": [
+      {
+        "name": "MyFeatureLibAbility",
+        "srcEntry": "./ets/myfeaturelibability/MyFeatureLibAbility.ts",
+        "description": "$string:MyFeatureLibAbility_desc",
+        "icon": "$media:icon",
+        "label": "$string:MyFeatureLibAbility_label",
+        "startWindowIcon": "$media:startIcon",
+        "startWindowBackground": "$color:start_window_background",
+        "exported": true
+      }
+    ]
+  }
+}

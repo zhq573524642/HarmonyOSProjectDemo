@@ -22,6 +22,18 @@
           ]
         }
       ]
+    },
+    {
+      "name": "myFeatureLib",
+      "srcPath": "./myFeatureLib",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
     }
   ]
 }

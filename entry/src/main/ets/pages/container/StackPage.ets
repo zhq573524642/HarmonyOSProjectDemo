@@ -1,4 +1,4 @@
-import { CommonButton } from './component/MyComponent'
+import { CommonButton } from '../component/MyComponent'
 
 @Entry
 @Component

@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "模块描述"
+    },
+    {
+      "name": "MyFeatureLibAbility_desc",
+      "value": "description"
+    },
+    {
+      "name": "MyFeatureLibAbility_label",
+      "value": "label"
+    }
+  ]
+}
