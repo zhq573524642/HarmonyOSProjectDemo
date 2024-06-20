@@ -5,7 +5,7 @@
     "description": "$string:module_desc",
     "mainElement": "MyFeatureLibAbility",
     "deviceTypes": [
-      "phone",
+      "default",
       "tablet"
     ],
     "deliveryWithInstall": true,

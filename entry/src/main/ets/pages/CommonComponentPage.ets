@@ -63,6 +63,14 @@ struct CommonComponentPage {
     Scroll(this.scroller) {
       Column() {
         CommonTitle({ title: '按钮' })
+        Button('test')
+          .width(200)
+          .height(50)
+          .backgroundColor('#00000000')
+          .linearGradient({
+            angle: 90,
+            colors: [[0xff0000, 0.0], [0x0000ff, 0.3], [0xffff00, 1.0]]
+          })
         Flex({ wrap: FlexWrap.Wrap }) {
           //stateEffect是否可点击
           Button('普通按钮使用StateStyles+@Styles', { type: ButtonType.Normal, stateEffect: true })

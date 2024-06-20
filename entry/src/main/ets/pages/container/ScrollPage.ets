@@ -11,7 +11,7 @@ struct ScrollPage {
     Scroll(this.scroller) {
       if (this.params?.['direction'] == 1) {
         Column() {
-          ForEach(this.num, (item) => {
+          ForEach(this.num, (item: string) => {
             Text(item.toString())
               .width('90%')
               .height(150)
@@ -21,11 +21,11 @@ struct ScrollPage {
               .textAlign(TextAlign.Center)
               .backgroundColor(Color.White)
               .margin({ top: 10 })
-          }, item => item)
+          }, (item: string) => item)
         }.width('100%')
       } else {
         Row() {
-          ForEach(this.num, (item) => {
+          ForEach(this.num, (item:string) => {
             Text(item.toString())
               .width(150)
               .height('90%')
@@ -35,7 +35,7 @@ struct ScrollPage {
               .textAlign(TextAlign.Center)
               .backgroundColor(Color.White)
               .margin({ left: 10 })
-          }, item => item)
+          }, (item:string) => item)
         }.height('100%')
       }
 

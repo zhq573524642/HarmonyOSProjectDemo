@@ -11,7 +11,7 @@ export class WaterFlowDataSource implements IDataSource {
   }
 
   // 获取索引对应的数据
-  public getData(index: number): any {
+  public getData(index: number): number {
     return this.dataArray[index]
   }
 

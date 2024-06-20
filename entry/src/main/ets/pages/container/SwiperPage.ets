@@ -64,7 +64,7 @@ struct SwiperPage {
       .vertical(false)
       //每页是否显示多个子组件
       .displayCount(1)
-      .displayMode(SwiperDisplayMode.AutoLinear)
+      .displayMode(SwiperDisplayMode.AUTO_LINEAR)
 
       Row() {
         Button('上一个')

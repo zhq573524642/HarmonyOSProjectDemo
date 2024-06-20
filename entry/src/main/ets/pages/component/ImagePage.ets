@@ -1,6 +1,6 @@
 import thermal from '@ohos.thermal'
 import picker from '@ohos.file.picker'
-import { CommonButton, RadioList } from './component/MyComponent'
+import { CommonButton, RadioList } from './MyComponent'
 
 @Entry
 @Component
@@ -36,30 +36,30 @@ struct ImagePage {
           .copyOption(CopyOptions.InApp)
           .draggable(true)
           .margin(10)// .overlay('这是网图', { align: Alignment.Center, offset: { x: 0, y: 10 } })
-          .onComplete((msg: {
-            width: number,
-            height: number,
-            componentWidth: number,
-            componentHeight: number,
-            loadingStatus: number
-          }) => {
-            console.debug('==图片加载完成：' +
-              '图片宽：' + msg.width
-              + '-图片高：' + msg.height
-              + "-组件宽：" + msg.componentWidth
-              + '-组件高：' + msg.componentHeight
-              + '-状态' + (msg.loadingStatus == 1 ? '图片加载成功' : '图片解码成功'))
-          })
-          .onError((msg: {
-            componentWidth: number,
-            componentHeight: number,
-            error: string
-          }) => {
-            console.debug('==图片加载失败' +
-              +"-组件宽：" + msg.componentWidth
-              + '-组件高：' + msg.componentHeight
-              + '-加载失败信息：' + msg.error)
-          })
+          // .onComplete((msg: {
+          //   width: number,
+          //   height: number,
+          //   componentWidth: number,
+          //   componentHeight: number,
+          //   loadingStatus: number
+          // }) => {
+          //   console.debug('==图片加载完成：' +
+          //     '图片宽：' + msg.width
+          //     + '-图片高：' + msg.height
+          //     + "-组件宽：" + msg.componentWidth
+          //     + '-组件高：' + msg.componentHeight
+          //     + '-状态' + (msg.loadingStatus == 1 ? '图片加载成功' : '图片解码成功'))
+          // })
+          // .onError((msg: {
+          //   componentWidth: number,
+          //   componentHeight: number,
+          //   error: string
+          // }) => {
+          //   console.debug('==图片加载失败' +
+          //     '=组件宽：' + msg.componentWidth
+          //     + '-组件高：' + msg.componentHeight
+          //     + '-加载失败信息：' + msg.error)
+          // })
           .onFinish(() => {
             console.debug('==onFinish')
           })
@@ -220,12 +220,12 @@ struct ImagePage {
             this.getAllImg()
           })
         Grid() {
-          ForEach(this.imgDatas, (item) => {
+          ForEach(this.imgDatas, (item:string) => {
             GridItem() {
               Image(item)
             }.width(80)
             .height(80)
-          }, item => JSON.stringify(item))
+          }, (item:string) => JSON.stringify(item))
         }.columnsGap(8)
         .rowsGap(8)
       }
@@ -252,8 +252,8 @@ struct ImagePage {
       photoPicker.select(PhotoSelectOptions).then((PhotoSelectResult) => {
         this.imgDatas = PhotoSelectResult.photoUris;
         console.info('PhotoViewPicker.select successfully, PhotoSelectResult uri: ' + JSON.stringify(PhotoSelectResult));
-      }).catch((err) => {
-        console.error(`PhotoViewPicker.select failed with. Code: ${err.code}, message: ${err.message}`);
+      }).catch((err:string) => {
+        console.error(`PhotoViewPicker.select failed with. msg: ${err}`);
       });
     } catch (err) {
       console.error(`PhotoViewPicker failed with. Code: ${err.code}, message: ${err.message}`);

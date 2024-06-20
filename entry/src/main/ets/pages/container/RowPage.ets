@@ -44,10 +44,10 @@ struct RowPage {
             if (this.justifyContentTag >= this.justifyContent.length) {
               this.justifyContentTag = 0
             }
-            switch (this.justifyContentTag){
+            switch (this.justifyContentTag) {
               case 0:
                 this.btn2 = '在主抽上:FlexAlign.Start'
-              break
+                break
               case 1:
                 this.btn2 = '在主抽上:FlexAlign.Center'
                 break
@@ -68,26 +68,27 @@ struct RowPage {
           })
 
         Row() {
-          Square({ text: 'Item-1', color: Color.Red })
-          Square({ text: 'Item-2', color: Color.Green })
-          Square({ text: 'Item-3', color: Color.Yellow })
+          Square({ text: '1', color: Color.Red, w: 50, h: 50 })
+          Square({ text: '2', color: Color.Green, w: 50, h: 50 })
+          Square({ text: '3', color: Color.Yellow, w: 50, h: 50 })
 
         }
         .alignItems(this.alignItems[this.alignItemsTag%this.alignItems.length])
         .justifyContent(this.justifyContent[this.justifyContentTag%this.justifyContent.length])
         .width('100%')
         .layoutWeight(1)
+        .backgroundColor(Color.Gray)
       }.width('100%')
       .layoutWeight(1)
       .visibility(this.isShowRowSplit ? Visibility.None : Visibility.Visible)
 
       Column() {
         RowSplit() {
-          Text('Item_1').width(50).height(50).backgroundColor(Color.Orange).textAlign(TextAlign.Center)
-          Text('Item_2').width(50).height(50).backgroundColor(Color.Red).textAlign(TextAlign.Center)
-          Text('Item_3').width(50).height(50).backgroundColor(Color.Pink).textAlign(TextAlign.Center)
-          Text('Item_4').width(50).height(50).backgroundColor(Color.Green).textAlign(TextAlign.Center)
-          Text('Item_5').width(50).height(50).backgroundColor(Color.Blue).textAlign(TextAlign.Center)
+          Text('Item_1').width(50).height('100%').backgroundColor(Color.Orange).textAlign(TextAlign.Center)
+          Text('Item_2').width(50).height('100%').backgroundColor(Color.Red).textAlign(TextAlign.Center)
+          Text('Item_3').width(50).height('100%').backgroundColor(Color.Pink).textAlign(TextAlign.Center)
+          Text('Item_4').width(50).height('100%').backgroundColor(Color.Green).textAlign(TextAlign.Center)
+          Text('Item_5').width(50).height('100%').backgroundColor(Color.Blue).textAlign(TextAlign.Center)
 
         }.resizeable(true)
         .borderWidth(1)

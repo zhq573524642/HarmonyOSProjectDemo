@@ -1,5 +1,5 @@
 import router from '@ohos.router'
-import { CommonButton } from '../component/MyComponent'
+import { CommonButton, CommonTitle } from '../component/MyComponent'
 
 @Entry
 @Component
@@ -28,20 +28,24 @@ struct ContainerComponentPage {
         Row() {
           CommonButton({ text: 'Scroll组件-垂直' })
             .onClick(() => {
-              router.pushUrl({ url: 'pages/container/ScrollPage',
+              router.pushUrl({
+                url: 'pages/container/ScrollPage',
                 params: {
                   direction: 1
-                } }, router.RouterMode.Single)
+                }
+              }, router.RouterMode.Single)
             })
             .layoutWeight(1)
             .height(40)
 
           CommonButton({ text: 'Scroll组件-水平' })
             .onClick(() => {
-              router.pushUrl({ url: 'pages/container/ScrollPage',
+              router.pushUrl({
+                url: 'pages/container/ScrollPage',
                 params: {
                   direction: 2
-                } }, router.RouterMode.Single)
+                }
+              }, router.RouterMode.Single)
             })
             .layoutWeight(1)
             .height(40)
@@ -60,31 +64,59 @@ struct ContainerComponentPage {
           .onClick(() => {
             router.pushUrl({ url: 'pages/list/ListHandlePage' })
           })
-        CommonButton({text:'网格布局Grid'})
-          .onClick(()=>{
-            router.pushUrl({url:'pages/container/GridPage'})
+        CommonButton({ text: '网格布局Grid' })
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/container/GridPage' })
           })
-        CommonButton({text:'轮播Swiper'})
-          .onClick(()=>{
-            router.pushUrl({url:'pages/container/SwiperPage'})
+        CommonButton({ text: '轮播Swiper' })
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/container/SwiperPage' })
           })
-        CommonButton({text:'瀑布流WaterFlow'})
-          .onClick(()=>{
-            router.pushUrl({url:'pages/container/WaterFlowPage'})
+        CommonButton({ text: '瀑布流WaterFlow' })
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/container/WaterFlowPage' })
           })
-        CommonButton({text:'可滑动面板Panel'})
-          .onClick(()=>{
-            router.pushUrl({url:'pages/container/PanelPage'})
+        CommonButton({ text: '可滑动面板Panel' })
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/container/PanelPage' })
           })
-        CommonButton({text:'下拉刷新Refresh'})
-          .onClick(()=>{
-            router.pushUrl({url:'pages/container/RefreshPage'})
+        CommonButton({ text: '下拉刷新Refresh' })
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/container/RefreshPage' })
           })
-        CommonButton({text:'侧边栏SideBarContainer'})
-          .onClick(()=>{
-            router.pushUrl({url:'pages/container/SideBarContainerPage'})
+        CommonButton({ text: '侧边栏SideBarContainer' })
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/container/SideBarContainerPage' })
           })
+        CommonTitle({title:'选项卡Tabs'})
 
+        CommonButton({ text: '顶部Tabs' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/container/TabsPage',
+              params: {
+                tabType: 1
+              }
+            })
+          })
+        CommonButton({ text: '底部Tabs' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/container/TabsPage',
+              params: {
+                tabType: 2
+              }
+            })
+          })
+        CommonButton({ text: '自定义底部Tabs' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/container/TabsPage',
+              params: {
+                tabType: 3
+              }
+            })
+          })
 
       }.width('100%')
       .justifyContent(FlexAlign.Start)

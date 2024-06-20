@@ -11,17 +11,30 @@ export default class EntryAbility extends UIAbility {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onDestroy');
   }
 
+  myParam: Record<string, number> = {
+    'uiAbility_param': 30
+  };
+  localStorage: LocalStorage = new LocalStorage(this.myParam)
+
   onWindowStageCreate(windowStage: window.WindowStage) {
     // Main window is created, set main page for this ability
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
 
-    windowStage.loadContent('pages/Index', (err, data) => {
+    windowStage.loadContent('pages/ui/MainPage', this.localStorage, (err, data) => {
       if (err.code) {
         hilog.error(0x0000, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err) ?? '');
         return;
       }
       hilog.info(0x0000, 'testTag', 'Succeeded in loading the content. Data: %{public}s', JSON.stringify(data) ?? '');
     });
+    //获取到UIContext环境
+    // let window = windowStage.getMainWindow()
+    // window.then(window => {
+    //   let context = window.getUIContext()
+    //   context.runScopedTask(() => {
+    //
+    //   })
+    // })
   }
 
   onWindowStageDestroy() {

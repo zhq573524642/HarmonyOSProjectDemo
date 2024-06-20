@@ -1,5 +1,5 @@
 import router from '@ohos.router'
-import { CommonButton } from './component/MyComponent'
+import { CommonButton } from '../component/MyComponent'
 
 @Entry
 @Component
@@ -28,13 +28,13 @@ struct TabsPage {
             }
           })
         Tabs({ barPosition: this.tabPosition }) {
-          ForEach(this.tabsTop, (subTab, index) => {
+          ForEach(this.tabsTop, (subTab:string, index) => {
             TabContent() {
               Text(subTab)
                 .fontSize(30)
                 .fontColor(Color.Red)
             }.tabBar(subTab)
-          }, index => index)
+          }, (subTab:string) => subTab)
         }
         .scrollable(true) //页面是否可以滚动，默认可滚动
         .barPosition(this.tabPosition)

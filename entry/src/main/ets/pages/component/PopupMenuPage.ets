@@ -1,6 +1,7 @@
 import promptAction from '@ohos.promptAction'
 import thermal from '@ohos.thermal'
-import { CommonButton, CommonTitle } from './component/MyComponent'
+import { TestBean } from '../../bean/TestBean'
+import { CommonButton, CommonTitle } from './MyComponent'
 
 @Entry
 @Component
@@ -10,10 +11,37 @@ struct PopupMenuPage {
   @State isShowPopupCustom: boolean = false
   @State isShowMenu: boolean = false
   private scroller: Scroller = new Scroller()
+  @State dialogList: Array<TestBean> = [
+    {
+      name: '1111',
+      isSelected: true,
+    },
+    {
+      name: '2222',
+      isSelected: false,
+    },
+    {
+      name: '3333',
+      isSelected: false,
+    },
+    {
+      name: '4444',
+      isSelected: false,
+    },
+
+  ]
   private dialogController: CustomDialogController = new CustomDialogController({
-    builder: CustomDialogExample({ content: '你的账号可能在别的设备登录',
+    builder: CustomDialogExample({
+      list: this.dialogList,
+      content: '你的账号可能在别的设备登录',
       onCancel: this.onDialogCancel,
-      onConfirm: this.onDialogConfirm })
+      onConfirm: this.onDialogConfirm,
+      onListItemClick: (index: number) => {
+        for (let i = 0; i < this.dialogList.length; i++) {
+          this.dialogList[i].isSelected = i == index
+        }
+      }
+    })
   , alignment: DialogAlignment.Bottom, offset: { dx: 0, dy: -30 }
   })
 
@@ -114,26 +142,36 @@ struct PopupMenuPage {
           })
           .bindMenu(//是个数组
             [
-              { value: '菜单Item1',
+              {
+                value: '菜单Item1',
                 action: () => {
                   promptAction.showToast({ message: '菜单Item1', duration: 2000 })
-                } },
-              { value: '菜单Item2',
+                }
+              },
+              {
+                value: '菜单Item2',
                 action: () => {
                   promptAction.showToast({ message: '菜单Item2', duration: 2000 })
-                } },
-              { value: '菜单Item3',
+                }
+              },
+              {
+                value: '菜单Item3',
                 action: () => {
                   promptAction.showToast({ message: '菜单Item3', duration: 2000 })
-                } },
-              { value: '菜单Item4',
+                }
+              },
+              {
+                value: '菜单Item4',
                 action: () => {
                   promptAction.showToast({ message: '菜单Item4', duration: 2000 })
-                } },
-              { value: '菜单Item5',
+                }
+              },
+              {
+                value: '菜单Item5',
                 action: () => {
                   promptAction.showToast({ message: '菜单Item5', duration: 2000 })
-                } }
+                }
+              }
             ]
           )
         CommonButton({ text: '自定义菜单' })
@@ -333,12 +371,16 @@ struct PopupMenuPage {
           }
         })
       MenuItem({ startIcon: $r('app.media.icon_menu'), content: '菜单2' }).enabled(false)
-      MenuItem({ startIcon: $r('app.media.icon_menu'), content: '菜单3', endIcon: $r('app.media.ic_into'),
-        builder: this.SubMenu.bind(this) })
+      MenuItem({
+        startIcon: $r('app.media.icon_menu'), content: '菜单3', endIcon: $r('app.media.ic_into'),
+        builder: this.SubMenu.bind(this)
+      })
 
       MenuItemGroup({ header: '分组菜单栏' }) {
-        MenuItem({ startIcon: $r('app.media.icon_menu'),
-          content: '分组菜单1', endIcon: $r('app.media.ic_into'), })
+        MenuItem({
+          startIcon: $r('app.media.icon_menu'),
+          content: '分组菜单1', endIcon: $r('app.media.ic_into'),
+        })
 
         MenuItem({ startIcon: $r('app.media.icon_menu'), content: '分组菜单2', endIcon: $r('app.media.ic_into') })
         MenuItem({ startIcon: $r('app.media.icon_menu'), content: '分组菜单3', endIcon: $r('app.media.ic_into') })
@@ -360,10 +402,13 @@ struct PopupMenuPage {
 
 @CustomDialog
 struct CustomDialogExample {
-  private content: string
+  private content: string = ''
   controller: CustomDialogController
-  onCancel: () => void
-  onConfirm: () => void
+  onCancel?: () => void
+  onConfirm?: () => void
+  private scroller: Scroller = new Scroller()
+  @State list: Array<TestBean> = []
+  onListItemClick?: (index: number) => void
 
   build() {
     Column() {
@@ -377,6 +422,22 @@ struct CustomDialogExample {
         .fontSize(15)
         .margin({ top: 10, bottom: 10 })
         .fontWeight(FontWeight.Normal)
+      List({ scroller: this.scroller }) {
+        ForEach(this.list, (item: TestBean, index: number) => {
+          ListItem() {
+            Row() {
+              Text(item.name).fontColor(Color.Red)
+            }.backgroundColor(item.isSelected ? Color.Orange : Color.Pink)
+            .onClick(() => {
+              if (this.onListItemClick) {
+                this.onListItemClick(index)
+              }
+            }).width(100)
+            .height(40)
+          }
+        }, (item: TestBean) => JSON.stringify(item))
+      }
+
       Flex({ justifyContent: FlexAlign.SpaceAround }) {
         Button('取消', { type: ButtonType.Normal })
           .width(60)
@@ -387,7 +448,7 @@ struct CustomDialogExample {
           .fontColor(Color.Black)
           .onClick(() => {
             this.controller.close()
-            this.onCancel()
+            this.onCancel?.()
           })
         Button('确定', { type: ButtonType.Normal })
           .width(60)
@@ -398,7 +459,7 @@ struct CustomDialogExample {
           .fontColor(Color.White)
           .onClick(() => {
             this.controller.close()
-            this.onConfirm()
+            this.onConfirm?.()
           })
       }.width('100%')
       .margin({ top: 15, bottom: 15 })

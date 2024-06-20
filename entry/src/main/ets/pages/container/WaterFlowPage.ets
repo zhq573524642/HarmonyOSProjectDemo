@@ -12,6 +12,7 @@ struct WaterFlowPage {
   private itemWidthArray: number[] = []
   private itemHeightArray: number[] = []
   private images: Array<ResourceStr> = [$r('app.media.img1'), $r('app.media.img2'), $r('app.media.img3')]
+
   // 计算flow item宽/高
   getSize() {
     let ret = Math.floor(Math.random() * this.maxSize)
@@ -30,7 +31,8 @@ struct WaterFlowPage {
     this.getItemSizeArray()
   }
 
-  @Builder itemFoot() {
+  @Builder
+  itemFoot() {
     Column() {
       Text(`Footer`)
         .fontSize(10)
@@ -45,25 +47,30 @@ struct WaterFlowPage {
   build() {
     Column() {
       WaterFlow({ footer: this.itemFoot.bind(this), scroller: this.scroller }) {
-        LazyForEach(this.datasource, (item: number) => {
+        LazyForEach(this.datasource, (item: number, index) => {
           FlowItem() {
             Column() {
               Image(this.images[item%3]).objectFit(ImageFit.Fill)
-              Text(item + '').fontSize('12vp').height(20).textAlign(TextAlign.Center)
-                .fontColor(Color.Black).backgroundColor(this.colors[item%this.colors.length])
+              Text(item + '')
+                .fontSize('12vp')
+                .height(20)
+                .textAlign(TextAlign.Center)
+                .fontColor(Color.Black)
+                .backgroundColor(this.colors[item%this.colors.length])
 
             }
             .backgroundColor(this.colors[item%this.colors.length])
           }.width(this.itemWidthArray[item])
           .height(this.itemHeightArray[item])
           .backgroundColor(this.colors[item%this.colors.length])
-        }, item => item)
+        })
       }
       .layoutDirection(FlexDirection.Column)
       .columnsTemplate('1fr 1fr 1fr 1fr') //列的数量
       .columnsGap(10) //列与列的间距
       .rowsGap(5) //行与行的间距
-      .itemConstraintSize({ //宽高范围约束
+      .itemConstraintSize({
+        //宽高范围约束
         minWidth: 0,
         maxWidth: '100%',
         minHeight: 0,

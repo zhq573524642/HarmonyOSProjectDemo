@@ -1,11 +1,29 @@
 import thermal from '@ohos.thermal'
 
+@Observed
+class GridData {
+  public name: string = ''
+  public isSelect: boolean = false
+}
+
 @Entry
 @Component
 struct GridPage {
   private scroller: Scroller = new Scroller()
-  private gridData: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-    11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+  private scroller1: Scroller = new Scroller()
+  private gridData: string[] = ['1', '2', '3', '4', '5', '6', '7', '8', '9',
+    '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31']
+  @State dataList: Array<GridData> = []
+
+  aboutToAppear(): void {
+
+    for (let i = 0; i < 10; i++) {
+      let data: GridData = new GridData()
+      data.name = 'item-' + i
+      data.isSelect = false
+      this.dataList.push(data)
+    }
+  }
 
   build() {
     Column() {
@@ -30,7 +48,7 @@ struct GridPage {
           .height(100)
           .backgroundColor(Color.Gray)
 
-        }, item => item)
+        }, (item: string) => item)
       }
       // .maxCount(3)
       // .layoutDirection(GridDirection.Row)
@@ -40,7 +58,47 @@ struct GridPage {
       .margin(10)
       .height(250)
       .rowsGap(10)
+
+      Grid(this.scroller1) {
+         ForEach(this.dataList,(item:GridData,index:number)=>{
+            GridItem(){
+               this.goodsItemView(item,index)
+            }.width('100%')
+            .height(50)
+         },(item:GridData)=>JSON.stringify(item))
+      }
+      .width('100%')
+      .columnsTemplate('1fr 1fr')
+      .columnsGap(12)
+      .layoutDirection(GridDirection.Column)
+      .rowsGap(12)
+      .padding({ left: 25, right: 25 })
+      .height(125)
     }.width('100%')
     .height('100%')
+  }
+
+  @Builder
+  goodsItemView(item: GridData, index: number) {
+    Column() {
+      Text(`${item.name}`).fontSize(14).fontColor(item.isSelect ? Color.White : Color.Black)
+      Text( '222')
+        .fontColor(item.isSelect ? Color.White : Color.Black)
+        .fontSize(10)
+        .margin({ top: 6 })
+    }
+    .alignItems(HorizontalAlign.Center)
+    .padding({ top: 10, bottom: 10 })
+    .width('100%')
+    .borderRadius(5)
+    .backgroundColor(item.isSelect ? '#4f89ff' : '#f1f1f1')
+    .onClick(() => {
+      for (let i = 0; i < this.dataList.length; i++) {
+        console.debug('==='+i+'=='+index)
+        this.dataList[i].isSelect = i == index
+      }
+
+    })
+
   }
 }

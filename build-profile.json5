@@ -1,12 +1,27 @@
 {
   "app": {
-    "signingConfigs": [],
-    "compileSdkVersion": 9,
-    "compatibleSdkVersion": 9,
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\26496\\.ohos\\config\\default_huaweiHarmonyOSProject_nY4_6_95W6PdbBL5xx5y1fSQc5XJXUNiAZzgq1OdT8M=.cer",
+          "storePassword": "0000001A77EE834CC03B16205B705170EE8AAC8F801598B82FC9A6A8BDD7671D6EF4EA28A3A751FB43A6",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001AB5435C14296A315F7F169969BFEB2A20DA35626D9E06FA6C30395B368D4AA368C2504A888D22",
+          "profile": "C:\\Users\\26496\\.ohos\\config\\default_huaweiHarmonyOSProject_nY4_6_95W6PdbBL5xx5y1fSQc5XJXUNiAZzgq1OdT8M=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\26496\\.ohos\\config\\default_huaweiHarmonyOSProject_nY4_6_95W6PdbBL5xx5y1fSQc5XJXUNiAZzgq1OdT8M=.p12"
+        }
+      }
+    ],
     "products": [
       {
         "name": "default",
         "signingConfig": "default",
+        "compileSdkVersion": "4.1.0(11)",
+        "compatibleSdkVersion": "4.1.0(11)",
+        "runtimeOS": "HarmonyOS"
       }
     ]
   },
@@ -34,6 +49,22 @@
           ]
         }
       ]
+    },
+    {
+      "name": "sharedLibrary",
+      "srcPath": "./sharedLibrary",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "staticLibrary",
+      "srcPath": "./staticLibrary"
     }
   ]
 }

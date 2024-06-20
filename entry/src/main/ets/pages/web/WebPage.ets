@@ -23,7 +23,7 @@ struct WebPage {
         .focusable(true)
         .touchable(true)
         .onShowFileSelector((event) => {
-          let fileResult = event.result
+          // let fileResult = event.result
 
           return true
         })

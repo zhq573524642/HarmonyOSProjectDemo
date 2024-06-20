@@ -1,4 +1,3 @@
-// @ts-nocheck
 import util from '@ohos.util'
 import router from '@ohos.router';
 import { CommonButton } from '../component/MyComponent';
@@ -19,11 +18,16 @@ class Contact {
   }
 }
 
+class UserInfo {
+  title: string = ''
+  contact?: Array<Contact>
+}
+
 @Entry
 @Component
 struct ListPage {
   @State message: string = 'Hello World'
-  private listData: object[] = [
+  private listData: Array<UserInfo> = [
     {
       title: 'A',
       contact: [
@@ -83,7 +87,8 @@ struct ListPage {
   @State selectedIndex: number = 0
   private availableThings: string[] = ['读书', '运动', '旅游', '听音乐', '看电影', '唱歌'];
 
-  @Builder itemHeader(text: string) {
+  @Builder
+  itemHeader(text: string) {
     Text(text)
       .fontSize(15)
       .fontColor(Color.Pink)
@@ -92,7 +97,8 @@ struct ListPage {
       .padding(5)
   }
 
-  @Builder itemEnd(index: number) {
+  @Builder
+  itemEnd(index: number) {
     Button({ type: ButtonType.Normal }) {
       Text('删除').fontColor(Color.White)
     }.height(50)
@@ -124,20 +130,20 @@ struct ListPage {
         .onClick(() => {
           this.listScroller.scrollToIndex(0)
         })
-      CommonButton({text:'新增条目'})
-      .onClick(()=>{
-         TextPickerDialog.show({
-           range:this.availableThings,
-           onAccept:(value:TextPickerResult)=>{
+      CommonButton({ text: '新增条目' })
+        .onClick(() => {
+          TextPickerDialog.show({
+            range: this.availableThings,
+            onAccept: (value: TextPickerResult) => {
               // this.listData
-           }
-         })
-      })
+            }
+          })
+        })
       Stack() {
         List({ space: 20, scroller: this.listScroller }) {
-          ForEach(this.listData, item => {
+          ForEach(this.listData, (item: UserInfo) => {
             ListItemGroup({ header: this.itemHeader(item.title) }) {
-              ForEach(item.contact, (contact, index) => {
+              ForEach(item.contact, (contact: Contact, index) => {
                 ListItem() {
                   Row() {
                     Badge({
@@ -145,15 +151,15 @@ struct ListPage {
                       position: BadgePosition.RightTop,
                       style: { badgeColor: Color.Red, badgeSize: 18 }
                     }) {
-                       Image($r('app.media.app_icon'))
-                         .width(40)
-                         .height(40)
+                      Image($r('app.media.app_icon'))
+                        .width(40)
+                        .height(40)
                     }
 
                     Text(contact.name)
                       .fontColor(Color.Red)
                       .fontSize(20)
-                      .margin({left:10})
+                      .margin({ left: 10 })
                     Text(contact.phone)
                       .fontColor(Color.Blue)
                       .fontSize(15)
@@ -163,7 +169,7 @@ struct ListPage {
                 }.height(50)
                 .width('100%')
                 .swipeAction({ end: this.itemEnd(index) })
-              }, contact => contact.key)
+              }, (contact: Contact) => contact.key)
             }.divider({
               strokeWidth: 1, color: Color.Brown, startMargin: 20, endMargin: 20
             })

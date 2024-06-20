@@ -10,9 +10,9 @@ struct Second {
   build() {
     Column() {
       Text('传来的参数：\n' +
-      this.params?.['id'] + '\n' +
-      this.params?.['info']?.['name'] + '\n' +
-      this.params?.['info']?.['age'])
+        this.params?.['id'] + '\n' +
+        this.params?.['info']?.['name'] + '\n' +
+        this.params?.['info']?.['age'])
         .fontSize(15)
         .fontColor(Color.Black)
       CommonButton({ text: '返回Index页面并携带参数' })
@@ -20,7 +20,7 @@ struct Second {
           router.back({
             url: 'pages/Index',
             params: {
-              name: '返回携带的参数'
+              name: '返回携带的参数---'
             }
           })
         })
@@ -38,7 +38,7 @@ struct Second {
       CommonButton({ text: '返回页面自定义弹窗' })
         .onClick(() => {
           promptAction.showDialog({
-            title:'温馨提示',
+            title: '温馨提示',
             message: '确定要返回吗？',
             buttons: [
               {
@@ -56,8 +56,14 @@ struct Second {
             } else if (result.index == 1) {
               router.back()
             }
-          }).catch((error) => {
+          }).catch((error: string) => {
             console.info('===错误' + error)
+          })
+        })
+      CommonButton({ text: '跳转HSP包中的Index页面' })
+        .onClick(() => {
+          router.pushUrl({
+            url:'@bundle:com.example.myapplication/sharedLibrary/ets/pages/Index'
           })
         })
     }.height('100%')

@@ -8,7 +8,7 @@ struct ColumnPage {
   @State btn2: string = '在主抽上:FlexAlign.Start'
   private alignItems: Array<HorizontalAlign> = [HorizontalAlign.Start, HorizontalAlign.Center, HorizontalAlign.End]
   private justifyContent: Array<FlexAlign> = [FlexAlign.Start, FlexAlign.Center, FlexAlign.End,
-  FlexAlign.SpaceBetween, FlexAlign.SpaceAround, FlexAlign.SpaceEvenly]
+    FlexAlign.SpaceBetween, FlexAlign.SpaceAround, FlexAlign.SpaceEvenly]
   @State private alignItemsTag: number = 0
   @State private justifyContentTag: number = 0
   @State isShowColumnSplit: boolean = false
@@ -45,7 +45,7 @@ struct ColumnPage {
             if (this.justifyContentTag >= this.justifyContent.length) {
               this.justifyContentTag = 0
             }
-            switch (this.justifyContentTag){
+            switch (this.justifyContentTag) {
               case 0:
                 this.btn2 = '在主抽上:FlexAlign.Start'
                 break
@@ -70,16 +70,18 @@ struct ColumnPage {
 
 
         Column() {
-          Square({ text: 'Item-1', color: Color.Red })
-          Square({ text: 'Item-2', color: Color.Green })
-          Square({ text: 'Item-3', color: Color.Yellow })
+          Square({ text: '1', color: Color.Red, w: 50, h: 50 })
+          Square({ text: '2', color: Color.Green, w: 50, h: 50 })
+          Square({ text: '3', color: Color.Yellow, w: 50, h: 50 })
 
         }
+        .backgroundColor(Color.Gray)
         .alignItems(this.alignItems[this.alignItemsTag%this.alignItems.length])
         .justifyContent(this.justifyContent[this.justifyContentTag%this.justifyContent.length])
         .width('100%')
         .layoutWeight(1)
       }.width('100%')
+      .margin(10)
       .layoutWeight(1)
       .visibility(this.isShowColumnSplit ? Visibility.None : Visibility.Visible)
 
@@ -91,8 +93,10 @@ struct ColumnPage {
           Text('Item_4').width('100%').height(40).backgroundColor(Color.Green).textAlign(TextAlign.Center)
           Text('Item_5').width('100%').height(40).backgroundColor(Color.Red).textAlign(TextAlign.Center)
           Text('Item_6').width('100%').height(40).backgroundColor(Color.Pink).textAlign(TextAlign.Center)
-        }.resizeable(true)
+        }
+        .resizeable(true)
         .borderWidth(1)
+        .margin(10)
         .width('100%')
         .height('100%')
       }.width('100%')
