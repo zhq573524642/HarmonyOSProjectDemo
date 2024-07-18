@@ -11,6 +11,14 @@
     {
       "name": "EntryAbility_label",
       "value": "鸿蒙Demo"
+    },
+    {
+      "name": "permission_reason_camera",
+      "value": "用于拍照进行上传"
+    },
+    {
+      "name": "permission_reason_microphone",
+      "value": "用于进行语音通话"
     }
   ]
 }

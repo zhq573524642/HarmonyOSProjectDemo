@@ -472,3 +472,4 @@ struct CustomDialogExample {
     .backgroundColor(Color.White)
   }
 }
+

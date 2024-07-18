@@ -60,12 +60,6 @@ struct Second {
             console.info('===错误' + error)
           })
         })
-      CommonButton({ text: '跳转HSP包中的Index页面' })
-        .onClick(() => {
-          router.pushUrl({
-            url:'@bundle:com.example.myapplication/sharedLibrary/ets/pages/Index'
-          })
-        })
     }.height('100%')
     .width('100%')
   }

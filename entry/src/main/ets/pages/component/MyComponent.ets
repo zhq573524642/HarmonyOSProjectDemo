@@ -1,8 +1,10 @@
 import promptAction from '@ohos.promptAction'
 
+
+
 @Component
 export struct CommonButton {
-  private text: string = ''
+  private text: string = '点击'
 
   build() {
     Row() {

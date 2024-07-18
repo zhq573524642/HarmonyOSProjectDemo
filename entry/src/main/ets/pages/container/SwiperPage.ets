@@ -2,49 +2,22 @@
 @Component
 struct SwiperPage {
   private swiperController: SwiperController = new SwiperController()
+  private imageList: Array<Resource> = [$r('app.media.img1'), $r('app.media.img2'), $r('app.media.img3')]
 
   build() {
     Column() {
       Swiper(this.swiperController) {
-        Text('Item-1')
-          .fontWeight(FontWeight.Lighter)
-          .fontSize(30)
-          .borderRadius(10)
-          .width('90%')
-          .height(100)
-          .textAlign(TextAlign.Center)
-          .backgroundColor(Color.Red)
-          .margin(3)
-        Text('Item-2')
-          .fontWeight(FontWeight.Lighter)
-          .fontSize(30)
-          .borderRadius(10)
-          .width('90%')
-          .height(100)
-          .textAlign(TextAlign.Center)
-          .backgroundColor(Color.Pink)
-          .margin(3)
-        Text('Item-3')
-          .fontWeight(FontWeight.Lighter)
-          .fontSize(30)
-          .borderRadius(10)
-          .width('90%')
-          .height(100)
-          .textAlign(TextAlign.Center)
-          .backgroundColor(Color.Yellow)
-          .margin(3)
-        Text('Item-4')
-          .fontWeight(FontWeight.Lighter)
-          .fontSize(30)
-          .borderRadius(10)
-          .width('90%')
-          .height(100)
-          .textAlign(TextAlign.Center)
-          .backgroundColor(Color.Green)
-          .margin(3)
-
+        ForEach(this.imageList, (item: Resource) => {
+          Image(item)
+            .width('90%')
+            .height(160)
+            .objectFit(ImageFit.Cover)
+            .borderRadius(10)
+        })
       }
+      .duration(500) //轮播动画的时长
       .margin(10)
+      .itemSpace(20) //每个条目的间隔
       //是否开启轮播
       .loop(true)
       //是否自动轮播
@@ -52,19 +25,33 @@ struct SwiperPage {
       //自动轮播时间间隔
       .interval(2000)
       //是否显示指示器
-      .indicator(true)
-      //指示器样式
-      .indicatorStyle({
-        size: 20,
-        color: Color.Red,
-        selectedColor: Color.Green,
-        top: 0
+      .indicator(DotIndicator.dot()
+        .itemWidth(10)
+        .itemHeight(10)
+        .selectedItemWidth(15)
+        .selectedItemHeight(15)
+        .color(Color.Green)
+        .selectedColor(Color.Red)
+        .mask(true))
+      //数字指示器
+      // .indicator(DotIndicator.digit()
+      //   .fontColor(Color.Yellow)
+      //   .selectedFontColor(Color.Pink)
+      //   .right(20))
+      //箭头
+      .displayArrow({
+        showBackground: true,
+        isSidebarMiddle: true,
+        backgroundSize: 50,
+        backgroundColor: Color.Pink,
+        arrowSize: 20,
+        arrowColor: Color.Blue
       })
       //轮播方向
       .vertical(false)
       //每页是否显示多个子组件
       .displayCount(1)
-      .displayMode(SwiperDisplayMode.AUTO_LINEAR)
+      .displayMode(SwiperDisplayMode.STRETCH)
 
       Row() {
         Button('上一个')

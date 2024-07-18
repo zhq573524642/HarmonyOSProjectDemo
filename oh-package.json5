@@ -1,4 +1,5 @@
 {
+  "modelVersion": "5.0.0",
   "license": "",
   "devDependencies": {
     "@ohos/hypium": "1.0.6"
@@ -8,5 +9,8 @@
   "description": "Please describe the basic information.",
   "main": "",
   "version": "1.0.0",
-  "dependencies": {}
+  "dependencies": {
+    "@ohos/axios": "^2.2.0"
+  },
+  "dynamicDependencies": {}
 }

@@ -13,14 +13,15 @@
     "pages": "$profile:main_pages",
     "abilities": [
       {
-        "name": "EntryAbility",
-        "srcEntry": "./ets/entryability/EntryAbility.ts",
-        "description": "$string:EntryAbility_desc",
-        "icon": "$media:icon",
-        "label": "$string:EntryAbility_label",
-        "startWindowIcon": "$media:icon",
-        "startWindowBackground": "$color:start_window_background",
+        "name": "EntryAbility",//UIAbility组件名称,
+        "srcEntry": "./ets/entryability/EntryAbility.ts",//UIAbility的代码路径
+        "description": "$string:EntryAbility_desc",// UIAbility组件的描述信息
+        "icon": "$media:img1",// UIAbility组件的图标
+        "label": "$string:EntryAbility_label", // UIAbility组件的标签
+        "startWindowIcon": "$media:img2",//UIAbility组件启动页面图标资源文件的索引
+        "startWindowBackground": "$color:start_window_background",//// UIAbility组件启动页面背景颜色资源文件的索引
         "exported": true,
+        "launchType": "singleton",
         "skills": [
           {
             "entities": [
@@ -33,10 +34,29 @@
         ]
       }
     ],
-
     "requestPermissions": [
       {
-        "name" : "ohos.permission.INTERNET"
+        "name": "ohos.permission.INTERNET"
+      },
+      {
+        "name": "ohos.permission.CAMERA",
+        "reason": "$string:permission_reason_camera",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
+        "name": "ohos.permission.MICROPHONE",
+        "reason": "$string:permission_reason_microphone",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when": "inuse"
+        }
       }
     ]
   }

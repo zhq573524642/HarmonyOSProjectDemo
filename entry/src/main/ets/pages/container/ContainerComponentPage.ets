@@ -9,6 +9,7 @@ struct ContainerComponentPage {
   build() {
     Scroll(this.scroller) {
       Column() {
+
         CommonButton({ text: 'Column' })
           .onClick(() => {
             router.pushUrl({ url: 'pages/container/ColumnPage' })
@@ -55,14 +56,9 @@ struct ContainerComponentPage {
           .onClick(() => {
             router.pushUrl({ url: 'pages/container/RelativeContainerPage' })
           })
-
-        CommonButton({ text: '列表布局-List' })
+        CommonButton({ text: '各种列表布局-List' })
           .onClick(() => {
-            router.pushUrl({ url: 'pages/list/ListPage' })
-          })
-        CommonButton({ text: '列表布局操作' })
-          .onClick(() => {
-            router.pushUrl({ url: 'pages/list/ListHandlePage' })
+            router.pushUrl({ url: 'pages/list/ListLearnPage' })
           })
         CommonButton({ text: '网格布局Grid' })
           .onClick(() => {
@@ -74,7 +70,7 @@ struct ContainerComponentPage {
           })
         CommonButton({ text: '瀑布流WaterFlow' })
           .onClick(() => {
-            router.pushUrl({ url: 'pages/container/WaterFlowPage' })
+            router.pushUrl({ url: 'pages/container/water_flow/WaterFlowPage' })
           })
         CommonButton({ text: '可滑动面板Panel' })
           .onClick(() => {
@@ -88,7 +84,7 @@ struct ContainerComponentPage {
           .onClick(() => {
             router.pushUrl({ url: 'pages/container/SideBarContainerPage' })
           })
-        CommonTitle({title:'选项卡Tabs'})
+        CommonTitle({ title: '选项卡Tabs' })
 
         CommonButton({ text: '顶部Tabs' })
           .onClick(() => {
@@ -115,6 +111,32 @@ struct ContainerComponentPage {
               params: {
                 tabType: 3
               }
+            })
+          })
+        CommonTitle({ title: '组合高级组件' })
+        CommonButton({ text: 'SelectTitleBar（下拉菜单标题栏）' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/container/SelectTitleBarPage'
+            })
+          })
+        CommonButton({ text: 'SplitLayout（上下结构布局）' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/container/SplitLayoutPage'
+            })
+          })
+        CommonButton({ text: 'SubHeader（子标题）' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/container/SubHeaderPage'
+            })
+          })
+
+        CommonButton({ text: 'TreeView（树视图）' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/container/TreeViewPage'
             })
           })
 

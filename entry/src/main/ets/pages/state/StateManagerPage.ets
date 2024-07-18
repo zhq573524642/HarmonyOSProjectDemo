@@ -45,7 +45,7 @@ struct StateManagerPage {
   build() {
 
     Scroll(this.scroller) {
-      Column({ space: 15 }) {
+      Column({ space: 8 }) {
         CommonTitle({ title: '组件的状态' })
         CommonButton({ text: '@State' })
           .onClick(() => {
@@ -57,6 +57,18 @@ struct StateManagerPage {
           .onClick(() => {
             router.pushUrl({
               url: 'pages/state/PropPage'
+            })
+          })
+        CommonButton({ text: '@Observed和@ObservedLink' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/state/ObservedLinkPage'
+            })
+          })
+        CommonButton({ text: '@ObservedV2和@Trace' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/state/ObservedV2Page'
             })
           })
 
@@ -82,7 +94,7 @@ struct StateManagerPage {
         CommonButton({ text: 'MVVM示例' })
           .onClick(() => {
             router.pushUrl({
-              url:'pages/mvvm/PageEntry'
+              url: 'pages/mvvm/PageEntry'
             })
           })
 

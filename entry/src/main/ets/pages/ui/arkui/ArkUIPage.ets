@@ -9,6 +9,12 @@ struct ArkUIPage {
   build() {
     Scroll(this.scroller) {
       Column() {
+        CommonButton({ text: '通用属性' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/ui/arkui/CommonPropertyPage'
+            })
+          })
         CommonButton({ text: '容器组件' })
           .onClick(() => {
             router.pushUrl({ url: 'pages/container/ContainerComponentPage' })
@@ -16,6 +22,12 @@ struct ArkUIPage {
         CommonButton({ text: '常用组件' })
           .onClick(() => {
             router.pushUrl({ url: 'pages/CommonComponentPage' })
+          })
+        CommonButton({ text: 'Navigation' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/navigation/NavigationTestPage'
+            })
           })
         CommonButton({ text: '气泡和菜单' })
           .onClick(() => {

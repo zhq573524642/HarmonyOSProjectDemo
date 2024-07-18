@@ -5,8 +5,11 @@ import Want from '@ohos.app.ability.Want';
 import window from '@ohos.window';
 
 export default class MyFeatureLibAbility extends UIAbility {
+
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
+    let funcAbilityWant=want
+    AppStorage.setOrCreate<Want>('startAbilityInfo',funcAbilityWant)
   }
 
   onDestroy(): void {

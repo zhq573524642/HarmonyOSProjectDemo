@@ -2,10 +2,17 @@
   "module": {
     "name": "staticLibrary",
     "type": "har",
+    "routerMap": "$profile:router_map",
     "deviceTypes": [
       "default",
       "tablet",
       "2in1"
+    ],
+    "metadata": [
+      {
+        "name": "UseTsHar",
+        "value": "true"
+      }
     ]
   }
 }

@@ -13,4 +13,5 @@ export class Person {
     this.sex = sex;
     this.phone = phone;
   }
+
 }
