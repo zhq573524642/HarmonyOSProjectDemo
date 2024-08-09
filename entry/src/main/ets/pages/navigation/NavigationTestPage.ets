@@ -3,6 +3,7 @@ import { curves, promptAction } from '@kit.ArkUI'
 import { NavDialogPage } from './NavDialogPage'
 import { NavStandardPage } from './NavStandardPage'
 import { BusinessError } from '@kit.BasicServicesKit'
+import { CustomToggle } from '../../widget/CustomToggle'
 
 
 let NextID: number = 1
@@ -47,6 +48,9 @@ struct NavigationTestPage {
   ]
   @Provide('NavPathStack') pageStack: NavPathStack = new NavPathStack()
   private scroller: Scroller = new Scroller()
+  @State pageSwitch: number = 0
+  @State isHideTitleBar: boolean = false
+  @State isHideToolBar: boolean = false
 
   @Builder
   PageMap(name: string) {
@@ -59,45 +63,59 @@ struct NavigationTestPage {
 
   build() {
     Navigation(this.pageStack) {
-      TextInput({ placeholder: '请输入' })
-        .width('80%')
-        .height(45)
-        .borderColor('#999999')
-        .borderRadius(20)
-        .backgroundColor('#f5f5f5')
-        .padding({ left: 10, right: 10 })
-      Row() {
-        Text('NavMode:')
-        Button('Auto')
-          .onClick(() => {
-            this.navigationMode = NavigationMode.Auto
-          })
-        Button('Stack')
-          .onClick(() => {
-            this.navigationMode = NavigationMode.Stack
-          })
-        Button('Split')
-          .onClick(() => {
-            this.navigationMode = NavigationMode.Split
-          })
-      }.margin(10)
+      Scroll(this.scroller) {
+        Column({ space: 10 }) {
+          Row() {
+            Text('NavMode:')
+            Button('Auto')
+              .onClick(() => {
+                this.navigationMode = NavigationMode.Auto
+              })
+            Button('Stack')
+              .onClick(() => {
+                this.navigationMode = NavigationMode.Stack
+              })
+            Button('Split')
+              .onClick(() => {
+                this.navigationMode = NavigationMode.Split
+              })
+          }
+          .width('100%')
+          .justifyContent(FlexAlign.SpaceEvenly)
 
-      Row() {
-        Text('TitleMode:')
-        Button('Free')
-          .onClick(() => {
-            this.titleMode = NavigationTitleMode.Free
-          })
-        Button('Mini')
-          .onClick(() => {
-            this.titleMode = NavigationTitleMode.Mini
-          })
-        Button('Full')
-          .onClick(() => {
-            this.titleMode = NavigationTitleMode.Full
-          })
-      }.margin(10)
-      .justifyContent(FlexAlign.SpaceEvenly)
+          Row() {
+            Text('TitleMode:')
+            Button('Free')
+              .onClick(() => {
+                this.titleMode = NavigationTitleMode.Free
+              })
+            Button('Mini')
+              .onClick(() => {
+                this.titleMode = NavigationTitleMode.Mini
+              })
+            Button('Full')
+              .onClick(() => {
+                this.titleMode = NavigationTitleMode.Full
+              })
+          }
+          .width('100%')
+          .justifyContent(FlexAlign.SpaceEvenly)
+
+          Row() {
+            CustomToggle({
+              text: 'hideTitleBar',
+              isOpen: this.isHideTitleBar
+            })
+            CustomToggle({
+              text: 'hideToolBar',
+              isOpen: this.isHideToolBar
+            })
+          }.width('100%')
+          .justifyContent(FlexAlign.SpaceEvenly)
+        }
+        .margin({ top: 10 })
+        .width('100%')
+      }.width('100%')
 
 
       List({ space: 15, scroller: this.scroller }) {
@@ -136,7 +154,7 @@ struct NavigationTestPage {
                       })
                       break
                     case 4:
-                      this.pageStack.pushPathByName('NavHarPage','',false)
+                      this.pageStack.pushPathByName('NavHarPage', '', false)
                       break
                   }
                 })
@@ -150,26 +168,32 @@ struct NavigationTestPage {
       }.width('80%')
       .margin({ top: 12 })
     }
-    .title('主页')
+    .title('主页', {
+      //标题栏
+      backgroundColor: Color.Pink,
+      barStyle: BarStyle.STANDARD
+    })
+    .hideTitleBar(this.isHideTitleBar) //是否隐藏标题栏
+    .hideToolBar(this.isHideToolBar) //是否隐藏ToolBar
     .mode(this.navigationMode)
     .titleMode(this.titleMode)
-    // .navDestination(this.PageMap)
+    .navDestination(this.PageMap)
     .menus([
       {
-        value: "", icon: "resources/base/media/tab_home_f.png", action: () => {
+        value: "菜单1", icon: "resources/base/media/tab_home_f.png", action: () => {
 
       }
       },
       {
-        value: "", icon: "resources/base/media/tab_find_f.png", action: () => {
+        value: "菜单2", icon: "resources/base/media/tab_find_f.png", action: () => {
       }
       },
       {
-        value: "", icon: "resources/base/media/tab_info_f.png", action: () => {
+        value: "菜单3", icon: "resources/base/media/tab_info_f.png", action: () => {
       }
       },
       {
-        value: "", icon: "resources/base/media/tab_my_f.png", action: () => {
+        value: "菜单4", icon: "resources/base/media/tab_my_f.png", action: () => {
       }
       }
     ])
@@ -181,16 +205,16 @@ struct NavigationTestPage {
       range: ['pushPath', 'pushPathByName', 'pushPathByName/onPop', 'pushDestination',
         'pushDestinationByName/ErrorCode'],
       selected: 0,
-      canLoop:false,
+      canLoop: false,
       onAccept: (value: TextPickerResult) => {
         switch (value.index) {
           case 0:
             this.pageStack.pushPath({
-              name: 'NavStandardPage', param:'aaaaaa',
+              name: 'NavStandardPage', param: 'aaaaaa',
             })
             break
           case 1:
-            this.pageStack.pushPathByName('NavStandardPage','bbbbbb')
+            this.pageStack.pushPathByName('NavStandardPage', 'bbbbbb')
             break
           case 2:
             this.pageStack.pushPathByName('NavStandardPage',
@@ -198,8 +222,8 @@ struct NavigationTestPage {
                 name: '王五',
                 age: 22
               }, (popInfo: PopInfo) => {
-              console.debug('===onPop：' + JSON.stringify(popInfo))
-            })
+                console.debug('===onPop：' + JSON.stringify(popInfo))
+              })
             break
           case 3:
             this.pageStack.pushDestination({

@@ -68,6 +68,22 @@
     "pages/list/ListItemDeletePage",
     "pages/list/ListSingleSelectPage",
     "pages/list/ListMultipleSelectPage",
-    "pages/list/ListItemDragPage"
+    "pages/list/ListItemDragPage",
+    "pages/component/ProgressPage",
+    "pages/component/RatingSliderPage",
+    "pages/component/DateTimePage",
+    "pages/ui/arkts/MessageTransmitPage",
+    "pages/camera/CameraKitPage",
+    "pages/camera/CameraPreviewPage",
+    "pages/data/ArrayListPage",
+    "pages/container/MediaQueryPage",
+    "pages/container/GridRowPage",
+    "pages/container/OneMoreMatchPage",
+    "pages/container/OneMoreForHomeTabPage",
+    "pages/container/OneMoreForHeaderPage",
+    "pages/concurrency/ConcurrencyPage",
+    "pages/component/ImmersionPage",
+    "pages/web/WebViewNestedScrollPage",
+    "pages/web/WebNodeContainerPage"
   ]
 }

@@ -1,0 +1,14 @@
+{
+  "color": [
+    {
+      "name": "white",
+      "value": "#FFFFFF"
+    }, {
+      "name": "line_color",
+      "value": "#C8C7CC"
+    },{
+      "name": "theme_color",
+      "value": "#0090ff"
+    }
+  ]
+}

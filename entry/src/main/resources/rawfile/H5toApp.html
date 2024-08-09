@@ -1,0 +1,22 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<body>
+<button type="button" onclick="callArkTS()">调用原生无参函数</button>
+<button type="button" onclick="callArkTS1()">调用原生传参函数</button>
+<p id="demo"></p>
+<script>
+    function callArkTS() {
+        let str = nativeCall.test();
+        document.getElementById("demo").innerHTML = str;
+        console.info('ArkTS Hello World! :' + str);
+    }
+
+     function callArkTS1() {
+        let str = nativeCall.testWithParam("AAA");
+        document.getElementById("demo").innerHTML = str;
+        console.info('ArkTS Hello World! :' + str);
+    }
+</script>
+</body>
+</html>

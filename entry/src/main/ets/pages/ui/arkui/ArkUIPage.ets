@@ -15,6 +15,12 @@ struct ArkUIPage {
               url: 'pages/ui/arkui/CommonPropertyPage'
             })
           })
+        CommonButton({ text: '沉浸式效果' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/component/ImmersionPage'
+            })
+          })
         CommonButton({ text: '容器组件' })
           .onClick(() => {
             router.pushUrl({ url: 'pages/container/ContainerComponentPage' })

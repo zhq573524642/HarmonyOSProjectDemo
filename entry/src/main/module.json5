@@ -15,11 +15,12 @@
       {
         "name": "EntryAbility",//UIAbility组件名称,
         "srcEntry": "./ets/entryability/EntryAbility.ts",//UIAbility的代码路径
+//        "srcEntry": "./ets/myabilitystage/MyAbilityStage.ets",//UIAbility的代码路径
         "description": "$string:EntryAbility_desc",// UIAbility组件的描述信息
-        "icon": "$media:img1",// UIAbility组件的图标
+        "icon": "$media:ic_app_launcher",// UIAbility组件的图标
         "label": "$string:EntryAbility_label", // UIAbility组件的标签
-        "startWindowIcon": "$media:img2",//UIAbility组件启动页面图标资源文件的索引
-        "startWindowBackground": "$color:start_window_background",//// UIAbility组件启动页面背景颜色资源文件的索引
+        "startWindowIcon": "$media:ic_app_launcher",//UIAbility组件启动页面图标资源文件的索引
+        "startWindowBackground": "$color:start_window_background",// UIAbility组件启动页面背景颜色资源文件的索引
         "exported": true,
         "launchType": "singleton",
         "skills": [
@@ -28,7 +29,9 @@
               "entity.system.home"
             ],
             "actions": [
-              "action.system.home"
+              "action.system.home",
+              "ohos.want.action.home"
+
             ]
           }
         ]
@@ -51,6 +54,35 @@
       {
         "name": "ohos.permission.MICROPHONE",
         "reason": "$string:permission_reason_microphone",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when": "inuse"
+        }
+      },{
+        "name": "ohos.permission.WRITE_MEDIA",
+        "reason": "$string:permission_reason_write_media",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
+        "name": "ohos.permission.READ_MEDIA",
+        "reason": "$string:permission_reason_read_media",
+        "usedScene": {
+          "abilities": [
+            "EntryAbility"
+          ],
+          "when": "inuse"
+        }
+      },
+      {
+        "name": "ohos.permission.MEDIA_LOCATION",
+        "reason": "$string:permission_reason_location",
         "usedScene": {
           "abilities": [
             "EntryAbility"

@@ -30,7 +30,8 @@ struct ArkDecoratorPage {
         CommonTitle({ title: '2：@BuilderParam装饰器：引用@Builder函数' })
         this.childTextView()
         CustomTexView({
-          customBuilderParam0: this.childTextView, customBuilderParam1: () => {
+          customBuilderParam0: this.childTextView,
+          customBuilderParam1: () => {
             this.childTextView()
           }, customBuilderParam2: InnerTextView2
         })
@@ -63,7 +64,7 @@ struct ArkDecoratorPage {
           .textAlign(TextAlign.Center)
 
         CommonTitle({ title: '5：@Extend装饰器：定义扩展组件样式' })
-        Text('扩展Text的组件样式')
+        Text('扩展Text的组件样式')//仅支持全局定义，不支持在组件内部定义
           .myExtendText(this.fontSizeChange, () => {
             promptAction.showToast({ message: 'OK' })
             this.fontSizeChange += 1
@@ -110,7 +111,7 @@ struct ArkDecoratorPage {
 
   }
 
-  //组件内部的@Styles
+  //组件内部的@Styles,可以使用状态变量
   @Styles
   InnerStyles(){
     .width(100)
@@ -144,7 +145,7 @@ struct ArkDecoratorPage {
 }
 
 /**
- * @Extend
+ * @Extend  仅支持全局定义，不支持组件内部定义
  */
 @Extend(Text)
 function myExtendText(fonSize: number, onClick: () => void) {
@@ -159,6 +160,7 @@ function myExtendText(fonSize: number, onClick: () => void) {
 }
 
 
+//全局的样式，不支持传递参数
 @Styles
 function globalStyles() {
   .width(150)

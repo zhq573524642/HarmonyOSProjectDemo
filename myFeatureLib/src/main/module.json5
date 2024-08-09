@@ -18,6 +18,7 @@
         "description": "$string:MyFeatureLibAbility_desc",
         "icon": "$media:icon",
         "label": "$string:MyFeatureLibAbility_label",
+        "launchType":"singleton",
         "startWindowIcon": "$media:startIcon",
         "startWindowBackground": "$color:start_window_background",
         "exported": true,

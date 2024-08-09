@@ -5,7 +5,6 @@ import { UIAbility, common } from '@kit.AbilityKit'
 @Entry
 @Component
 struct ArkTSBasePage {
-  @State showBackParam: string = '页面返回参数在这里显示'
   private context = getContext(this) as common.UIAbilityContext
 
   build() {
@@ -28,14 +27,19 @@ struct ArkTSBasePage {
             url: 'pages/decorator/ArkDecoratorPage'
           })
         })
-
-      Text(`页面跳转回传参数：${this.showBackParam}`)
-        .margin(8)
-        .fontSize(15)
-      CommonButton({ text: 'router页面跳转并传递参数' })
-        .onClick(() => {
-          jumpPageWithParams()
+      CommonButton({text:'并发'})
+        .onClick(()=>{
+           router.pushUrl({
+             url:'pages/concurrency/ConcurrencyPage'
+           })
         })
+      CommonButton({ text: '消息通信' })
+        .onClick(() => {
+          router.pushUrl({
+            url: 'pages/ui/arkts/MessageTransmitPage'
+          })
+        })
+
       CommonTitle({ title: '应用程序包' })
       CommonButton({ text: 'HAR（静态共享包）' })
         .onClick(() => {
@@ -55,6 +59,7 @@ struct ArkTSBasePage {
             url: 'pages/ui/arkts/AbilityTestPage'
           })
         })
+      CommonButton({text:'信息传递载体Want'})
     }
     .width('100%')
     .justifyContent(FlexAlign.Start)
@@ -62,29 +67,5 @@ struct ArkTSBasePage {
   }
 }
 
-class Person {
-  name: string = '';
-  age: number = 0;
-}
 
-class Student {
-  id: number = 0;
-  info: Person = new Person();
-}
 
-function jumpPageWithParams() {
-  let student: Student = {
-    id: 12,
-    info: {
-      name: '张三',
-      age: 18
-    }
-  }
-
-  router.pushUrl({
-    url: 'pages/Second',
-    params: student
-  }, router.RouterMode.Single, (error) => {
-
-  })
-}

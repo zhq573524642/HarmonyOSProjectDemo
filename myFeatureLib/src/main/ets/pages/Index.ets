@@ -43,7 +43,7 @@ struct Index {
               resultCode:1001,
               want:{
                 deviceId: '', //为空代表本设备
-                bundleName: 'com.example.myapplication',
+                bundleName: 'com.zhq.harmonyosdemo',
                 abilityName: 'MyFeatureLibAbility',
                 moduleName: 'myFeatureLib',
                 parameters: {

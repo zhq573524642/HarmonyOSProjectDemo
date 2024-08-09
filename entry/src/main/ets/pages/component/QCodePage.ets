@@ -7,7 +7,7 @@ struct QCodePage {
 
     Column() {
       TextInput({ placeholder: '请输入' })
-        .width('100%')
+        .width('90%')
         .margin(10)
         .height(50)
         .type(InputType.Normal)
@@ -17,7 +17,7 @@ struct QCodePage {
 
       QRCode(this.inputContent)
         .color(Color.Pink)
-        .backgroundColor(Color.Transparent)
+        .backgroundColor(Color.Yellow)
         .width(200)
         .height(200)
     }

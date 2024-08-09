@@ -12,6 +12,12 @@ struct DataStructurePage {
              url:'pages/data/ArrayTestPage'
           })
         })
+      CommonButton({ text: '集合ArrayList' })
+        .onClick(() => {
+          router.pushUrl({
+            url:'pages/data/ArrayListPage'
+          })
+        })
     }
   }
 }

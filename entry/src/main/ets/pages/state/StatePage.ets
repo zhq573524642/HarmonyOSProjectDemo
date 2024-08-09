@@ -63,6 +63,13 @@ struct StatePage {
     this.stateArrayListTemp = this.stateArrayList
   }
 
+  /**
+   * 1.私有的，只能在声明的组件内使用，声明时需要指定类型和初始值；
+   * 2.@State与@Prop单向同步，与@Link和@ObjectLink双向同步；
+   * 3.@State修饰变量的生命周期与所属组件的生命周期相同；
+   * 4.
+   */
+
   build() {
 
     Scroll(this.scroller) {

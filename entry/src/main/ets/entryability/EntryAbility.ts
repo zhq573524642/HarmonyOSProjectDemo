@@ -4,14 +4,23 @@ import window from '@ohos.window';
 import { BusinessError } from '@kit.BasicServicesKit';
 import AbilityConstant from '@ohos.app.ability.AbilityConstant';
 import Want from '@ohos.app.ability.Want';
-import { Context } from '@ohos.arkui.UIContext';
+import { webview } from '@kit.ArkWeb';
+import { UIContext } from '@kit.ArkUI';
 
+const localStorage: LocalStorage = new LocalStorage('uiContext');
 export default class EntryAbility extends UIAbility {
+  storage: LocalStorage = localStorage;
   onCreate(want, launchParam) {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
-
+    //开启web前进后退缓存
+    // let features = new webview.BackForwardCacheSupportedFeatures();
+    // features.nativeEmbed = true;
+    // features.mediaTakeOver = true;
+    // webview.WebviewController.enableBackForwardCache(features);
+    //网页预解析、预连接
+    webview.WebviewController.initializeWebEngine()
+    webview.WebviewController.prepareForPageLoad('https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/application-models-V5',true,2)
   }
-
 
 
   onDestroy() {
@@ -59,6 +68,8 @@ export default class EntryAbility extends UIAbility {
       }
       hilog.info(0x0000, 'testTag', 'Succeeded in loading the content. Data: %{public}s', JSON.stringify(data) ?? '');
     });
+    // this.storage.setOrCreate<UIContext>('uiContext',windowStage.getMainWindowSync().getUIContext())
+
     //获取到UIContext环境
     // let window = windowStage.getMainWindow()
     // window.then(window => {
@@ -67,6 +78,26 @@ export default class EntryAbility extends UIAbility {
     //
     //   })
     // })
+    //设置窗口全屏
+    // let windowClass: window.Window = windowStage.getMainWindowSync()
+    // let isFullScreenLayout =true
+    // windowClass.setWindowLayoutFullScreen(isFullScreenLayout)
+    //   .then(() => {
+    //     console.debug('===设置成功')
+    //     AppStorage.setOrCreate('layoutfullscreen',true)
+    //   })
+    //   .catch((error: BusinessError) => {
+    //     console.debug('===设置失败：' + error.message)
+    //   })
+    // // //获取布局避让遮挡的区域
+    // let type = window.AvoidAreaType.TYPE_NAVIGATION_INDICATOR
+    // let statusBarType=window.AvoidAreaType.TYPE_SYSTEM
+    // let avoidArea = windowClass.getWindowAvoidArea(type)
+    // let statusBarArea=windowClass.getWindowAvoidArea(statusBarType)
+    // let statusBarHeight=statusBarArea.topRect.height//获取状态栏高度
+    // let bottomRectHeight = avoidArea.bottomRect.height //获取到导航条的高度
+    // AppStorage.setOrCreate('navigation_bottom_height', bottomRectHeight)
+    // AppStorage.setOrCreate('status_bar_height',statusBarHeight)
   }
 
   onNewWant(want: Want, launchParam: AbilityConstant.LaunchParam): void {

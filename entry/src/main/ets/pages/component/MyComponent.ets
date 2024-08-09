@@ -1,7 +1,6 @@
 import promptAction from '@ohos.promptAction'
 
 
-
 @Component
 export struct CommonButton {
   private text: string = '点击'
@@ -142,6 +141,7 @@ export struct RadioList {
       .margin({ top: 5 })
       .alignListItem(ListItemAlign.Start)
     }.width('100%')
+    .height(55)
     .alignItems(HorizontalAlign.Start)
     .margin(8)
   }

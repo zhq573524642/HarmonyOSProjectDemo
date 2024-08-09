@@ -6,6 +6,8 @@ struct ObservedLinkClassPage {
 
   build() {
     Column({ space: 5 }) {
+      Text('User <- Person').fontSize(16)
+      Text('Teacher <- Student <- Person')
       Text(`源数据User中Person的Size：${this.user.person.size}`).fontSize(16).fontColor(Color.Black)
         .margin(10)
       Text(`源数据Teacher中Student的Size：${this.teacher.student.size}`).fontSize(16).fontColor(Color.Black)

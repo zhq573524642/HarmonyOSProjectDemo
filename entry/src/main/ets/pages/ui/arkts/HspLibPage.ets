@@ -16,7 +16,10 @@ struct HspLibPage {
       CommonButton({ text: '跳转HSP（动态共享包HspMainPage页面组件）2' })
         .onClick(() => {
           router.pushUrl({
-            url:'@bundle:com.example.myapplication/sharedLibrary/ets/pages/HspMainPage'
+            url:'@bundle:com.zhq.harmonyosdemo/sharedLibrary/ets/pages/HspMainPage',
+            params:{
+              param_name:'哈哈哈'
+            }
           })
         })
       CommonTitle({ title: '加载HSP中的资源' })

@@ -9,8 +9,7 @@ export struct NavDialogPage {
     NavDestination() {
       Stack({ alignContent: Alignment.Center }) {
         Column() {
-          Text("Dialog NavDestination：\n" +
-            '参数：')
+          Text("Dialog NavDestination")
             .fontSize(20)
             .margin({ bottom: 100 })
           Button("Close").onClick(() => {
@@ -30,8 +29,11 @@ export struct NavDialogPage {
   }
 
   aboutToAppear(): void {
+    let params = this.pageStack.getParamByName('NavDialogPage').toString()
+    console.debug('===参数：'+params)
     this.navDesInfo = this.queryNavDestinationInfo()
     observer.on('navDestinationUpdate', (info: NavDestinationInfo) => {
+      info.param
       // console.info('===NavDestination state update', JSON.stringify(info));
     });
   }

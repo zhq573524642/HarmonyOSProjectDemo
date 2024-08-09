@@ -2,6 +2,8 @@ import promptAction from '@ohos.promptAction'
 import thermal from '@ohos.thermal'
 import { TestBean } from '../../bean/TestBean'
 import { CommonButton, CommonTitle } from './MyComponent'
+import { BusinessError } from '@ohos.base'
+import { ToastUtils } from '@ohos/common'
 
 @Entry
 @Component
@@ -56,6 +58,194 @@ struct PopupMenuPage {
   build() {
     Scroll(this.scroller) {
       Column() {
+        CommonTitle({ title: 'promptAction.showToast' })
+        Row() {
+          Button('default')
+            .onClick(() => {
+              promptAction.showToast({
+                message: '你好啊！'
+              })
+            })
+          Button('TopStart')
+            .onClick(() => {
+              promptAction.showToast({
+                message: '你好啊！',
+                alignment: Alignment.TopStart
+              })
+            })
+          Button('Top')
+            .onClick(() => {
+              promptAction.showToast({
+                message: '你好啊！',
+                alignment: Alignment.Top
+              })
+            })
+          Button('TopEnd')
+            .onClick(() => {
+              promptAction.showToast({
+                message: '你好啊！',
+                alignment: Alignment.TopEnd
+              })
+            })
+        }.width('100%')
+        .margin({ bottom: 10 })
+        .justifyContent(FlexAlign.SpaceEvenly)
+
+        Row() {
+          Button('Start')
+            .onClick(() => {
+              promptAction.showToast({
+                message: '你好啊！',
+                alignment: Alignment.Start
+              })
+            })
+          Button('Center')
+            .onClick(() => {
+              promptAction.showToast({
+                message: '你好啊！',
+                alignment: Alignment.Center
+              })
+            })
+          Button('End')
+            .onClick(() => {
+              promptAction.showToast({
+                message: '你好啊！',
+                alignment: Alignment.End
+              })
+            })
+          Button('BottomStart')
+            .onClick(() => {
+              promptAction.showToast({
+                message: '你好啊！',
+                alignment: Alignment.BottomStart
+              })
+            })
+        }.width('100%')
+        .justifyContent(FlexAlign.SpaceEvenly)
+        .margin({ bottom: 10 })
+
+        Row() {
+          Button('Bottom')
+            .onClick(() => {
+              promptAction.showToast({
+                message: '你好啊！',
+                alignment: Alignment.Bottom
+              })
+            })
+          Button('BottomEnd')
+            .onClick(() => {
+              promptAction.showToast({
+                message: '你好啊！',
+                alignment: Alignment.BottomEnd
+              })
+            })
+          Button('3000')
+            .onClick(() => {
+              promptAction.showToast({
+                message: '你好啊！',
+                duration: 3000,
+                alignment: Alignment.Bottom
+              })
+            })
+          Button('m:top_most')
+            .onClick(() => {
+              promptAction.showToast({
+                message: '你好啊！',
+                alignment: Alignment.Bottom,
+                showMode: promptAction.ToastShowMode.TOP_MOST
+              })
+            })
+        }.width('100%')
+        .justifyContent(FlexAlign.SpaceEvenly)
+        .margin({ bottom: 10 })
+
+        CommonTitle({ title: 'promptAction.showDialog' })
+        Row() {
+          Button('NoButton')
+            .onClick(() => {
+              promptAction.showDialog({
+                title: '温馨提示',
+                message: '确定退出登录吗？'
+              })
+            })
+          Button('OneButton')
+            .onClick(() => {
+              promptAction.showDialog({
+                title: '温馨提示',
+                message: '确定退出登录吗？',
+                buttons: [
+                  {
+                    text: '知道了',
+                    color: '#ff0000'
+                  }
+                ]
+              })
+            })
+          Button('TwoButton')
+            .onClick(() => {
+              promptAction.showDialog({
+                title: '温馨提示',
+                message: '确定退出登录吗？',
+                buttons: [
+                  {
+                    text: '取消',
+                    color: '#000000'
+                  },
+                  {
+                    text: '确定',
+                    color: '#ff0000'
+                  }
+                ]
+              })
+            })
+        }.width('100%')
+        .justifyContent(FlexAlign.SpaceEvenly)
+        .margin({ bottom: 10 })
+
+        Row() {
+          Button('NoTitle')
+            .onClick(() => {
+              promptAction.showDialog({
+                message: '确认退出吗？'
+              })
+            })
+          Button('NoMessage')
+            .onClick(() => {
+              promptAction.showDialog({
+                title: '确认退出吗？'
+              })
+            })
+          Button('Callback')
+            .onClick(() => {
+              promptAction.showDialog({
+                title: '温馨提示',
+                message: '确认退出吗？',
+                buttons: [
+                  {
+                    text: '取消',
+                    color: '#000000'
+                  },
+                  {
+                    text: '确定',
+                    color: '#ff0000'
+                  }
+                ]
+              }, (error: BusinessError, data: promptAction.ShowDialogSuccessResponse) => {
+                if (error) {
+                  ToastUtils.show(error.message)
+                  return
+                }
+                if (data?.index == 0) {
+                  ToastUtils.show('取消')
+                } else {
+                  ToastUtils.show('确定')
+                }
+              })
+            })
+        }.width('100%')
+        .justifyContent(FlexAlign.SpaceEvenly)
+        .margin({ bottom: 10 })
+
         CommonTitle({ title: '气泡' })
         CommonButton({ text: '普通气泡' })
           .onClick(() => {
@@ -285,7 +475,7 @@ struct PopupMenuPage {
             this.dialogController.open()
           })
         CommonTitle({ title: '选择器' })
-        CommonButton({ text: 'DatePickerDialog' })
+        CommonButton({ text: 'DatePickerDialog具体见常用组件-日期时间组件' })
           .onClick(() => {
             DatePickerDialog.show({
               start: new Date(2000, 1, 1),
@@ -304,7 +494,7 @@ struct PopupMenuPage {
             })
           })
 
-        CommonButton({ text: 'TimePickerDialog' })
+        CommonButton({ text: 'TimePickerDialog具体见常用组件-日期时间组件' })
           .onClick(() => {
             TimePickerDialog.show({
               selected: new Date('2024-04-19T08:30:00'),
@@ -325,6 +515,7 @@ struct PopupMenuPage {
             TextPickerDialog.show({
               range: ['item1', 'item2', 'item3', 'item4', 'item5'],
               selected: 2,
+              canLoop: false,
               onAccept: (value: TextPickerResult) => {
 
               },
@@ -372,15 +563,18 @@ struct PopupMenuPage {
         })
       MenuItem({ startIcon: $r('app.media.icon_menu'), content: '菜单2' }).enabled(false)
       MenuItem({
-        startIcon: $r('app.media.icon_menu'), content: '菜单3', endIcon: $r('app.media.ic_into'),
-        builder: this.SubMenu.bind(this)
+        startIcon: $r('app.media.icon_menu'),
+        content: '菜单3',
+        endIcon: $r('app.media.ic_into'),
+        builder: this.SubMenu
       })
 
-      MenuItemGroup({ header: '分组菜单栏' }) {
+      MenuItemGroup({ header: '分组菜单栏Header', footer: '分栏菜单Footer' }) {
         MenuItem({
           startIcon: $r('app.media.icon_menu'),
           content: '分组菜单1', endIcon: $r('app.media.ic_into'),
         })
+          .contentFontColor(Color.Red)
 
         MenuItem({ startIcon: $r('app.media.icon_menu'), content: '分组菜单2', endIcon: $r('app.media.ic_into') })
         MenuItem({ startIcon: $r('app.media.icon_menu'), content: '分组菜单3', endIcon: $r('app.media.ic_into') })
@@ -395,7 +589,9 @@ struct PopupMenuPage {
   SubMenu() {
     Menu() {
       MenuItem({ content: "复制", labelInfo: "Ctrl+C" })
+        .labelFontColor(Color.Green)
       MenuItem({ content: "粘贴", labelInfo: "Ctrl+V" })
+        .labelFontColor(Color.Yellow)
     }
   }
 }

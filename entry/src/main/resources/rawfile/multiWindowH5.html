@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WindowEvent</title>
+</head>
+<body>
+<input type="button" value="新窗口中打开网页" onclick="OpenNewWindow()">
+<script type="text/javascript">
+    function OpenNewWindow()
+    {
+        let openedWindow = window.open("about:blank", "", "location=no,status=no,scrollvars=no");
+        openedWindow.document.write("<p>这是我的窗口</p>");
+        openedWindow.focus();
+    }
+</script>
+</body>
+</html>

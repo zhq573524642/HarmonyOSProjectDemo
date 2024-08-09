@@ -9,6 +9,7 @@
   "dependencies": {
     "@ohos/sharedLibrary": "../sharedLibrary",
     "@ohos/staticLibrary": "../staticLibrary",
-    "@ohos/common": "../common"
+    "@ohos/common": "../common",
+    "@ohos/zutils": "../zutils"
   }
 }

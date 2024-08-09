@@ -60,6 +60,14 @@ struct ContainerComponentPage {
           .onClick(() => {
             router.pushUrl({ url: 'pages/list/ListLearnPage' })
           })
+        CommonButton({text:'一多适配'})
+          .onClick(()=>{
+             router.pushUrl({
+               url:'pages/container/OneMoreMatchPage'
+             })
+          })
+
+
         CommonButton({ text: '网格布局Grid' })
           .onClick(() => {
             router.pushUrl({ url: 'pages/container/GridPage' })

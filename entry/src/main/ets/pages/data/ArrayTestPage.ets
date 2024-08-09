@@ -8,13 +8,11 @@ import { util } from '@kit.ArkTS'
 struct ArrayTestPage {
   @State private personArray: ObservedArray<Person> = new ObservedArray<Person>()
   private nameArr: string[] = ['张三', '李四', '王五', '赵六']
-  @State selectedItem: Person = new Person()
+  @State selectedItem: Person = new Person('', 0)
 
   aboutToAppear(): void {
     for (let i = 0; i < this.nameArr.length; i++) {
-      let person = new Person()
-      person.name = this.nameArr[i]
-      person.age = i + 18
+      let person = new Person(this.nameArr[i], i + 18)
       if (i === 0) {
         this.selectedItem = person
       }
@@ -53,9 +51,7 @@ struct ArrayTestPage {
         space: { main: LengthMetrics.vp(10), cross: LengthMetrics.vp(10) }
       }) {
         this.MyButton('新增push', () => {
-          let person = new Person()
-          person.name = '孙七' + util.generateRandomUUID()
-          person.age = 28
+          let person = new Person('孙七' + util.generateRandomUUID(), 28)
           this.personArray.push(person)
         })
         this.MyButton('删除pop', () => {

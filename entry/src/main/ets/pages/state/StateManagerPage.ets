@@ -24,7 +24,7 @@ let uiAbilityLocalStorage = LocalStorage.getShared()
 
 PersistentStorage.persistProp<TempClass>('persistent_param', new TempClass(11))
 
-@Entry(localStorage)
+@Entry({ storage: localStorage })
   //uiAbilityLocalStorage
 @Component
 struct StateManagerPage {

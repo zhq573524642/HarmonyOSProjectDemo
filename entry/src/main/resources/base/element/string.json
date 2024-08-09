@@ -19,6 +19,18 @@
     {
       "name": "permission_reason_microphone",
       "value": "用于进行语音通话"
+    },
+    {
+      "name": "permission_reason_write_media",
+      "value": "用于保存拍摄内容"
+    },
+    {
+      "name": "permission_reason_read_media",
+      "value": "用于打开查看多媒体"
+    },
+    {
+      "name": "permission_reason_location",
+      "value": "用于访问媒体文件中的地理位置信息"
     }
   ]
 }

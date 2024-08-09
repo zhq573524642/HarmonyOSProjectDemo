@@ -5,15 +5,21 @@ import Want from '@ohos.app.ability.Want';
 import window from '@ohos.window';
 
 export default class MyFeatureLibAbility extends UIAbility {
-
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
-    let funcAbilityWant=want
-    AppStorage.setOrCreate<Want>('startAbilityInfo',funcAbilityWant)
+    //别的UIAbility跳转过来，从Want中拿到参数数据保存在AppStorage
+    console.debug('===onCreate-MyFeatureLibAbility')
+    let funcAbilityWant = want
+    AppStorage.setOrCreate<Want>('startAbilityInfo', funcAbilityWant)
+  }
+
+  onNewWant(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+    console.debug('===onNewWant-MyFeatureLibAbility')
+    let funcAbilityWant = want
+    AppStorage.setOrCreate<Want>('startAbilityInfo', funcAbilityWant)
   }
 
   onDestroy(): void {
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onDestroy');
+    console.debug('===onDestroy-MyFeatureLibAbility')
   }
 
   onWindowStageCreate(windowStage: window.WindowStage): void {

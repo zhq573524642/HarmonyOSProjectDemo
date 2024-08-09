@@ -1,10 +1,13 @@
 {
   "app": {
-    "bundleName": "com.example.myapplication",
+    //设置应用中，需要展示应用列表时
+    //在隐私管理中，需要展示应用申请的权限时
+    //在状态栏显示通知消息时
+    "bundleName": "com.zhq.harmonyosdemo",//bundleName包名
     "vendor": "example",
-    "versionCode": 1000000,
-    "versionName": "1.0.0",
-    "icon": "$media:app_icon",
-    "label": "$string:app_name"
+    "versionCode": 1000000,//版本code
+    "versionName": "1.0.0",//版本名称
+    "icon": "$media:app_icon",//应用图标
+    "label": "$string:app_name"//应用名称
   }
 }

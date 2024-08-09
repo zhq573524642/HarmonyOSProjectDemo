@@ -16,7 +16,7 @@ struct TogglePage {
         Row() {
           Text('男')
             .fontSize(13)
-          Radio({ value: 'man', group: 'group1' })
+          Radio({ value: 'man', group: 'group1', indicatorType: RadioIndicatorType.TICK })
             .onChange((isCheck: boolean) => {
               if (isCheck) {
                 promptAction.showToast({ message: '选中：男' })
@@ -28,11 +28,109 @@ struct TogglePage {
           Text('女')
             .fontSize(13)
             .margin({ left: 20 })
-          Radio({ value: 'woman', group: 'group1' })
+          Radio({ value: 'woman', group: 'group1', indicatorType: RadioIndicatorType.TICK })
             .onChange((isCheck: boolean) => {
               if (isCheck) {
                 promptAction.showToast({ message: '选中：女' })
               }
+            })
+            .width(25)
+            .height(25)
+            .margin({ left: 10 })
+        }.alignItems(VerticalAlign.Center)
+
+        Row() {
+          Text('男')
+            .fontSize(13)
+          Radio({ value: 'man', group: 'group2', indicatorType: RadioIndicatorType.DOT })
+            .onChange((isCheck: boolean) => {
+              if (isCheck) {
+                promptAction.showToast({ message: '选中：男' })
+              }
+            })
+            .width(25)
+            .height(25)
+            .margin({ left: 10 })
+          Text('女')
+            .fontSize(13)
+            .margin({ left: 20 })
+          Radio({ value: 'woman', group: 'group2', indicatorType: RadioIndicatorType.DOT })
+            .onChange((isCheck: boolean) => {
+              if (isCheck) {
+                promptAction.showToast({ message: '选中：女' })
+              }
+            })
+            .width(25)
+            .height(25)
+            .margin({ left: 10 })
+        }.alignItems(VerticalAlign.Center)
+
+        Row() {
+          Text('男')
+            .fontSize(13)
+          Radio({
+            value: 'man',
+            group: 'group3',
+            indicatorType: RadioIndicatorType.CUSTOM,
+            indicatorBuilder: this.customRadioStyle()
+          })
+            .onChange((isCheck: boolean) => {
+              if (isCheck) {
+                promptAction.showToast({ message: '选中：男' })
+              }
+            })
+            .width(25)
+            .height(25)
+            .margin({ left: 10 })
+          Text('女')
+            .fontSize(13)
+            .margin({ left: 20 })
+          Radio({
+            value: 'woman',
+            group: 'group3',
+            indicatorType: RadioIndicatorType.CUSTOM,
+            indicatorBuilder: this.customRadioStyle()
+          })
+            .onChange((isCheck: boolean) => {
+              if (isCheck) {
+                promptAction.showToast({ message: '选中：女' })
+              }
+            })
+            .width(25)
+            .height(25)
+            .margin({ left: 10 })
+        }.alignItems(VerticalAlign.Center)
+
+        Row() {
+          Text('男')
+            .fontSize(13)
+          Radio({ value: 'man', group: 'group4', indicatorType: RadioIndicatorType.TICK })
+            .onChange((isCheck: boolean) => {
+              if (isCheck) {
+                promptAction.showToast({ message: '选中：男' })
+              }
+            })
+            .radioStyle({
+              checkedBackgroundColor: Color.Green,//开启状态底板颜色
+              uncheckedBorderColor: Color.Yellow,//关闭状态描边颜色。
+              indicatorColor: Color.Red//开启状态内部圆饼颜色
+            })
+            .width(25)
+            .height(25)
+            .margin({ left: 10 })
+          Text('女')
+            .fontSize(13)
+            .margin({ left: 20 })
+          Radio({ value: 'woman', group: 'group4', indicatorType: RadioIndicatorType.TICK })
+            .onChange((isCheck: boolean) => {
+              if (isCheck) {
+                promptAction.showToast({ message: '选中：女' })
+              }
+            })
+            .radioStyle({
+              checkedBackgroundColor: Color.Green,
+              uncheckedBorderColor: Color.Yellow,
+              indicatorColor: Color.Red
             })
             .width(25)
             .height(25)
@@ -45,6 +143,8 @@ struct TogglePage {
           Flex({ alignContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
             CheckboxGroup({ group: 'checkbox_group' })
               .selectedColor(Color.Pink)
+              .unselectedColor(Color.Pink)
+              .checkboxShape(CheckBoxShape.ROUNDED_SQUARE)
               .onChange((event: CheckboxGroupResult) => {
                 console.debug('===CheckboxGroup：' + event.name.toString())
               })
@@ -54,6 +154,7 @@ struct TogglePage {
           Flex({ alignContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
             Checkbox({ name: 'Item-1', group: 'checkbox_group' })
               .selectedColor(Color.Red)
+              .unselectedColor(Color.Red)
               .onChange((isChecked: boolean) => {
                 console.debug('===item1：' + isChecked)
               })
@@ -63,6 +164,7 @@ struct TogglePage {
           Flex({ alignContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
             Checkbox({ name: 'Item-2', group: 'checkbox_group' })
               .selectedColor(Color.Yellow)
+              .unselectedColor(Color.Yellow)
               .onChange((isChecked: boolean) => {
                 console.debug('===item2：' + isChecked)
               })
@@ -72,6 +174,7 @@ struct TogglePage {
           Flex({ alignContent: FlexAlign.Start, alignItems: ItemAlign.Center }) {
             Checkbox({ name: 'Item-3', group: 'checkbox_group' })
               .selectedColor(Color.Blue)
+              .unselectedColor(Color.Blue)
               .onChange((isChecked: boolean) => {
                 console.debug('===item3：' + isChecked)
               })
@@ -108,5 +211,10 @@ struct TogglePage {
 
       }.width('100%')
     }.width('100%')
+  }
+
+  @Builder
+  customRadioStyle() {
+    Image($r('app.media.img2')).width(20).height(20).borderRadius(15)
   }
 }
