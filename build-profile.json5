@@ -6,9 +6,9 @@
         "type": "HarmonyOS",
         "material": {
           "certpath": "C:\\Users\\26496\\.ohos\\config\\default_huaweiHarmonyOSProject_nY4_6_95W6PdbBL5xx5y1fSQc5XJXUNiAZzgq1OdT8M=.cer",
-          "storePassword": "0000001BD3324C8D74883ABBBDC2D0F175B2D2077F4BFFD3A20709513939A5D334007A88CE9037A8A847B0",
+          "storePassword": "0000001B18837C18F4F0CC15B3B4A72992379AD322007D89C0ED00C83278DE1305B9F280A340775066A66D",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001BF3A54DB7F8C3B9093B2FB1E9ECC88D0BA3568066BF30FB69EE522AE4C6D093E953D0B368F94C83",
+          "keyPassword": "0000001BF31B7012C4E6A6F0837FBAEB2ED202BE5EA722CE0C7BF2A4642D58D7F52B115B4A1755E20D4F05",
           "profile": "C:\\Users\\26496\\.ohos\\config\\default_huaweiHarmonyOSProject_nY4_6_95W6PdbBL5xx5y1fSQc5XJXUNiAZzgq1OdT8M=.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "C:\\Users\\26496\\.ohos\\config\\default_huaweiHarmonyOSProject_nY4_6_95W6PdbBL5xx5y1fSQc5XJXUNiAZzgq1OdT8M=.p12"

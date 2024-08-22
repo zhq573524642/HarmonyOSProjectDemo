@@ -16,6 +16,12 @@ struct ArkTSBasePage {
             url: 'pages/data/DataStructurePage'
           })
         })
+      CommonButton({ text: '权限申请' })
+        .onClick(() => {
+          router.pushUrl({
+            url: 'pages/permission/PermissionsPage'
+          })
+        })
       CommonButton({ text: '状态控制' })
         .onClick(() => {
           router.pushUrl({ url: 'pages/state/StateManagerPage' })
@@ -33,7 +39,7 @@ struct ArkTSBasePage {
              url:'pages/concurrency/ConcurrencyPage'
            })
         })
-      CommonButton({ text: '消息通信' })
+      CommonButton({ text: '数据传递和消息通信' })
         .onClick(() => {
           router.pushUrl({
             url: 'pages/ui/arkts/MessageTransmitPage'

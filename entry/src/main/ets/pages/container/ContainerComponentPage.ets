@@ -121,32 +121,6 @@ struct ContainerComponentPage {
               }
             })
           })
-        CommonTitle({ title: '组合高级组件' })
-        CommonButton({ text: 'SelectTitleBar（下拉菜单标题栏）' })
-          .onClick(() => {
-            router.pushUrl({
-              url: 'pages/container/SelectTitleBarPage'
-            })
-          })
-        CommonButton({ text: 'SplitLayout（上下结构布局）' })
-          .onClick(() => {
-            router.pushUrl({
-              url: 'pages/container/SplitLayoutPage'
-            })
-          })
-        CommonButton({ text: 'SubHeader（子标题）' })
-          .onClick(() => {
-            router.pushUrl({
-              url: 'pages/container/SubHeaderPage'
-            })
-          })
-
-        CommonButton({ text: 'TreeView（树视图）' })
-          .onClick(() => {
-            router.pushUrl({
-              url: 'pages/container/TreeViewPage'
-            })
-          })
 
       }.width('100%')
       .justifyContent(FlexAlign.Start)

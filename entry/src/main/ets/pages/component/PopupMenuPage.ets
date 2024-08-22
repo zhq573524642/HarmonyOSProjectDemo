@@ -372,7 +372,7 @@ struct PopupMenuPage {
         CommonButton({ text: 'AlertDialogParamWithConfirm' })
           .onClick(() => {
             AlertDialog.show({
-              title: '温馨提示',
+              // title: '',
               message: '确定退出登录？',
               autoCancel: true,
               alignment: DialogAlignment.Center,
@@ -388,6 +388,9 @@ struct PopupMenuPage {
               },
               cancel: () => {
                 promptAction.showToast({ message: '取消' })
+              },
+              onWillDismiss:()=>{
+
               }
             })
           })
@@ -552,7 +555,7 @@ struct PopupMenuPage {
 
   //自定义菜单
   @Builder
-  myMenu() {
+   myMenu() {
     Menu() {
       MenuItem({ startIcon: $r('app.media.icon_menu'), content: '菜单1' })
         .selectIcon(true)

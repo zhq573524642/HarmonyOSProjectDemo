@@ -4,6 +4,7 @@ import { NavDialogPage } from './NavDialogPage'
 import { NavStandardPage } from './NavStandardPage'
 import { BusinessError } from '@kit.BasicServicesKit'
 import { CustomToggle } from '../../widget/CustomToggle'
+import { ToastUtils } from '@ohos/common/src/main/ets/utils/ToastUtils'
 
 
 let NextID: number = 1
@@ -59,6 +60,40 @@ struct NavigationTestPage {
     } else if (name == 'NavStandardPage') {
       NavStandardPage()
     }
+  }
+
+  aboutToAppear(): void {
+    // this.pageStack.setInterception({
+    //   willShow: (from: NavDestinationContext | "navBar", to: NavDestinationContext | "navBar",
+    //     operation: NavigationOperation, animated: boolean) => {
+    //     if (typeof to === "string") {
+    //       console.log("target page is navigation home page.");
+    //       return;
+    //     }
+    //     // 将跳转到PageTwo的路由重定向到PageOne
+    //     let target: NavDestinationContext = to as NavDestinationContext;
+    //     if (target.pathInfo.name === 'NavDialogPage') {
+    //       ToastUtils.show('重定向了')
+    //       target.pathStack.pop();
+    //       target.pathStack.pushPathByName('NavStandardPage', null);
+    //     }
+    //   },
+    //   didShow:(from: NavDestinationContext | "navBar", to: NavDestinationContext | "navBar",
+    //     operation: NavigationOperation, animated: boolean) => {
+    //     if (typeof to === "string") {
+    //       console.log("target page is navigation home page.");
+    //       return;
+    //     }
+    //     // 将跳转到PageTwo的路由重定向到PageOne
+    //     let target: NavDestinationContext = to as NavDestinationContext;
+    //     if (target.pathInfo.name === 'NavStandardPage'&&target.pathStack.size()==3) {
+    //       ToastUtils.show('拦截到现在是第3个页面打开了')
+    //     }
+    //   },
+    //   modeChange:()=>{
+    //      ToastUtils.show('显示模式切换')
+    //   }
+    // })
   }
 
   build() {
@@ -154,7 +189,7 @@ struct NavigationTestPage {
                       })
                       break
                     case 4:
-                      this.pageStack.pushPathByName('NavHarPage', '', false)
+                      this.pageStack.pushPathByName('NavHarPage1', '', false)
                       break
                   }
                 })
@@ -177,7 +212,7 @@ struct NavigationTestPage {
     .hideToolBar(this.isHideToolBar) //是否隐藏ToolBar
     .mode(this.navigationMode)
     .titleMode(this.titleMode)
-    .navDestination(this.PageMap)
+    // .navDestination(this.PageMap)
     .menus([
       {
         value: "菜单1", icon: "resources/base/media/tab_home_f.png", action: () => {

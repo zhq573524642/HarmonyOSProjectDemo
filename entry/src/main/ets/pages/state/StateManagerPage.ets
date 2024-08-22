@@ -1,5 +1,6 @@
 import { CommonButton, CommonTitle } from '../component/MyComponent';
 import { promptAction, router } from '@kit.ArkUI';
+import { ToastUtils } from '@ohos/common/src/main/ets/utils/ToastUtils';
 
 class TempClass {
   num: number
@@ -11,6 +12,7 @@ class TempClass {
 
 AppStorage.setOrCreate<number>('param1', 40)
 AppStorage.setOrCreate<TempClass>('param2', new TempClass(50))
+AppStorage.setOrCreate<number>('freezeWhenInactiveValue', 1)
 
 //@Entry内部组件树之间共享的LocalStorage
 let param1: Record<string, number> = { 'param1': 10 };
@@ -26,7 +28,7 @@ PersistentStorage.persistProp<TempClass>('persistent_param', new TempClass(11))
 
 @Entry({ storage: localStorage })
   //uiAbilityLocalStorage
-@Component
+@Component({ freezeWhenInactive: true })
 struct StateManagerPage {
   private scroller: Scroller = new Scroller()
   @LocalStorageProp('param1') localStorageProp: number = 0
@@ -41,22 +43,21 @@ struct StateManagerPage {
   @StorageLink('persistent_param') persistent_param: TempClass = new TempClass(0)
   @State @Watch('updateText') textShow: string = 'abc'
   @State textInputShow: string = ''
+  @StorageLink('freezeWhenInactiveValue') @Watch('freezeWhenInactiveValueChange') freezeWhenInactiveValue: number = 1
+
+  freezeWhenInactiveValueChange() {
+    console.debug('===页面A--freezeWhenInactiveValueChange：' + this.freezeWhenInactiveValue)
+  }
 
   build() {
 
     Scroll(this.scroller) {
       Column({ space: 8 }) {
         CommonTitle({ title: '组件的状态' })
-        CommonButton({ text: '@State' })
+        CommonButton({ text: '@State+@Link+@Prop' })
           .onClick(() => {
             router.pushUrl({
-              url: 'pages/state/StatePage'
-            })
-          })
-        CommonButton({ text: '@Prop' })
-          .onClick(() => {
-            router.pushUrl({
-              url: 'pages/state/PropPage'
+              url: 'pages/state/StatePropLinkPage'
             })
           })
         CommonButton({ text: '@Observed和@ObservedLink' })
@@ -71,7 +72,9 @@ struct StateManagerPage {
               url: 'pages/state/ObservedV2Page'
             })
           })
-
+        CommonTitle({ title: 'class状态变量属性被@Track修饰' })
+        Text('1.改变@Track修饰的变量使得绑定改属性的组件刷新，而不是整个class状态变量刷新')
+        Text('2.包含@Track修饰的属性绑定在组件，其他未被@Track修饰的属性不可以用于绑定组件')
         CommonTitle({ title: '@Watch装饰器：状态变量更改通知' })
         Text(this.textShow).fontSize(15).fontColor(Color.Orange)
         Button('修改@Watch修饰的状态变量')
@@ -91,6 +94,17 @@ struct StateManagerPage {
           .caretColor(Color.Orange)
           .textAlign(TextAlign.Center)
           .height(50)
+        CommonTitle({ title: '自定义组件冻结功能' })
+        Text('当前支持：页面路由router、TabContent、LazyForEach、Navigation')
+        Text(`自定义组件冻结功能:${this.freezeWhenInactiveValue}`).fontSize(15).fontColor(Color.Red)
+        Button('页面路由')
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/Second'
+            })
+          })
+
+        Button('当前页面')
         CommonButton({ text: 'MVVM示例' })
           .onClick(() => {
             router.pushUrl({
@@ -188,11 +202,24 @@ struct StateManagerPage {
           PersistentStorage.deleteProp('persistent_param')
         })
 
+        CommonTitle({ title: '4:Environment设备环境参数' })
+        Button('accessibilityEnabled')
+          .onClick(() => {
+            ToastUtils.show('无障碍是否开启：' + this.accessibilityEnabled)
+          })
+        Button('colorMode')
+          .onClick(() => {
+            ToastUtils.show('色彩模型类型：' + this.colorMode.toString())
+          })
+
       }.width('100%')
     }.width('100%')
     .scrollable(ScrollDirection.Vertical)
 
   }
+
+  @StorageProp('accessibilityEnabled') accessibilityEnabled: boolean = false
+  @StorageProp('colorMode') colorMode: ColorMode = ColorMode.LIGHT
 
   updateText(propName: string) {
     promptAction.showToast({ message: `更新了${propName}:${this.textShow}` })

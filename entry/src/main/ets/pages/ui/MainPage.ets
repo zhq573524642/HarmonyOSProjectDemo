@@ -37,29 +37,50 @@ struct MainPage {
               url: 'pages/animate/AnimationPage'
             })
           })
-        CommonButton({ text: '权限申请' })
+
+        CommonButton({ text: 'ArkWeb' })
           .onClick(() => {
             router.pushUrl({
-              url: 'pages/permission/PermissionsPage'
+              url: 'pages/web/WebPage',
+              params: {
+                web_url: 'https://beta-app.yiboshi.com/appAgreement/ybs'
+              }
             })
           })
-        CommonButton({text:'ArkWeb'})
-          .onClick(()=>{
-             router.pushUrl({
-               url:'pages/web/WebPage',
-               params:{
-                 web_url:'https://beta-app.yiboshi.com/appAgreement/ybs'
-               }
-             })
-          })
-        CommonTitle({ title: 'Camera Kit' })
+        CommonTitle({ title: 'Camera Kit（相机服务）' })
         CommonButton({ text: '相机开发' })
           .onClick(() => {
             router.pushUrl({
               url: 'pages/camera/CameraKitPage'
             })
           })
+        CommonButton({ text: '相机选择器' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/media/CameraPickerPage'
+            })
+          })
+        CommonTitle({ title: 'Media Library Kit（媒体文件管理服务）' })
+        CommonButton({ text: 'AlbumPickerComponent' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/media/AlbumPickerComponentPage'
+            })
+          })
+        CommonButton({ text: 'PhotoPickerComponent' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/media/PhotoPickerComponentPage'
+            })
+          })
         CommonTitle({ title: 'Audio Kit' })
+        CommonTitle({title:'PDF Kit'})
+        CommonButton({text:'PdfView'})
+          .onClick(()=>{
+              router.pushUrl({
+                url:'pages/media/PdfViewPage'
+              })
+          })
         CommonTitle({ title: 'Core Vision Kit（基础视觉服务）' })
         CommonButton({ text: '文字识别' })
           .onClick(() => {

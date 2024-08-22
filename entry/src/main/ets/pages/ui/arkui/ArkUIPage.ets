@@ -29,6 +29,12 @@ struct ArkUIPage {
           .onClick(() => {
             router.pushUrl({ url: 'pages/CommonComponentPage' })
           })
+        CommonButton({ text: '组合高级组件' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/component/HighRankComponentPage'
+            })
+          })
         CommonButton({ text: 'Navigation' })
           .onClick(() => {
             router.pushUrl({

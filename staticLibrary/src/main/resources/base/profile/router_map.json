@@ -1,7 +1,7 @@
 {
   "routerMap": [
     {
-      "name": "NavHarPage",
+      "name": "NavHarPage1",
       "pageSourceFile": "src/main/ets/components/mainpage/NavHarPage.ets",
       "buildFunction": "PageHarBuilder",
       "data": {

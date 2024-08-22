@@ -8,14 +8,14 @@ struct ObservedLinkPage {
 
   build() {
     Column() {
-      CommonButton({ text: 'Class类型' })
+      CommonButton({ text: '嵌套对象类型' })
         .onClick(()=>{
            router.pushUrl({
              url:'pages/state/ObservedLinkClassPage'
            })
         })
 
-      CommonButton({ text: 'Array类型' })
+      CommonButton({ text: '对象数组类型' })
         .onClick(()=>{
           router.pushUrl({
             url:'pages/state/ObservedLinkArrayPage'

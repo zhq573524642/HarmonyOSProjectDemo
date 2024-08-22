@@ -3,6 +3,8 @@ import { promptAction, router } from '@kit.ArkUI'
 import { common } from '@kit.AbilityKit'
 import { BusinessError, commonEventManager, emitter } from '@kit.BasicServicesKit'
 import { ToastUtils } from '@ohos/common/src/main/ets/utils/ToastUtils'
+import { HarMainPage } from '@ohos/staticLibrary'
+import { HspMainPage } from '@ohos/sharedLibrary'
 
 const FLAG_EMITTER_MSG: number = 1001
 const FLAG_EVENT_HUB_MSG: string = 'event_1'
@@ -31,17 +33,51 @@ struct MessageTransmitPage {
     console.debug('===收到EventHub消息2：' + arg1 + '--' + arg2)
   }
 
+  onPageShow(): void {
+    let param = router.getParams() as Record<string, string>
+    if (param) {
+      this.showBackParam = param.name as string
+    }
+  }
+
   build() {
     Scroll(this.scroller) {
       Column() {
-        CommonTitle({ title: 'router页面间数据传递' })
+        CommonTitle({ title: 'router页面路由和数据传递' })
         Text(`页面跳转回传参数：${this.showBackParam}`)
           .margin(8)
           .fontSize(15)
-        CommonButton({ text: 'router页面跳转并传递参数' })
+        CommonButton({ text: 'router.pushUrl' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/Second'
+            })
+          })
+        CommonButton({ text: 'router.replaceUrl' })
+          .onClick(() => {
+            router.replaceUrl({
+              url: 'pages/Second'
+            })
+          })
+        CommonButton({ text: 'router跳转Single模式(默认Standard)' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/Second'
+            }, router.RouterMode.Single)
+          })
+        CommonButton({ text: 'router携带参数跳转' })
           .onClick(() => {
             jumpPageWithParams()
           })
+        CommonButton({ text: '命名路由跳转HAR' })
+          .onClick(() => {
+            HarMainPage.startPage('张较瘦')
+          })
+        CommonButton({ text: '命名路由跳转HSP' })
+          .onClick(() => {
+            HspMainPage.startPage('张教授')
+          })
+        CommonTitle({ title: 'Navigation实现页面导航' })
         CommonButton({ text: 'Navigation页面跳转并传递参数' })
           .onClick(() => {
             router.pushUrl({ url: 'pages/navigation/NavigationTestPage' })
@@ -53,7 +89,8 @@ struct MessageTransmitPage {
             // this.context.eventHub.emit('event_1', '哈哈哈')
             this.context.eventHub.emit('event_1', '啦啦啦', 18)
           })
-        CommonButton({ text: 'Emitter线程间通信' })
+        CommonTitle({ title: 'Emitter线程间通信' })
+        CommonButton({ text: '发送Emitter消息' })
           .onClick(() => {
             // 定义一个eventId为1的事件，事件优先级为Low
             let event: emitter.InnerEvent = {
@@ -101,8 +138,6 @@ struct MessageTransmitPage {
         }.margin({ top: 10 })
         .width('100%')
         .justifyContent(FlexAlign.SpaceEvenly)
-
-
 
       }
     }.width('100%')
@@ -246,7 +281,7 @@ function jumpPageWithParams() {
         age: 18
       }
     }
-  }, router.RouterMode.Single, (error) => {
+  }, router.RouterMode.Standard, (error) => {
 
   })
 }

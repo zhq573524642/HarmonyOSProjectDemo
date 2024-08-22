@@ -18,7 +18,7 @@ class TestClass {
 
 @Entry
 @Component
-struct WebPage {
+export struct WebPage {
   private scroller: Scroller = new Scroller()
   private param: object = router.getParams()
   webUrl: string = this.param?.['web_url']

@@ -6,8 +6,8 @@ struct ObservedLinkClassPage {
 
   build() {
     Column({ space: 5 }) {
-      Text('User <- Person').fontSize(16)
-      Text('Teacher <- Student <- Person')
+      Text('User中包含Person').fontSize(16)
+      Text('Teacher中包含Student继承自Person')
       Text(`源数据User中Person的Size：${this.user.person.size}`).fontSize(16).fontColor(Color.Black)
         .margin(10)
       Text(`源数据Teacher中Student的Size：${this.teacher.student.size}`).fontSize(16).fontColor(Color.Black)
@@ -37,7 +37,7 @@ struct ObservedLinkClassPage {
           this.teacher.student = new Student(88)
         })
         .margin(10)
-      Button('改变Teacher中')
+      Button('改变Teacher')
         .onClick(() => {
           this.teacher = new Teacher(new Student(99))
         })

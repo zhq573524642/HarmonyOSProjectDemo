@@ -28,7 +28,7 @@
     "pages/component/QCodePage",
     "pages/FunctionsPage",
     "pages/state/StateManagerPage",
-    "pages/state/StatePage",
+    "pages/state/StatePropLinkPage",
     "pages/container/SizeTestPage",
     "pages/ui/MainPage",
     "pages/ui/arkts/ArkTSBasePage",
@@ -84,6 +84,11 @@
     "pages/concurrency/ConcurrencyPage",
     "pages/component/ImmersionPage",
     "pages/web/WebViewNestedScrollPage",
-    "pages/web/WebNodeContainerPage"
+    "pages/web/WebNodeContainerPage",
+    "pages/media/AlbumPickerComponentPage",
+    "pages/media/PhotoPickerComponentPage",
+    "pages/media/CameraPickerPage",
+    "pages/media/PdfViewPage",
+    "pages/component/CounterPage"
   ]
 }

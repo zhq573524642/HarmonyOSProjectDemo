@@ -13,7 +13,7 @@ export struct HarMainPage {
       params: {
         param_name: param
       }
-    })
+    },router.RouterMode.Single)
   }
 
   aboutToAppear(): void {
