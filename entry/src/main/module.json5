@@ -2,41 +2,114 @@
   "module": {
     "name": "entry",
     "type": "entry",
+    //- entry：应用的主模块。feature：应用的动态特性模块。har：静态共享包模块。shared：动态共享包模块。
     "description": "$string:module_desc",
+    //当前module的描述
+    //标识当前Module所对应入口UIAbility或者ExtensionAbility的代码路径，
+    //需要和mainElement字段指向同一个UIAbility或者ExtensionAbility，
+    //    "mainElement": "MyAbilityStage",
+    //    "srcEntry": "./ets/myabilitystage/MyAbilityStage.ets",
     "mainElement": "EntryAbility",
+    //    "srcEntry": "./ets/myabilitystage/MyAbilityStage.ets",
     "deviceTypes": [
+      //标识可在哪些设备上运行
       "default",
       "tablet"
     ],
     "deliveryWithInstall": true,
+    //标识当前Module是否在用户主动安装的时候安装，即该Module对应的HAP是否跟随应用一起安装。
     "installationFree": false,
+    //标识当前Module是否支持免安装特性，当bundleType为元服务时，该字段需要配置为true。反之，该字段需要配置为false。
     "pages": "$profile:main_pages",
+    //标识当前Module的profile资源，用于列举每个页面信息，
+    //    "appStartup": "$profile:startup_config",//应用组件启动框架
+    "querySchemes": [
+      "zhq"
+    ],
     "abilities": [
       {
-        "name": "EntryAbility",//UIAbility组件名称,
-        "srcEntry": "./ets/entryability/EntryAbility.ts",//UIAbility的代码路径
-//        "srcEntry": "./ets/myabilitystage/MyAbilityStage.ets",//UIAbility的代码路径
-        "description": "$string:EntryAbility_desc",// UIAbility组件的描述信息
-        "icon": "$media:ic_app_launcher",// UIAbility组件的图标
-        "label": "$string:EntryAbility_label", // UIAbility组件的标签
-        "startWindowIcon": "$media:ic_app_launcher",//UIAbility组件启动页面图标资源文件的索引
-        "startWindowBackground": "$color:start_window_background",// UIAbility组件启动页面背景颜色资源文件的索引
+        "name": "EntryAbility",
+        //UIAbility组件名称,
+        "srcEntry": "./ets/entryability/EntryAbility.ts",
+        //UIAbility的代码路径
+        "description": "$string:EntryAbility_desc",
+        // UIAbility组件的描述信息
+        "icon": "$media:ic_app_launcher",
+        // UIAbility组件的图标
+        "label": "$string:EntryAbility_label",
+        // UIAbility组件的标签
+        "startWindowIcon": "$media:ic_app_launcher",
+        //	标识当前UIAbility组件启动页面图标资源文件的索引
+        //UIAbility组件启动页面图标资源文件的索引
+        "startWindowBackground": "$color:start_window_background",
+        // UIAbility组件启动页面背景颜色资源文件的索引
         "exported": true,
+        //标识当前UIAbility组件是否可以被其他应用调用。
         "launchType": "singleton",
+        //当前UIAbility的启动模式
         "skills": [
+          //标识当前ExtensionAbility组件能够接收的Want的特征集。
           {
             "entities": [
               "entity.system.home"
             ],
             "actions": [
               "action.system.home",
-              "ohos.want.action.home"
-
+              "ohos.want.action.home",
+              "ohos.want.action.sendData"
+            ],
+            "uris": [
+              {
+                "scheme": "file",
+                "type": "text/plain"
+              }
             ]
           }
+        ],
+        "orientation": "portrait",
+        //标识当前UIAbility组件启动时的方向，支持配置枚举，或启动方向资源索引。
+        "supportWindowMode": [
+          "fullscreen",
+          //全屏
+          "split",
+          //分屏
+          "floating"
+          //悬浮窗
+        ],
+        "continuable": true,
+        //表示该UIAbility可被迁移。配置为false的UIAbility将被系统识别为无法迁移且该配置默认值为false
+
+        "metadata": [
+          {
+            "name": "ohos.ability.shortcuts",
+            "resource": "$profile:shortcut_config"
+          }
+        ],
+        //后台长时任务类型
+        "backgroundModes": [
+          "audioRecording"
         ]
       }
     ],
+    //应用数据备份恢复配置
+    //    "extensionAbilities": [
+    //      {
+    //        "description": "$string:ServiceExtAbility",
+    //        "icon": "$media:icon",
+    //        "name": "BackupExtensionAbility",
+    //        "type": "backup",
+    //        "exported": false,
+    //        "metadata": [
+    //          {
+    //            "name": "ohos.extension.backup",
+    //            "resource": "$profile:backup_config"
+    //          }
+    //        ],
+    //        // 在BackupExtension.ets文件里自定义继承BackupExtensionAbility，重写其中的onBackup/onBackupEx和// onRestore/onRestoreEx方法，推荐使用onBackupEx/onRestoreEx。
+    //        // 如果没有特殊要求可以空实现，则备份恢复服务会按照统一的备份恢复数据规则进行备份恢复。
+    //        "srcEntry": "./ets/backupextension/BackupExtension.ets",
+    //      }
+    //    ],
     "requestPermissions": [
       {
         "name": "ohos.permission.INTERNET"
@@ -60,7 +133,8 @@
           ],
           "when": "inuse"
         }
-      },{
+      },
+      {
         "name": "ohos.permission.WRITE_MEDIA",
         "reason": "$string:permission_reason_write_media",
         "usedScene": {
@@ -89,7 +163,105 @@
           ],
           "when": "inuse"
         }
+      },
+      {
+        "name": "ohos.permission.DISTRIBUTED_DATASYNC",
+        "reason": "$string:permission_reason_ark_data",
+        "usedScene": {
+          "when": "inuse",
+          "abilities": [
+            "EntryAbility"
+          ]
+        }
+      },
+      {
+        "name": "ohos.permission.READ_CALENDAR",
+        "reason": "$string:permission_reason_calendar",
+        "usedScene": {
+          "when": "inuse",
+          "abilities": [
+            "EntryAbility"
+          ]
+        }
+      },
+      {
+        "name": "ohos.permission.WRITE_CALENDAR",
+        "reason": "$string:permission_reason_calendar",
+        "usedScene": {
+          "when": "inuse",
+          "abilities": [
+            "EntryAbility"
+          ]
+        }
+      },
+      {
+        "name": "ohos.permission.LOCATION",
+        "reason": "$string:permission_reason_location_1",
+        "usedScene": {
+          "when": "inuse",
+          "abilities": [
+            "EntryAbility"
+          ]
+        }
+      },
+      {
+        "name": "ohos.permission.APPROXIMATELY_LOCATION",
+        "reason": "$string:permission_reason_location_2",
+        "usedScene": {
+          "when": "inuse",
+          "abilities": [
+            "EntryAbility"
+          ]
+        }
+      },
+      //      {
+      //        "name": "ohos.permission.LOCATION_IN_BACKGROUND",
+      //        "reason": "$string:permission_reason_location_3",
+      //        "usedScene": {
+      //          "when": "inuse",
+      //          "abilities": [
+      //            "EntryAbility"
+      //          ]
+      //        }
+      //      }
+      {
+        "name": "ohos.permission.ACCESS_BLUETOOTH",
+        "reason": "$string:permission_reason_access_bluetooth",
+        "usedScene": {
+          "when": "inuse",
+          "abilities": [
+            "EntryAbility"
+          ]
+        }
+      },
+      {
+        "name": "ohos.permission.KEEP_BACKGROUND_RUNNING",
+        "reason": "$string:permission_reason_keep_background_running",
+        "usedScene": {
+          "when": "always",
+          "abilities": [
+            "EntryAbility"
+          ]
+        }
+      },
+      {
+        "name": "ohos.permission.VIBRATE"
+      }
+    ],
+    "extensionAbilities": [
+      {
+        "name": "EntryFormAbility",
+        "srcEntry": "./ets/entryformability/EntryFormAbility.ets",
+        "label": "$string:EntryFormAbility_label",
+        "description": "$string:EntryFormAbility_desc",
+        "type": "form",
+        "metadata": [
+          {
+            "name": "ohos.extension.form",
+            "resource": "$profile:form_config"
+          }
+        ]
       }
     ]
-  }
+  },
 }

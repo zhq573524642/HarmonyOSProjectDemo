@@ -1,92 +1,74 @@
 @Entry
 @Component
 struct ObservedLinkClassPage {
-  @State user: User = new User(new Person(1))
-  @State teacher: Teacher = new Teacher(new Student(1))
+  @State classA: Class_A = new Class_A(1, new Class_B(1, new Class_C(1)))
 
   build() {
-    Column({ space: 5 }) {
-      Text('User中包含Person').fontSize(16)
-      Text('Teacher中包含Student继承自Person')
-      Text(`源数据User中Person的Size：${this.user.person.size}`).fontSize(16).fontColor(Color.Black)
-        .margin(10)
-      Text(`源数据Teacher中Student的Size：${this.teacher.student.size}`).fontSize(16).fontColor(Color.Black)
-        .margin(10)
-      ViewClassA({ person: this.user.person })
-      ViewClassB({ student: this.teacher.student })
-      Button('改变User中Person的Size：+10')
-        .onClick(() => {
-          this.user.person.size += 10
-        }).margin(10)
-      Button('改变Teacher中Student的Size：+20')
-        .onClick(() => {
-          this.teacher.student.size += 20
-        }).margin(10)
-      Button('改变User中Person')
-        .onClick(() => {
-          this.user.person = new Person(66)
-        })
-        .margin(10)
-      Button('改变User')
-        .onClick(() => {
-          this.user = new User(new Person(77))
-        })
-        .margin(10)
-      Button('改变Teacher中Student')
-        .onClick(() => {
-          this.teacher.student = new Student(88)
-        })
-        .margin(10)
-      Button('改变Teacher')
-        .onClick(() => {
-          this.teacher = new Teacher(new Student(99))
-        })
-        .margin(10)
-    }
+    Column({ space: 10 }) {
+      Text('A->B->C:每层嵌套使用单独的组件接收并渲染\n点击按钮和文本修改数据，实现双向同步')
+      MyComponentA({ classA: this.classA })
+      MyComponentB({ classB: this.classA.classB })
+      MyComponentC({ classC: this.classA.classB.classC })
+      Button('改变A：+1').onClick(() => {
+        this.classA.size++
+      })
+      Button('改变B：+2').onClick(() => {
+        this.classA.classB.size += 2
+      })
+      Button('改变C：+3').onClick(() => {
+        this.classA.classB.classC.size += 3
+      })
+    }.margin({ top: 20 })
+    .width('100%')
   }
 }
 
 @Component
-struct ViewClassA {
-  @ObjectLink person: Person
+struct MyComponentA {
+  @ObjectLink classA: Class_A
 
   build() {
     Column() {
-      Text(`User中Person的Size：${this.person.size}`).fontSize(16).fontColor(Color.Black)
-        .margin(10)
-      Button('改变User中Person的Size:+5')
+      Text(`A：${this.classA.size}`).fontColor(Color.Blue).fontSize(20)
         .onClick(() => {
-          this.person.size += 5
+          this.classA.size++
         })
-    }
-    .width('100%')
-    .alignItems(HorizontalAlign.Center)
-    .padding(20)
-    .borderWidth(5)
-    .borderColor(Color.Green)
-    .margin(5)
-  }
-}
-
-@Component
-struct ViewClassB {
-  @ObjectLink student: Student
-
-  build() {
-    Column() {
-      Text(`Teacher中Student的Size：${this.student.size}`).fontSize(16).fontColor(Color.Black)
-        .margin(10)
-      Button('改变Teacher中Student的Size:+6')
-        .onClick(() => {
-          this.student.size += 6
-        })
-    }
-    .width('100%')
-    .alignItems(HorizontalAlign.Center)
-    .padding(20)
-    .borderWidth(5)
+    }.padding(10)
     .borderColor(Color.Red)
-    .margin(5)
+    .borderWidth(2)
+  }
+}
+
+@Component
+struct MyComponentB {
+  @ObjectLink classB: Class_B
+
+  build() {
+    Column() {
+      Text(`B：${this.classB.size}`).fontColor(Color.Green).fontSize(20)
+        .onClick(() => {
+          this.classB.size += 2
+        })
+    }.padding(10)
+    .borderColor(Color.Yellow)
+    .borderWidth(2)
+  }
+}
+
+@Component
+struct MyComponentC {
+  @ObjectLink classC: Class_C
+
+  build() {
+    Column() {
+      Text(`C：${this.classC.size}`).fontColor(Color.Pink).fontSize(20)
+        .onClick(() => {
+          this.classC.size += 3
+        })
+    }
+    .borderColor(Color.Orange)
+    .borderWidth(2)
+    .padding(10)
   }
 }
 
@@ -94,42 +76,37 @@ struct ViewClassB {
 let NextId: number = 1
 
 @Observed
-class Person {
+class Class_A {
   id: number
   size: number
+  classB: Class_B
 
-  constructor(size: number) {
+  constructor(size: number, classB: Class_B) {
     this.id = NextId++
     this.size = size
+    this.classB = classB
   }
 }
 
 @Observed
-class User {
-  person: Person
+class Class_B {
+  size: number
+  classC: Class_C
 
-  constructor(person: Person) {
-    this.person = person
+  constructor(size: number, classC: Class_C) {
+    this.size = size
+    this.classC = classC
   }
 }
 
 @Observed
-class Student extends Person {
+class Class_C {
   size: number
 
   constructor(size: number) {
-    super(size)
     this.size = size
   }
 }
 
-@Observed
-class Teacher {
-  student: Student
-
-  constructor(student: Student) {
-    this.student = student
-  }
-}
 
 

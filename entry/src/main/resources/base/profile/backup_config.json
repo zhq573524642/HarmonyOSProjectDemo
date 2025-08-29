@@ -1,0 +1,22 @@
+
+{
+
+  "allowToBackupRestore": true,
+  "includes": [
+    "data/storage/el1/database/",
+    "data/storage/el1/base/files/",
+    "data/storage/el1/base/preferences/",
+    "data/storage/el1/base/haps/<module-name>/files/",
+    "data/storage/el1/base/haps/<module-name>/preferences/",
+    "data/storage/el2/database/",
+    "data/storage/el2/base/files/",
+    "data/storage/el2/base/preferences/",
+    "data/storage/el2/base/haps/<module-name>/files/",
+    "data/storage/el2/base/haps/<module-name>/preferences/",
+    "data/storage/el2/distributedfiles/"
+  ],
+  "excludes": [
+  ],
+  "fullBackupOnly": false,
+  "restoreDeps": ""
+}

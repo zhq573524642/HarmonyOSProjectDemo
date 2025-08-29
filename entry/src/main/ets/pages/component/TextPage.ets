@@ -1,9 +1,13 @@
 import { CommonTitle } from './MyComponent'
 import { LengthMetrics } from '@kit.ArkUI'
+import { RouterUtil } from '@ohos/common'
 
-@Entry
+@Entry({routeName:'TextPage'})
 @Component
-struct TextPage {
+export struct TextPage {
+  static startPage(){
+    RouterUtil.pushNamedRoute("TextPage")
+  }
   private scroller: Scroller = new Scroller()
   @State texWeight: FontWeight = FontWeight.Normal
   @State texWeightDesc: string = '切换FontWeight:Normal'
@@ -426,6 +430,8 @@ struct TextPage {
           .onComplete(() => {
             console.debug('===richText=-onComplete')
           })
+
+
 
         CommonTitle({ title: 'Counter' })
         Counter() {

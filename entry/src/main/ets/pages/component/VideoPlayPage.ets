@@ -3,7 +3,7 @@ import { CommonButton } from './MyComponent'
 @Entry
 @Component
 struct VideoPlayPage {
-  private videoSrc: Resource = $rawfile('video.mp4')
+  private videoSrc: Resource|string = $rawfile('video.mp4')
   private videoPreviewUri = $r('app.media.ic_video_preview')
   private videoController: VideoController = new VideoController()
   @State isMuted: boolean = false;

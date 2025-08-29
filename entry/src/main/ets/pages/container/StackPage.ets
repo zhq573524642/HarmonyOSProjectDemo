@@ -1,8 +1,17 @@
 import { CommonButton } from '../component/MyComponent'
+import { router } from '@kit.ArkUI'
+import { PageRouter } from '../../router/PageRouter'
 
-@Entry
+
+@Entry({ routeName: PageRouter.PAGE_STACK })
 @Component
-struct StackPage {
+export struct StackPage {
+  static startPage() {
+    router.pushNamedRoute({
+      name: PageRouter.PAGE_STACK
+    }, router.RouterMode.Single)
+  }
+
   @State message: string = 'Hello World'
   @State alignContentState: Alignment = Alignment.TopStart
 

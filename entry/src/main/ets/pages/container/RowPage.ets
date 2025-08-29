@@ -1,9 +1,17 @@
+import { PageRouter } from '../../router/PageRouter'
 import { CommonButton, CommonButton1 } from '../component/MyComponent'
 import { Square } from '../component/MyComponent'
+import { router } from '@kit.ArkUI'
 
-@Entry
+@Entry({routeName:PageRouter.PAGE_ROW})
 @Component
-struct RowPage {
+export struct RowPage {
+
+  static startPage(){
+    router.pushNamedRoute({
+      name:PageRouter.PAGE_ROW
+    },router.RouterMode.Single)
+  }
   @State btn1: string = '在交叉抽上:VerticalAlign.Top'
   @State btn2: string = '在主抽上:FlexAlign.Start'
   private alignItems: Array<VerticalAlign> = [VerticalAlign.Top, VerticalAlign.Center, VerticalAlign.Bottom]

@@ -31,6 +31,66 @@
     {
       "name": "permission_reason_location",
       "value": "用于访问媒体文件中的地理位置信息"
+    },
+    {
+      "name": "permission_reason_ark_data",
+      "value": "用于数据库同步"
+    },
+    {
+      "name": "permission_reason_calendar",
+      "value": "查看并读写日历"
+    },
+    {
+      "name": "permission_reason_location_1",
+      "value": "用于获取精准位置"
+    },
+    {
+      "name": "permission_reason_location_2",
+      "value": "用于获取模糊位置"
+    },
+    {
+      "name": "permission_reason_location_3",
+      "value": "用于应用置于后台获取位置位置"
+    },
+    {
+      "name": "permission_reason_access_bluetooth",
+      "value": "获取蓝牙状态"
+    },
+    {
+      "name": "permission_reason_keep_background_running",
+      "value": "获取保持后台运行权限"
+    },
+    {
+      "name": "shortcut1",
+      "value": "打开UI"
+    },
+    {
+      "name": "shortcut2",
+      "value": "打开基础"
+    },
+    {
+      "name": "EntryFormAbility_desc",
+      "value": "form_description"
+    },
+    {
+      "name": "EntryFormAbility_label",
+      "value": "form_label"
+    },
+    {
+      "name": "MyTestWidget1_desc",
+      "value": "This is a service widget."
+    },
+    {
+      "name": "MyTestWidget1_display_name",
+      "value": "MyTestWidget1"
+    },
+    {
+      "name": "card_title",
+      "value": "Title"
+    },
+    {
+      "name": "introduction",
+      "value": "Introduction"
     }
   ]
 }

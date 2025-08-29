@@ -1,0 +1,19 @@
+{
+  "shortcuts": [
+    {
+      "shortcutId": "id_test1",
+      "label": "$string:shortcut1",
+      "icon": "$media:ic_star_forward",
+      "wants": [
+        {
+          "bundleName": "com.zhq.harmonyosdemo",
+          "moduleName": "myFeatureLib",
+          "abilityName": "MyFeatureLibAbility",
+          "parameters": {
+            "testKey": "testValue"
+          }
+        }
+      ]
+    }
+  ]
+}

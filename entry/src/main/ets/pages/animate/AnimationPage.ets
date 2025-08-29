@@ -1,20 +1,29 @@
 import { Point, PointVector } from './Point'
 import { CommonButton, CommonTitle } from '../component/MyComponent'
 import { router } from '@kit.ArkUI'
+import { RouterUtil } from '@ohos/common'
+import { PropertyAnimatePage } from './PropertyAnimatePage'
+import { TransitionEffectPage } from './TransitionEffectPage'
+import { ParticleAnimatePage } from './ParticleAnimatePage'
 
 @AnimatableExtend(Text)
 function animatableText(fontSize: number) {
   .fontSize(fontSize)
 }
 
+
 @AnimatableExtend(Polyline)
 function animatablePoints(points: PointVector) {
   .points(points.get())
 }
 
-@Entry
+@Entry({ routeName: 'AnimationPage' })
 @Component
-struct AnimationPage {
+export struct AnimationPage {
+  static startPage() {
+    RouterUtil.pushNamedRoute('AnimationPage')
+  }
+
   @State viewWidth: number = 90
   @State viewHeight: number = 40
   @State anim1Flag: boolean = false
@@ -48,10 +57,12 @@ struct AnimationPage {
     Scroll(this.scroller) {
       Column() {
         CommonTitle({ title: '一、@AnimatableExtend装饰器：定义可组件动画属性' })
+        //由于参数的数据类型必须具备一定程度的连续性，
+        // 自定义可动画属性接口的参数类型仅支持number类型和实现AnimatableArithmetic<T>接口的自定义类型。
         Text('这是一串文本')
           .animatableText(this.fontSizeNumber)
           .animation({ duration: 500, curve: Curve.Ease })
-        Button('点击改变字体大小')
+        Button('点击改变')
           .margin(10)
           .onClick(() => {
             this.fontSizeNumber = this.fontSizeNumber == 15 ? 25 : 15
@@ -78,16 +89,17 @@ struct AnimationPage {
 
         CommonButton({ text: '属性动画' })
           .onClick(() => {
-            router.pushUrl({
-              url: 'pages/animate/PropertyAnimatePage'
-            })
+            PropertyAnimatePage.startPage()
           })
 
         CommonButton({ text: '转场动画' })
           .onClick(() => {
-            router.pushUrl({
-              url: 'pages/animate/TransitionEffectPage'
-            })
+            TransitionEffectPage.startPage()
+          })
+
+        CommonButton({ text: '粒子动画' })
+          .onClick(() => {
+            ParticleAnimatePage.startPage()
           })
 
       }

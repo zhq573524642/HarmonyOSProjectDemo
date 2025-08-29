@@ -7,18 +7,18 @@ const HOST_URL: string = "https://www.wanandroid.com"
 
 class NetworkViewModel {
   //get请求与
-  handleGetRequest(): Promise<NetTestBean> {
+  handleGetRequest(): Promise<string> {
     return new Promise(async (resolve, reject) => {
       //参数
       let param: Record<string, Object> = {
         "formatType": 1
       }
-      httpARequestGet<ResponseResultC<NetTestBean>>('/v1/servers/time', param, HOST_URL)
-        .then((data: ResponseResultC<NetTestBean>) => {
-          if (data.code == 0) {
-            resolve(data.data)
+      httpARequestGet<string>('/project/tree/json', param, HOST_URL)
+        .then((data: string) => {
+          if (data) {
+            resolve(data)
           }else {
-            reject(data.msg)
+            reject('请求错误')
           }
         })
         .catch((error: AxiosError) => {

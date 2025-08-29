@@ -1,9 +1,12 @@
 import { curves } from '@kit.ArkUI'
-import { CommonTitle } from '../component/MyComponent'
+import { RouterUtil } from '@ohos/common';
+import { CommonButton, CommonTitle } from '../component/MyComponent'
+import { ShareElementAnimatePage } from './ShareElementAnimatePage';
+import { ShareElementByStackPage } from './ShareElementByStackPage';
 
 const ITEM_COUNTS = 9;
 const ITEM_COLOR = Color.Pink;
-const INTERVAL = 30;
+const INTERVAL = 80;
 const DURATION = 300;
 
 class BindMenuBean {
@@ -12,49 +15,111 @@ class BindMenuBean {
   }
 }
 
-@Entry
+@Entry({ routeName: 'TransitionEffectPage' })
 @Component
-struct TransitionEffectPage {
+export struct TransitionEffectPage {
+  static startPage() {
+    RouterUtil.pushNamedRoute('TransitionEffectPage')
+  }
+
   private scroller: Scroller = new Scroller()
   @State isShow: boolean = true
   @State isBindContentCover: boolean = false
   @State isBindSheetShow: boolean = false
   @State isBindMenuShow: boolean = false
-  // 第一步，创建TransitionEffect
-  private effect: TransitionEffect =
-    // 创建默认透明度转场效果,并指定了springMotion(0.6, 0.8)曲线
+  @State isBindPopupShow: boolean = false
+  //禁用转场动画
+  private effectIdentity: TransitionEffect = TransitionEffect.IDENTITY
+  //一、默认封装的好的：OPACITY（出现0->1,小时1->0）、SLIDE（出现从左划入，消失从右划出）
+  private effectOPACITY: TransitionEffect =
+    //（1）创建默认透明度转场效果,并指定了springMotion(0.6, 0.8)曲线
     TransitionEffect.OPACITY.animation({
+      curve: curves.springMotion(0.6, 0.8),
+    })
+  private effectSLIDE: TransitionEffect =
+    //（2）创建默认位移转场效果,并指定了springMotion(0.6, 0.8)曲线
+    TransitionEffect.SLIDE.animation({
       curve: curves.springMotion(0.6, 0.8)
-    })// 通过combine方法,这里的动画参数会跟随上面的TransitionEffect，也就是springMotion(0.6, 0.8)
-      //出现时：scale:1.5->1,消失时：scale:1->0.2
+    })
+  //（3）TransitionEffect.asymmetric创建自定义数值的进入和退出转场效果
+  //TransitionEffect.asymmetric：指定非对称的转场效果。
+  //第一个参数指定出现的转场效果，第二个参数指定消失的转场效果。
+  private effectAsymmetricScale: TransitionEffect =
+    //scale:出现时为scale接口设置的值到默认值1，消失时为默认值1到scale接口设置的值。
+    //translate:出现时为translate接口设置的值到默认值0，消失时为默认值0到translate接口设置的值。
+    //rotate:出现时为rotate接口设置的值到默认值0，消失时为默认值0到rotate接口设置的值。
+    //opacity:出现时为opacity设置的值到默认透明度1，消失时为默认透明度1到opacity设置的值。
+    TransitionEffect.asymmetric(
+      TransitionEffect.scale({
+        x: 1.5,
+        y: 1.5,
+        centerX: '20%', //默认'50%'即中心点，(0,0)代表左上角
+        centerY: '20%'
+      }),
+      TransitionEffect.scale({
+        x: 1.5,
+        y: 1.5,
+        centerX: '20%', //默认'50%'即中心点，(0,0)代表左上角
+        centerY: '20%'
+      })
+    ).animation({
+      curve: curves.springMotion(0.6, 0.8)
+    })
+  // .combine(TransitionEffect.asymmetric(
+  //   TransitionEffect.move(TransitionEdge.START), TransitionEffect.move(TransitionEdge.END)
+  // ))
+  private effectAsymmetricRotate: TransitionEffect =
+    TransitionEffect.asymmetric(
+      TransitionEffect.rotate({
+        angle: 180
+      }),
+      TransitionEffect.rotate({
+        angle: 180
+      })
+    ).animation({ curve: curves.springMotion(0.6, 0.8) })
+  private effectAsymmetricTranslate: TransitionEffect =
+    TransitionEffect.asymmetric(
+      TransitionEffect.translate({
+        x: -100,
+        y: 100
+      }),
+      TransitionEffect.translate({
+        x: 100,
+        y: 100
+      })
+    ).animation({ curve: curves.springMotion(0.6, 0.8) })
+  private effectAsymmetricOpacity: TransitionEffect =
+    TransitionEffect.asymmetric(
+      TransitionEffect.opacity(1.0),
+      TransitionEffect.opacity(0)
+    ).animation({ curve: curves.springMotion(0.6, 0.8) })
+  private effectAsymmetricMove: TransitionEffect =
+    TransitionEffect.asymmetric(
+      //从窗口的边缘
+      TransitionEffect.move(TransitionEdge.TOP), TransitionEffect.move(TransitionEdge.BOTTOM)
+    ).animation({ curve: curves.springMotion(0.6, 0.8) })
+  private effectAsymmetricCombine: TransitionEffect =
+    TransitionEffect.asymmetric(
+      TransitionEffect.opacity(1.0),
+      TransitionEffect.opacity(0)
+    ).animation({ curve: curves.springMotion(0.6, 0.8) })
       .combine(TransitionEffect.asymmetric(
-        TransitionEffect.scale({
-          x: 1.5,
-          y: 1.5
+        TransitionEffect.translate({
+          x: -100,
+          y: 100
         }),
-        TransitionEffect.scale({
-          x: 0.2,
-          y: 0.2
+        TransitionEffect.translate({
+          x: 100,
+          y: 100
         })
-      ))// 添加旋转转场效果，这里的动画参数会跟随上面带animation的TransitionEffect，也就是springMotion(0.6, 0.8)
-        //出现时：rotate:90->0,消失时：rotate:0->90
-      .combine(TransitionEffect.asymmetric(
-        TransitionEffect.rotate({ angle: 90 }),
-        TransitionEffect.rotate({ angle: 90 })
-      ))// 添加平移转场效果，这里的动画参数使用指定的springMotion()
-      .combine(TransitionEffect.asymmetric(
-        TransitionEffect.translate({ y: -150, x: -150 })
-          .animation({ curve: curves.springMotion() }),
-        TransitionEffect.translate({ y: 150, x: 150 })
-          .animation({ curve: curves.springMotion() })
-      ))// 添加move转场效果，这里的动画参数会跟随上面的TransitionEffect，也就是springMotion()
-        //出现时：opacity:1->0,消失时：opacity:1->0.2
-      .combine(TransitionEffect.asymmetric(
-        TransitionEffect.opacity(0.2),
-        TransitionEffect.opacity(0.2)
       ))
       .combine(TransitionEffect.asymmetric(
-        TransitionEffect.move(TransitionEdge.START), TransitionEffect.move(TransitionEdge.END)
+        TransitionEffect.rotate({
+          angle: 180
+        }),
+        TransitionEffect.rotate({
+          angle: 180
+        })
       ))
   @State isGridShow: boolean = false;
   private dataArray: number[] = new Array(ITEM_COUNTS);
@@ -87,31 +152,22 @@ struct TransitionEffectPage {
 
   build() {
     Scroll(this.scroller) {
-      Column() {
+      Column({ space: 10 }) {
         CommonTitle({ title: '出现/消失转场' })
-        Button('开始动画')
-          .onClick(() => {
-            this.isShow = !this.isShow
-          })
-        Stack() {
-          if (this.isShow) {
-            Column() {
-              Text('测试').fontColor(Color.White).fontSize(15)
-            }
-            .width(150)
-            .height(150)
-            .justifyContent(FlexAlign.Center)
-            .backgroundColor(Color.Red)
-            .borderRadius(20)
-            .margin(20)
-            .transition(this.effect)
-          }
-        }
-        .size({ width: 160, height: 160 })
-        .alignContent(Alignment.Center)
-        .borderWidth(5)
-        .borderColor(Color.Yellow)
-
+        CommonTitle({ title: '1.IDENTITY禁用转场动画', fontSize: 14 })
+        AnimateTestStack({ effect: this.effectIdentity })
+        CommonTitle({ title: '2.OPACITY默认透明度转场', fontSize: 14 })
+        AnimateTestStack({ effect: this.effectOPACITY })
+        CommonTitle({ title: '3.SLIDE默认平移转场', fontSize: 14 })
+        AnimateTestStack({ effect: this.effectSLIDE })
+        CommonTitle({ title: '4.TransitionEffect.asymmetric构建进入和退出:', fontSize: 14 })
+        AnimateTestStack({ title: 'scale', effect: this.effectAsymmetricScale })
+        AnimateTestStack({ title: 'rotate', effect: this.effectAsymmetricRotate })
+        AnimateTestStack({ title: 'translate', effect: this.effectAsymmetricTranslate })
+        AnimateTestStack({ title: 'opacity', effect: this.effectAsymmetricOpacity })
+        AnimateTestStack({ title: 'move', effect: this.effectAsymmetricMove })
+        CommonTitle({ title: '4.TransitionEffect.asymmetric和combine组合构建进入和退出:', fontSize: 14 })
+        AnimateTestStack({ title: '组合', effect: this.effectAsymmetricCombine })
         Stack() {
           if (this.isGridShow) {
             Grid() {
@@ -123,6 +179,7 @@ struct TransitionEffectPage {
                   .size({ width: 50, height: 50 })
                   .backgroundColor(ITEM_COLOR)
                   .transition(TransitionEffect.OPACITY
+                    .combine(TransitionEffect.rotate({ angle: 360 }))
                     .combine(TransitionEffect.scale({ x: 0.5, y: 0.5 }))// 对每个方格的转场添加delay，实现组件的渐次出现消失效果
                     .animation({ duration: DURATION, curve: Curve.Friction, delay: INTERVAL * index }))
                   .borderRadius(10)
@@ -148,7 +205,7 @@ struct TransitionEffectPage {
         .borderWidth(5)
         .borderColor(Color.Green)
         .onClick(() => {
-          animateTo({
+          this.getUIContext().animateTo({
             duration: DURATION + INTERVAL * (ITEM_COUNTS - 1),
             curve: Curve.Friction
           }, () => {
@@ -164,7 +221,9 @@ struct TransitionEffectPage {
             modalTransition: ModalTransition.NONE,
 
             onDisappear: () => {
-              this.isBindContentCover = !this.isBindContentCover
+              if (this.isBindContentCover) {
+                this.isBindContentCover = !this.isBindContentCover
+              }
             },
           })
           .onClick(() => {
@@ -177,20 +236,22 @@ struct TransitionEffectPage {
             height: 300,
             // showClose: true,
             detents: [500, 600, 700], //与dragBar搭配使用 半模态页面的切换高度档位
-            dragBar: false, //是否显示控制条
+            dragBar: true, //是否显示控制条
             // blurStyle: BlurStyle.Regular, //模糊背景样式
             maskColor: '#80ffffff', //背景蒙层颜色
             // title: { title: '测试标题', subtitle: '测试副标题' },
             // preferType:SheetType.CENTER,
-            shouldDismiss: (sheetDismiss: SheetDismiss) => {
-              sheetDismiss.dismiss()
-            },
+            // shouldDismiss: (sheetDismiss: SheetDismiss) => {
+            //   sheetDismiss.dismiss()
+            // },
             enableOutsideInteractive: false, //所在页面是否允许交互
             onAppear: () => {
 
             },
             onDisappear: () => {
-
+              if (this.isBindSheetShow) {
+                this.isBindSheetShow = !this.isBindSheetShow
+              }
             }
           })
           .onClick(() => {
@@ -203,7 +264,12 @@ struct TransitionEffectPage {
             this.isBindMenuShow = !this.isBindMenuShow
           })
           .bindMenu(this.isBindMenuShow, this.bindMenuArray, {
-            title: '菜单'
+            title: '菜单',
+            onDisappear: () => {
+              if (this.isBindMenuShow) {
+                this.isBindMenuShow = !this.isBindMenuShow
+              }
+            }
           })
         Image($r('app.media.img2'))
           .width(100)
@@ -216,6 +282,59 @@ struct TransitionEffectPage {
             enableArrow: true, //是否显示进入的箭头，如果放不下则不显示
             preview: this.MyBindContextMenuPreview(), //预览view
             backgroundColor: Color.Pink
+          })
+        Image($r('app.media.img1'))
+          .width(100)
+          .height(100)
+          .margin(10)
+          .objectFit(ImageFit.Fill)
+          .onClick(() => {
+            this.isBindPopupShow = !this.isBindPopupShow
+          })
+          .bindPopup(this.isBindPopupShow, {
+            builder: this.MyBindContextMenuPreview(),
+            autoCancel: true, //点击外部是否可以取消
+            enableArrow: true, //是否显示箭头
+            arrowPointPosition: ArrowPointPosition.START, //箭头的位置：start，center，end
+            arrowWidth: 50, //箭头的宽
+            arrowHeight: 60, //箭头的高
+            targetSpace: 10, //popup和点击目标的间距
+            // message: 'aaaaaaaa', //如果message不为空就会显示按钮
+            // messageOptions: {
+            //   textColor: Color.Red
+            // },
+            followTransformOfTarget: true,
+            radius: 10, //popup边框半径
+            placement: Placement.Top, //弹出位置
+            popupColor: Color.Yellow,
+            primaryButton: {
+              value: '确定',
+              action: () => {
+
+              }
+            },
+            secondaryButton: {
+              value: '取消',
+              action: () => {
+
+              }
+            },
+
+            onStateChange: (event) => {
+              if (!event.isVisible) {
+                this.isBindPopupShow = false
+              }
+            }
+          })
+        CommonTitle({ title: '共享元素转场' })
+        CommonButton({ text: '不新建容器并直接改变原容器' })
+          .onClick(() => {
+            ShareElementAnimatePage.startPage()
+          })
+
+        CommonButton({ text: '新建容器并跨容器迁移组件:结合Stack' })
+          .onClick(() => {
+            ShareElementByStackPage.startPage()
           })
       }
       .width('100%')
@@ -244,6 +363,16 @@ struct TransitionEffectPage {
       TransitionEffect.translate({ x: 500 }))
       .animation({ curve: curves.springMotion(0.6, 0.8) })
       .combine(TransitionEffect.asymmetric(
+        TransitionEffect.scale({
+          x: 0.5,
+          y: 0.5
+        }),
+        TransitionEffect.scale({
+          x: 0.5,
+          y: 0.5
+        })
+      ))
+      .combine(TransitionEffect.asymmetric(
         TransitionEffect.opacity(0.3),
         TransitionEffect.opacity(0.3)
       )))
@@ -263,9 +392,17 @@ struct TransitionEffectPage {
     }
     .width('100%')
     .height('100%')
-    .backgroundColor(Color.Pink)
+    // .backgroundColor(Color.Pink)
     .justifyContent(FlexAlign.Center)
-    .transition(TransitionEffect.translate({ y: 500 }).animation({ curve: curves.springMotion(0.6, 0.8) }))
+    .transition(TransitionEffect.asymmetric(
+      TransitionEffect.translate({ y: 500 }),
+      TransitionEffect.translate({ y: -500 })
+    )
+      .combine(TransitionEffect.asymmetric(
+        TransitionEffect.opacity(0),
+        TransitionEffect.opacity(0)
+      ))
+      .animation({ curve: curves.springMotion(0.6, 0.8) }))
   }
 
   @Builder
@@ -288,8 +425,38 @@ struct TransitionEffectPage {
     Column() {
       Image($r('app.media.img3')).width(90).height(160)
     }
-    .borderColor(Color.Green)
-    .borderWidth(3)
+    .margin(10)
     .borderRadius(5)
+  }
+}
+
+@Component
+struct AnimateTestStack {
+  title: string = '测试'
+  @State isShow: boolean = true
+  effect: TransitionEffect = TransitionEffect.IDENTITY
+
+  build() {
+    Stack() {
+      if (this.isShow) {
+        Column() {
+          Text(this.title).fontColor(Color.White).fontSize(15)
+        }
+        .width(80)
+        .height(80)
+        .justifyContent(FlexAlign.Center)
+        .backgroundColor(Color.Red)
+        .borderRadius(20)
+        .margin(20)
+        .transition(this.effect)
+      }
+    }
+    .size({ width: 90, height: 90 })
+    .alignContent(Alignment.Center)
+    .borderWidth(5)
+    .borderColor(Color.Yellow)
+    .onClick(() => {
+      this.isShow = !this.isShow
+    })
   }
 }

@@ -1,4 +1,3 @@
-
 @ObservedV2
 class PersonBean {
   name: string = ''
@@ -9,7 +8,7 @@ class PersonBean {
 @Entry
 @Component
 struct ListMultipleSelectPage {
-  @State dataList: Array<PersonBean> = []
+  dataList: Array<PersonBean> = []
   private scroller: Scroller = new Scroller()
   private images: Resource[] = [$r('app.media.img1'), $r('app.media.img2'), $r('app.media.img3'),]
 

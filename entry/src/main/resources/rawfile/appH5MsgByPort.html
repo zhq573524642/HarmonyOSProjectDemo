@@ -7,10 +7,10 @@
 <body>
 <h1>WebView Message Port Demo</h1>
 <div>
-    <input type="button" value="SendToEts" onclick="PostMsgToEts(msgFromJS.value);"/><br/>
-    <input id="msgFromJS" type="text" value="send this message from HTML to ets"/><br/>
+    <input id="msgFromJS" type="text" value="发送消息给app"/><br/>
+    <input type="button" value="发送给App" onclick="PostMsgToEts(msgFromJS.value);"/><br/>
 </div>
-<p class="output">display received message send from ets</p>
+<p class="output">这里显示来自app的消息：</p>
 </body>
 <script>
     var h5Port;

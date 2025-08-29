@@ -15,8 +15,10 @@
 
 import { common } from '@kit.AbilityKit';
 import { preferences } from '@kit.ArkData';
+import { BusinessError } from '@kit.BasicServicesKit';
+import { util } from '@kit.ArkTS';
 
-const PREFERENCES_NAME: string = 'HMosWorldStore';
+const PREFERENCES_NAME: string = 'zhq_preference';
 
 export class PreferenceManager {
   private preferences?: preferences.Preferences;
@@ -35,14 +37,25 @@ export class PreferenceManager {
   }
 
   async initPreference(storeName: string): Promise<void> {
-    return preferences.getPreferences(this.context, storeName)
+    let options: preferences.Options = { name: storeName }
+    //Api 18以上
+    // if (preferences.isStorageTypeSupported(preferences.StorageType.GSKV)) {
+    //   options.storageType = preferences.StorageType.GSKV
+    // } else {
+    //   options.storageType = preferences.StorageType.XML
+    // }
+    return preferences.getPreferences(this.context, options)
       .then((preferences: preferences.Preferences) => {
         this.preferences = preferences;
-      });
+      }).catch((error: BusinessError) => {
+        console.error('---initPreference Error:' + JSON.stringify(error))
+      })
   }
 
   async setValue<T>(key: string, value: T): Promise<void> {
     if (this.preferences) {
+      // 当字符串有特殊字符时，需要将字符串转为Uint8Array类型再存储，长度均不超过16 * 1024 * 1024个字节。
+      // let uInt8Array1 = new util.TextEncoder().encodeInto("~！@#￥%……&*（）——+？");
       this.preferences.put(key, JSON.stringify(value)).then(() => {
         this.saveUserData();
       })
@@ -55,6 +68,10 @@ export class PreferenceManager {
 
   async getValue<T>(key: string): Promise<T | null> {
     if (this.preferences) {
+      // 当获取的值为带有特殊字符的字符串时，需要将获取到的Uint8Array转换为字符串
+      // let uInt8Array2 : preferences.ValueType = dataPreferences.getSync('uInt8', new Uint8Array(0));
+      // let textDecoder = util.TextDecoder.create('utf-8');
+      // val = textDecoder.decodeToString(uInt8Array2 as Uint8Array);
       return this.preferences.get(key, '').then((res: preferences.ValueType) => {
         let value: T | null = null;
         if (res) {
@@ -93,5 +110,34 @@ export class PreferenceManager {
 
   saveUserData() {
     this.preferences?.flush();
+  }
+
+  clear(){
+    if (this.preferences) {
+      this.preferences.clear(()=>{
+
+      })
+    }else {
+      this.initPreference(PREFERENCES_NAME).then(()=>{
+        this.clear()
+      })
+    }
+  }
+
+  onChangedRegister(){
+    if (this.preferences){
+      this.preferences?.on('change',(value)=>{
+        console.debug('===Key：'+value+' Changed')
+      })
+    }
+
+  }
+
+  onChangedUnregister(){
+    if (this.preferences) {
+      this.preferences.off('change',(value)=>{
+
+      })
+    }
   }
 }

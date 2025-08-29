@@ -1,0 +1,9 @@
+{
+  "routerMap": [
+    {
+      "name": "HspMainPage",
+      "pageSourceFile": "src/main/ets/pages/HspMainPage.ets",
+      "buildFunction": "HspMainPageBuilder"
+    }
+  ]
+}

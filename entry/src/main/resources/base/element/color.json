@@ -15,6 +15,22 @@
     {
       "name": "tab_unselect",
       "value": "#bfbfbf"
+    },
+    {
+      "name": "information_title_font",
+      "value": "#E6000000"
+    },
+    {
+      "name": "title_font",
+      "value": "#E5FFFFFF"
+    },
+    {
+      "name": "item_text_font",
+      "value": "#99000000"
+    },
+    {
+      "name": "image_info_background",
+      "value": "#FFFFFF"
     }
   ]
 }

@@ -1,10 +1,18 @@
 import { CommonButton } from '../../component/MyComponent'
 import { router } from '@kit.ArkUI'
+import { ContainerComponentPage } from '../../container/ContainerComponentPage'
+import { RouterUtil } from '@ohos/common'
+import { QCodePage } from '../../component/QCodePage'
+import { PopupMenuPage } from '../../component/PopupMenuPage'
 
-@Entry
+@Entry({ routeName: 'ArkUIPage' })
 @Component
-struct ArkUIPage {
+export struct ArkUIPage {
   private scroller: Scroller = new Scroller()
+
+  static startPage() {
+    RouterUtil.pushNamedRoute('ArkUIPage')
+  }
 
   build() {
     Scroll(this.scroller) {
@@ -15,6 +23,12 @@ struct ArkUIPage {
               url: 'pages/ui/arkui/CommonPropertyPage'
             })
           })
+        CommonButton({ text: '组件生命周期' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/ui/arkui/ComponentLifecyclePage'
+            })
+          })
         CommonButton({ text: '沉浸式效果' })
           .onClick(() => {
             router.pushUrl({
@@ -23,7 +37,7 @@ struct ArkUIPage {
           })
         CommonButton({ text: '容器组件' })
           .onClick(() => {
-            router.pushUrl({ url: 'pages/container/ContainerComponentPage' })
+            ContainerComponentPage.startPage()
           })
         CommonButton({ text: '常用组件' })
           .onClick(() => {
@@ -41,9 +55,9 @@ struct ArkUIPage {
               url: 'pages/navigation/NavigationTestPage'
             })
           })
-        CommonButton({ text: '气泡和菜单' })
+        CommonButton({ text: '弹出框' })
           .onClick(() => {
-            router.pushUrl({ url: 'pages/component/PopupMenuPage' })
+            PopupMenuPage.startPage()
           })
         CommonButton({ text: '图片显示Image' })
           .onClick(() => {
@@ -59,7 +73,7 @@ struct ArkUIPage {
           })
         CommonButton({ text: '二维码' })
           .onClick(() => {
-            router.pushUrl({ url: 'pages/component/QCodePage' })
+            QCodePage.startPage()
           })
         CommonButton({ text: '绘制组件' })
           .onClick(() => {

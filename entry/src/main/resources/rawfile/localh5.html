@@ -3,11 +3,92 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="color-scheme" content="light dark">
+    <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.5">
     <title>Document</title>
+    <style>
+        /* 默认样式 */
+        body { background-color: White; }
+        /* 浅色样式，Web关闭深色模式时覆盖默认样式 */
+        @media (prefers-color-scheme: light) {
+          body { background-color: Gray; }
+        }
+        /* 深色样式，Web开启深色模式时覆盖默认样式 */
+        @media (prefers-color-scheme: dark) {
+          body { background-color: Black; }
+        }
+    </style>
 </head>
 
 <body>
-// 点击文件上传按钮
-<input type="file" value="file"></br>
+<!--// 点击文件上传按钮-->
+<input type="file" name="photo" id="photo" value="file" ></br></br></br>
+
+<!--1.仅image/* 图片类型，2.设置前置或后置摄像头，3.结果直接打开相机-->
+<input type="file" name="photo" id="photo1" value="file" accept="image/*" capture="environment" ></br>
+<input type="file" name="photo" id="photo2" value="file" accept="image/*" capture="user" ></br>
+
+<!--1.仅image/* 图片类型，2.不设置前置或后置摄像头，3.结果弹窗自主选择-->
+<input type="file" name="photo" id="photo3" value="file" accept="image/*"></br>
+
+<!--1.仅video/* 视频类型，2.设置前置或后置摄像头，3.直接打开录制-->
+<input type="file" name="photo" id="photo4" value="file" accept="video/*" capture="environment"></br>
+<input type="file" name="photo" id="photo5" value="file" accept="video/*" capture="user"></br>
+
+<!--1.仅video/* 视频类型，2.不设置前置或后置摄像头，3.弹窗自主选择-->
+<input type="file" name="photo" id="photo6" value="file" accept="video/*"></br>
+
+<!--1.设置image/*,video/* 图片和视频类型，2.设置前置或后置摄像头，3.直接拍照录制-->
+<input type="file" name="photo" id="photo7" value="file" accept="image/*,video/*" capture="environment"></br>
+<input type="file" name="photo" id="photo8" value="file" accept="image/*,video/*" capture="user"></br>
+
+<!--1.设置image/*,video/* 图片和视频类型，2.不设置前置或后置摄像头，3.自主选择-->
+<input type="file" name="photo" id="photo9" value="file" accept="image/*,video/*"></br>
+
+<!--1.不设置image/*,video/* 图片和视频类型，2.设置前置或后置摄像头，3.直接拍照录制-->
+<input type="file" name="photo" id="photo10" value="file"  capture="environment"></br>
+<input type="file" name="photo" id="photo11" value="file"  capture="user"></br>
+
+<img style="display: none;width:200px;" id="img">
+<script>
+    let photo = document.getElementById("photo");
+    let photo1 = document.getElementById("photo1");
+    let photo2 = document.getElementById("photo2");
+    let photo3 = document.getElementById("photo3");
+    let photo4 = document.getElementById("photo4");
+    let photo5 = document.getElementById("photo5");
+    let photo6 = document.getElementById("photo6");
+    let photo7 = document.getElementById("photo7");
+    let photo8 = document.getElementById("photo8");
+    let photo9 = document.getElementById("photo9");
+    let photo10= document.getElementById("photo10");
+    let photo11 = document.getElementById("photo11");
+    photo.addEventListener("change", preViewImg)
+    photo1.addEventListener("change", preViewImg)
+    photo2.addEventListener("change", preViewImg)
+    photo3.addEventListener("change", preViewImg)
+    photo4.addEventListener("change", preViewImg)
+    photo5.addEventListener("change", preViewImg)
+    photo6.addEventListener("change", preViewImg)
+    photo7.addEventListener("change", preViewImg)
+    photo8.addEventListener("change", preViewImg)
+    photo9.addEventListener("change", preViewImg)
+    photo10.addEventListener("change", preViewImg)
+    photo11.addEventListener("change", preViewImg)
+    function preViewImg(event) {
+        let fileReader = new FileReader();
+        let img = document.getElementById("img");
+        fileReader.addEventListener(
+            "load",
+            () => {
+                // 将图像文件转换为 Base64 字符串
+                img.src = fileReader.result;
+            },
+            false,
+        );
+        fileReader.readAsDataURL(event.target.files[0]);
+        img.style.display = "block";
+    }
+</script>
 </body>
 </html>

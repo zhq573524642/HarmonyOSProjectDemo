@@ -1,9 +1,17 @@
+import { PageRouter } from '../../router/PageRouter'
 import { CommonButton, CommonButton1 } from '../component/MyComponent'
 import { Square } from '../component/MyComponent'
+import { router } from '@kit.ArkUI'
 
-@Entry
+@Entry({ routeName: PageRouter.PAGE_COLUMN })
 @Component
-struct ColumnPage {
+export struct ColumnPage {
+  static startPage() {
+    router.pushNamedRoute({
+      name: PageRouter.PAGE_COLUMN
+    }, router.RouterMode.Single)
+  }
+
   @State btn1: string = '在交叉抽上:HorizontalAlign.Start'
   @State btn2: string = '在主抽上:FlexAlign.Start'
   private alignItems: Array<HorizontalAlign> = [HorizontalAlign.Start, HorizontalAlign.Center, HorizontalAlign.End]
@@ -70,9 +78,24 @@ struct ColumnPage {
 
 
         Column() {
-          Square({ text: '1', color: Color.Red, w: 50, h: 50 })
-          Square({ text: '2', color: Color.Green, w: 50, h: 50 })
-          Square({ text: '3', color: Color.Yellow, w: 50, h: 50 })
+          Square({
+            text: '1',
+            color: Color.Red,
+            w: 50,
+            h: 50
+          })
+          Square({
+            text: '2',
+            color: Color.Green,
+            w: 50,
+            h: 50
+          })
+          Square({
+            text: '3',
+            color: Color.Yellow,
+            w: 50,
+            h: 50
+          })
 
         }
         .backgroundColor(Color.Gray)

@@ -87,7 +87,7 @@ struct MessageTransmitPage {
           .onClick(() => {
             // this.context.eventHub.emit('event_1')
             // this.context.eventHub.emit('event_1', '哈哈哈')
-            this.context.eventHub.emit('event_1', '啦啦啦', 18)
+            this.context.eventHub.emit(FLAG_EVENT_HUB_MSG, '啦啦啦', 18)
           })
         CommonTitle({ title: 'Emitter线程间通信' })
         CommonButton({ text: '发送Emitter消息' })
@@ -265,7 +265,7 @@ struct MessageTransmitPage {
   }
 
   unregisterEventHub() {
-    this.context.eventHub.off('event_1', (msg: string) => {
+    this.context.eventHub.off(FLAG_EVENT_HUB_MSG, (msg: string) => {
       console.debug('===取消订阅EventHub：event_1')
     })
   }

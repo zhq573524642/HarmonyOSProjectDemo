@@ -24,7 +24,15 @@ localStorage.setOrCreate('param2', new TempClass(20))
 //从UIAbility共享的LocalStorage
 let uiAbilityLocalStorage = LocalStorage.getShared()
 
+
 PersistentStorage.persistProp<TempClass>('persistent_param', new TempClass(11))
+PersistentStorage.persistProps([{
+  key: "name",
+  defaultValue: "aaa", //number | string | boolean | Object
+}, {
+  key: "age",
+  defaultValue: 18
+}])
 
 @Entry({ storage: localStorage })
   //uiAbilityLocalStorage
@@ -34,23 +42,22 @@ struct StateManagerPage {
   @LocalStorageProp('param1') localStorageProp: number = 0
   @LocalStorageLink('param2') localStorageLink: TempClass = new TempClass(0)
   @LocalStorageLink('uiAbility_param') uiAbility_param: number = 0
-  @State localStorage1: string = `LocalStorage(param1)：${localStorage.get<number>('param1')}`
-  @State localStorage2: string = `LocalStorage(param2)：${localStorage.get<TempClass>('param2')?.num}`
   @State appStorage1: string = `AppStorage(param1)：${AppStorage.get<number>('param1')}`
   @State appStorage2: string = `AppStorage(param2)：${AppStorage.get<TempClass>('param2')?.num}`
   @StorageProp('param1') appStorageProp: number = 0
   @StorageLink('param2') appStorageLink: TempClass = new TempClass(0)
   @StorageLink('persistent_param') persistent_param: TempClass = new TempClass(0)
+  @StorageLink('name') persistent_name: string = ""
   @State @Watch('updateText') textShow: string = 'abc'
   @State textInputShow: string = ''
   @StorageLink('freezeWhenInactiveValue') @Watch('freezeWhenInactiveValueChange') freezeWhenInactiveValue: number = 1
+  uiContext: UIContext | undefined = undefined
 
   freezeWhenInactiveValueChange() {
     console.debug('===页面A--freezeWhenInactiveValueChange：' + this.freezeWhenInactiveValue)
   }
 
   build() {
-
     Scroll(this.scroller) {
       Column({ space: 8 }) {
         CommonTitle({ title: '组件的状态' })
@@ -75,6 +82,13 @@ struct StateManagerPage {
         CommonTitle({ title: 'class状态变量属性被@Track修饰' })
         Text('1.改变@Track修饰的变量使得绑定改属性的组件刷新，而不是整个class状态变量刷新')
         Text('2.包含@Track修饰的属性绑定在组件，其他未被@Track修饰的属性不可以用于绑定组件')
+        CommonTitle({ title: 'ComponentV2' })
+        CommonButton({ text: 'ComponentV2测试' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/state/ComponentV2Page'
+            })
+          })
         CommonTitle({ title: '@Watch装饰器：状态变量更改通知' })
         Text(this.textShow).fontSize(15).fontColor(Color.Orange)
         Button('修改@Watch修饰的状态变量')
@@ -113,24 +127,29 @@ struct StateManagerPage {
           })
 
         CommonTitle({ title: '应用的状态' })
+        //1.LocalStorage 页面级UI状态存储
+        //2.应用程序可以创建多个LocalStorage实例，LocalStorage实例可以在页面内共享，
+        // 也可以通过getShared接口，实现跨页面、UIAbility实例内共享
+        //3.除了根节点可通过@Entry来接收LocalStorage实例，自定义组件（子节点）也可以通过构造参数来传递LocalStorage实例
+        //参数传递 （1）子组件定义了其他属性 初始化 childView({ xxx:xxx},localStorage);
+        //（2）子组件没有定义其他属性 childView(localStorage)
+        //（3）子组件定义了其他属性，但是不需要初始化该属性  childView({},localStorage)
+        //4.@LocalStorageProp 单行同步关系，@LocalStorageLink 双向同步关系,其参数key必须为string，不支持Function类型的变量
+        //5.LocalStorage是页面级存储，getShared接口仅能获取当前Stage通过windowStage.loadContent传入的LocalStorage实例
         CommonTitle({ title: '1.1:LocalStorage(一个@Entry中)' })
-        Text(this.localStorage1)
-          .fontSize(15)
-          .fontColor(Color.Black)
-        Text(this.localStorage2)
-          .fontSize(15)
-          .fontColor(Color.Black)
 
+        Button('setOrCreate改变LocalStorage(param1)').onClick(() => {
+          let old = localStorage.get<number>('param1')
+          if (old) {
+            localStorage.setOrCreate<number>('param1', old + 1)
+          }
+        })
+        Button('setOrCreate改变LocalStorage(param2)').onClick(() => {
+          let old = localStorage.get<TempClass>('param2')
+          if (old) {
+            localStorage.setOrCreate<TempClass>('param2', new TempClass(old.num + 1))
+          }
 
-        Button('刷新LocalStorage').onClick(() => {
-          this.localStorage1 = `LocalStorage(param1)：${localStorage.get<number>('param1')}`
-          this.localStorage2 = `LocalStorage(param2)：${localStorage.get<TempClass>('param2')?.num}`
-        })
-        Button('改变LocalStorage(param1)').onClick(() => {
-          localStorage.setOrCreate<number>('param1', 66)
-        })
-        Button('改变LocalStorage(param2)').onClick(() => {
-          localStorage.setOrCreate<TempClass>('param2', new TempClass(88))
         })
         Text(`父LocalStorageProp(param1)：${this.localStorageProp}`)
           .fontSize(15)
@@ -191,12 +210,19 @@ struct StateManagerPage {
         })
         CommonTitle({ title: '3:PersistentStorage：持久化存储UI状态' })
 
-        Text(`PersistentStorage关联的AppStorage：${this.persistent_param.num}`)
+        Text(`PersistentStorage.persistProp：组件内部接收：${this.persistent_param.num}`)
           .fontSize(15)
           .fontColor(Color.Green)
+        Text(`PersistentStorage.persistProps：组件内部接收：${this.persistent_name}`)
+          .fontSize(15)
+          .fontColor(Color.Green)
+        Text(`PersistentStorage：AppStorage获取：${AppStorage.get<TempClass>('persistent_param')?.num}`)
+          .fontSize(15)
+          .fontColor(Color.Red)
         Button('改变StorageLink以改变PersistentStorage').onClick(() => {
           this.persistent_param.num += 1
         })
+
 
         Button('删除PersistentStorage').onClick(() => {
           PersistentStorage.deleteProp('persistent_param')

@@ -1,0 +1,28 @@
+{
+  "UniformDataTypeDeclarations": [
+    {
+      "TypeId": "com.zhq.harmonyosdemo.image",
+      "BelongingToTypes": ["general.image"],
+      "FilenameExtensions": [".myImage", ".khImage"],
+      "MIMETypes": ["application/myImage", "application/khImage"],
+      "Description": "My Image.",
+      "ReferenceURL": ""
+    },
+    {
+      "TypeId": "com.zhq.harmonyosdemo.audio",
+      "BelongingToTypes": ["general.audio"],
+      "FilenameExtensions": [".myAudio", ".khAudio"],
+      "MIMETypes": ["application/myAudio", "application/khAudio"],
+      "Description": "My audio.",
+      "ReferenceURL": ""
+    },
+    {
+      "TypeId": "com.zhq.harmonyosdemo.video",
+      "BelongingToTypes": ["general.video"],
+      "FilenameExtensions": [".myVideo", ".khVideo"],
+      "MIMETypes": ["application/myVideo", "application/khVideo"],
+      "Description": "My video.",
+      "ReferenceURL": ""
+    }
+  ]
+}

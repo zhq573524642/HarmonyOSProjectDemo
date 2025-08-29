@@ -1,0 +1,50 @@
+{
+  "forms": [
+    {
+      "name": "StaticWidgetCard",
+      "displayName": "$string:MyTestWidget1_display_name",
+      "description": "$string:MyTestWidget1_desc",
+      "src": "./ets/mytestwidget1/pages/StaticWidgetCard.ets",
+      "uiSyntax": "arkts",
+      "window": {
+        "designWidth": 720,
+        "autoDesignWidth": true
+      },
+      "colorMode": "auto",
+      "isDynamic": false,
+      "isDefault": true,
+      "updateEnabled": false,
+      "scheduledUpdateTime": "10:30",
+      "updateDuration": 1,
+      "defaultDimension": "4*4",
+      "supportDimensions": [
+        "4*4"
+      ],
+      "supportShapes": ["rect"],
+      "dataProxyEnabled": true
+    },
+    {
+      "name": "DynamicWidgetCard",
+      "displayName": "$string:MyTestWidget1_display_name",
+      "description": "$string:MyTestWidget1_desc",
+      "src": "./ets/mytestwidget1/pages/DynamicWidgetCard.ets",
+      "uiSyntax": "arkts",
+      "window": {
+        "designWidth": 720,
+        "autoDesignWidth": true
+      },
+      "colorMode": "auto",
+      "isDynamic": true,
+      "isDefault": false,
+      "updateEnabled": false,
+      "scheduledUpdateTime": "10:30",
+      "updateDuration": 1,
+      "defaultDimension": "4*4",
+      "supportDimensions": [
+        "4*4"
+      ],
+      "supportShapes": ["rect"],
+      "dataProxyEnabled": true
+    }
+  ]
+}

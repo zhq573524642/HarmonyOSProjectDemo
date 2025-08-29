@@ -1,4 +1,3 @@
-
 @Entry
 @Component
 struct ListItemDeletePage {
@@ -27,10 +26,17 @@ struct ListItemDeletePage {
           .margin({ left: 10, right: 10 })
           .backgroundColor(Color.White)
           .borderRadius(12)
-          .swipeAction({ end: this.itemDeleteEnd(index) })
+          .swipeAction({
+            end: {
+              builder: () => {
+                this.itemDeleteEnd(index)
+              }
+            }
+          })
         }, (item: string) => item)
-      }.width('100%')
-      .chainAnimation(true)//列表条目联动的动画
+      }
+      .width('100%')
+      .chainAnimation(true) //列表条目联动的动画
       .multiSelectable(true)
       .scrollSnapAlign(ScrollSnapAlign.END)
       .listDirection(Axis.Vertical)
@@ -46,7 +52,12 @@ struct ListItemDeletePage {
       .fontSize(16)
       .width(80)
       .height(70)
-      .borderRadius({topLeft:0,topRight:12,bottomLeft:0,bottomRight:12})
+      .borderRadius({
+        topLeft: 0,
+        topRight: 12,
+        bottomLeft: 0,
+        bottomRight: 12
+      })
       .textAlign(TextAlign.Center)
       .backgroundColor(Color.Red)
       .onClick(() => {

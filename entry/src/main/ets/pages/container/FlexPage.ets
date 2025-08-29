@@ -1,8 +1,16 @@
 import { CommonButton1 } from '../component/MyComponent'
+import { router } from '@kit.ArkUI'
+import { PageRouter } from '../../router/PageRouter'
 
-@Entry
+@Entry({routeName:PageRouter.PAGE_FLEX})
 @Component
-struct FlexPage {
+export struct FlexPage {
+
+  static startPage(){
+    router.pushNamedRoute({
+      name:PageRouter.PAGE_FLEX
+    },router.RouterMode.Single)
+  }
   //布局方向
   @State directionState: FlexDirection = FlexDirection.Row
   @State directionDesc: string = '布局方向FlexDirection.Row'
@@ -91,8 +99,8 @@ struct FlexPage {
       })
 
       Flex({
-        direction: this.directionState,
-        wrap: this.flexWrap,
+        direction: this.directionState,//布局方向
+        wrap: this.flexWrap,//布局换行
         justifyContent: this.justifyContent,
         alignItems: this.itemAlign
       }) {

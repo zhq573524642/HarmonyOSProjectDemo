@@ -1,8 +1,19 @@
 import router from '@ohos.router'
+import { PageRouter } from '../../router/PageRouter'
 
-@Entry
+@Entry({ routeName: PageRouter.PAGE_SCROLL })
 @Component
-struct ScrollPage {
+export struct ScrollPage {
+  static startPage(direction:number) {
+
+    router.pushNamedRoute({
+      name: PageRouter.PAGE_SCROLL,
+      params: {
+        direction: direction
+      }
+    }, router.RouterMode.Single)
+  }
+
   scroller: Scroller = new Scroller()
   private num: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   private params: object = router.getParams()
@@ -25,7 +36,7 @@ struct ScrollPage {
         }.width('100%')
       } else {
         Row() {
-          ForEach(this.num, (item:string) => {
+          ForEach(this.num, (item: string) => {
             Text(item.toString())
               .width(150)
               .height('90%')
@@ -35,7 +46,7 @@ struct ScrollPage {
               .textAlign(TextAlign.Center)
               .backgroundColor(Color.White)
               .margin({ left: 10 })
-          }, (item:string) => item)
+          }, (item: string) => item)
         }.height('100%')
       }
 
@@ -45,6 +56,6 @@ struct ScrollPage {
     .scrollBarColor(Color.Red) //scrollBar颜色
     .scrollBarWidth(10) //scrollBar宽度
     .scrollBar(BarState.On) //scrollBar是否一直显示
-    .edgeEffect(EdgeEffect.Spring) //滚动到边缘后回弹
+    .edgeEffect(EdgeEffect.Fade) //滚动到边缘后回弹
   }
 }

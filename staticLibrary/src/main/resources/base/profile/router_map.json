@@ -1,11 +1,19 @@
 {
   "routerMap": [
     {
-      "name": "NavHarPage1",
+      "name": "NavHarPage",
       "pageSourceFile": "src/main/ets/components/mainpage/NavHarPage.ets",
       "buildFunction": "PageHarBuilder",
       "data": {
         "description": "这是Har包中的页面"
+      }
+    },
+    {
+      "name": "HarMainPage",
+      "pageSourceFile": "src/main/ets/components/mainpage/HarMainPage.ets",
+      "buildFunction": "HarMainPageBuilder",
+      "data": {
+        "description": "这是Har中的页面啊"
       }
     }
   ]

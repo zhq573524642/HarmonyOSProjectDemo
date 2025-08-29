@@ -1,24 +1,27 @@
 import promptAction from '@ohos.promptAction'
 import router from '@ohos.router'
 import thermal from '@ohos.thermal'
+import { RouterUtil } from '@ohos/common'
 import { CommonButton, CommonTitle } from './component/MyComponent'
+import { RichEditorPage } from './component/RichEditorPage'
+import { TextPage } from './component/TextPage'
 
 @Entry
 @Component
 struct CommonComponentPage {
   private scroller: Scroller = new Scroller()
-
   private patternLockController: PatternLockController = new PatternLockController()
-
 
   build() {
     Scroll(this.scroller) {
       Column() {
         CommonButton({ text: '文本-Text' })
           .onClick(() => {
-            router.pushUrl({
-              url: 'pages/component/TextPage'
-            })
+            TextPage.startPage()
+          })
+        CommonButton({ text: '富文本-RichEditor' })
+          .onClick(() => {
+            RichEditorPage.startPage()
           })
         CommonButton({ text: '按钮-Button' })
           .onClick(() => {
@@ -50,11 +53,11 @@ struct CommonComponentPage {
               url: 'pages/component/RatingSliderPage'
             })
           })
-        CommonButton({text:'日期时间组件'})
-          .onClick(()=>{
-             router.pushUrl({
-               url:'pages/component/DateTimePage'
-             })
+        CommonButton({ text: '日期时间组件' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/component/DateTimePage'
+            })
           })
 
 
@@ -71,8 +74,8 @@ struct CommonComponentPage {
           .onPatternComplete((input: number[]) => {
             console.debug('===操作的密码索引：' + input.toString())
           })
-          .onDotConnect((callback:number)=>{
-             console.debug('===选中的密码：'+callback)
+          .onDotConnect((callback: number) => {
+            console.debug('===选中的密码：' + callback)
           })
         Button('重置')
           .onClick(() => {

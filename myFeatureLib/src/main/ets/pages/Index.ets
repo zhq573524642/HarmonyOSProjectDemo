@@ -11,24 +11,28 @@ struct Index {
   aboutToAppear(): void {
     let want = AppStorage.get<Want>('startAbilityInfo')
     this.info = `信息：\n bundleName:${want?.bundleName}
-     \n abilityName:${want?.abilityName}
+     \n abilityName:\n${want?.abilityName}
      \n deviceId:${want?.deviceId}
      \n moduleName:${want?.moduleName}
-     \n 自定义参数:${want?.parameters?.param_info}`
+     \n 自定义参数:${want?.parameters?.param_info}
+     \n uri:${want?.uri}
+     \n type:${want?.type}`
   }
 
   build() {
     Row() {
       Column() {
         Text(this.message)
-          .fontSize(20)
+          .fontSize(16)
           .fontWeight(FontWeight.Bold)
         Text(this.info)
-          .fontSize(20)
+          .fontSize(16)
           .margin(10)
           .fontWeight(FontWeight.Bold)
         Button('停止当前UIAbility')
           .onClick(() => {
+            //module.json5的abilities中配置"removeMissionAfterTerminate": true，
+            //则调用terminateSelf时，最近任务栏不会有快照
             this.context.terminateSelf((error) => {
               if (error.code) {
                 console.debug('===停止当前UIAbility：' + error.code)

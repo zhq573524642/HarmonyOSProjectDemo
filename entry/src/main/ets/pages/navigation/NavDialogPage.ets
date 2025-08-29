@@ -3,7 +3,7 @@ import observer from '@ohos.arkui.observer';
 @Component
 export struct NavDialogPage {
   @Consume('NavPathStack') pageStack: NavPathStack
-  navDesInfo: observer.NavDestinationInfo | undefined
+  @State paramsStr: string = ''
 
   build() {
     NavDestination() {
@@ -11,7 +11,9 @@ export struct NavDialogPage {
         Column() {
           Text("Dialog NavDestination")
             .fontSize(20)
-            .margin({ bottom: 100 })
+          Text(this.paramsStr)
+            .fontSize(15)
+            .margin({ top: 10, bottom: 80 })
           Button("Close").onClick(() => {
             this.pageStack.pop()
           }).width('30%')
@@ -26,15 +28,11 @@ export struct NavDialogPage {
     .backgroundColor('rgba(0,0,0,0.5)')
     .hideTitleBar(true)
     .mode(NavDestinationMode.DIALOG)
-  }
-
-  aboutToAppear(): void {
-    let params = this.pageStack.getParamByName('NavDialogPage').toString()
-    console.debug('===参数：'+params)
-    this.navDesInfo = this.queryNavDestinationInfo()
-    observer.on('navDestinationUpdate', (info: NavDestinationInfo) => {
-      info.param
-      // console.info('===NavDestination state update', JSON.stringify(info));
-    });
+    .onReady((context: NavDestinationContext) => {
+      if (context?.pathInfo?.param) {
+        let p = context?.pathInfo?.param as Record<string, Object>
+        this.paramsStr = p.name + '--' + p.age
+      }
+    })
   }
 }

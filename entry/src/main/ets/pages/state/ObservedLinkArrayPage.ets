@@ -14,9 +14,9 @@ struct ObservedLinkArrayPage {
       .borderWidth(5)
       .borderColor(Color.Yellow)
 
-      Text(`第一个元素：${this.classArr[0].a}`).fontSize(18).fontColor(Color.Orange)
+      Text(`第一个元素中a值：${this.classArr[0].a}`).fontSize(18).fontColor(Color.Orange)
         .margin(10)
-      Text(`最后一个元素：${this.classArr[this.classArr.length-1].a}`).fontSize(18).fontColor(Color.Pink)
+      Text(`最后一个元素中a值：${this.classArr[this.classArr.length-1].a}`).fontSize(18).fontColor(Color.Pink)
         .margin(10)
       Button('重新赋值数组')
         .onClick(() => {

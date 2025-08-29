@@ -11,6 +11,10 @@
     {
       "name": "EntryAbility_label",
       "value": "HarmonyOSDemo"
+    },
+    {
+      "name": "MyTestWidget1_desc",
+      "value": "This is a service widget."
     }
   ]
 }

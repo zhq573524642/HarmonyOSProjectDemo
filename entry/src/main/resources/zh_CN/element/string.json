@@ -11,6 +11,10 @@
     {
       "name": "EntryAbility_label",
       "value": "鸿蒙Demo"
+    },
+    {
+      "name": "MyTestWidget1_desc",
+      "value": "这是小卡片."
     }
   ]
 }

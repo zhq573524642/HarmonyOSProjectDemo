@@ -9,6 +9,7 @@
       "2in1"
     ],
     "deliveryWithInstall": true,
-    "pages": "$profile:main_pages"
+    "routerMap": "$profile:hsp_page_router_map",//Navigation配置的跳转路由map
+    "pages": "$profile:main_pages"//配置的页面位置
   }
 }

@@ -8,15 +8,18 @@ struct ImmersionPage {
   @State navigationHeight: number | undefined = 0
   @State statusBarHeight: number | undefined = 0
   @State isStatusBarEnable: boolean = true
+  scroller: Scroller = new Scroller()
 
   build() {
-    Row() {
+    Scroll(this.scroller) {
       Column({ space: 10 }) {
-        Stack({alignContent:Alignment.Center}){
+        Stack({ alignContent: Alignment.Center }) {
           Text('沉浸式').fontColor(Color.Red).fontSize(16)
         }.width('100%')
+        .height(300)
         .backgroundColor(Color.Pink)
-        .expandSafeArea([SafeAreaType.SYSTEM],[SafeAreaEdge.TOP])
+        .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP])
+
         Image($r('app.media.img1')).width('100%').height(300)
           .objectFit(ImageFit.Cover)
         Button('设置全屏显示')

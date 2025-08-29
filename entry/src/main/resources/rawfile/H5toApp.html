@@ -4,18 +4,43 @@
 <body>
 <button type="button" onclick="callArkTS()">调用原生无参函数</button>
 <button type="button" onclick="callArkTS1()">调用原生传参函数</button>
+<button type="button" onclick="callArkTS2()">调用原生传参数组函数</button>
+<button type="button" onclick="callArkTS3()">调用原生传参复杂对象函数</button>
+<button type="button" onclick="callArkTS4()">应用侧调用前端页面的Callback</button>
 <p id="demo"></p>
 <script>
     function callArkTS() {
-        let str = nativeCall.test();
+        let str = nativeCall.test();//拿到返回值
         document.getElementById("demo").innerHTML = str;
-        console.info('ArkTS Hello World! :' + str);
+        console.info('===ArkTS Hello World! :' + str);
     }
 
+
+
      function callArkTS1() {
-        let str = nativeCall.testWithParam("AAA");
+        let str = nativeCall.testWithParam("AAA");//拿到返回值
         document.getElementById("demo").innerHTML = str;
-        console.info('ArkTS Hello World! :' + str);
+        console.info('===ArkTS Hello World! :' + str);
+    }
+
+    function callArkTS2(){
+      let array =nativeCall.testWithArray();
+      document.getElementById("demo").innerHTML = array;
+      console.info('===ArkTS Hello World! :' + array);
+    }
+
+    function callArkTS3(){
+       let student=nativeCall.testWithObject("张较瘦",18);
+       let showStr=nativeCall.testToString(student);
+       document.getElementById("demo").innerHTML = showStr;
+       console.info('===ArkTS Hello World! :' + showStr);
+    }
+
+    function callArkTS4(){
+      nativeCall.testWithFunction(function(param){nativeCall.toString(param);
+       document.getElementById("demo").innerHTML = '显示信息：'+param;
+      });
+
     }
 </script>
 </body>

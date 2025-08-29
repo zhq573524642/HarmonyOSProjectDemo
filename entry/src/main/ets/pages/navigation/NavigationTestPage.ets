@@ -156,48 +156,48 @@ struct NavigationTestPage {
       List({ space: 15, scroller: this.scroller }) {
         ForEach(this.dataList, (item: OnePerson, index: number) => {
           ListItem() {
-            NavRouter() {
-              Text(item.name)
-                .fontColor(Color.Black)
-                .fontSize(20)
-                .width('100%')
-                .height(60)
-                .textAlign(TextAlign.Center)
-                .borderRadius(20)
-                .borderColor(Color.Gray)
-                .borderWidth(1)
-                .backgroundColor(Color.White)
-                .onClick(() => {
-                  switch (index) {
-                    case 0:
-                      this.pageStack.pushPathByName('NavDialogPage', {
-                        name: '张三',
-                        age: 18
-                      }, (info: PopInfo) => {
-                        console.debug('===PopInfo：' + info.info.name + '==' + JSON.stringify(info.result))
-                      }, true)
-                      break
-                    case 1:
-                      this.handlePush()
-                      break
-                    case 2:
+            // NavRouter() {
+            Text(item.name)
+              .fontColor(Color.Black)
+              .fontSize(20)
+              .width('100%')
+              .height(60)
+              .textAlign(TextAlign.Center)
+              .borderRadius(20)
+              .borderColor(Color.Gray)
+              .borderWidth(1)
+              .backgroundColor(Color.White)
+              .onClick(() => {
+                switch (index) {
+                  case 0:
+                    this.pageStack.pushPathByName('NavDialogPage', new Object({
+                      name: '张三',
+                      age: 18
+                    }), (info: PopInfo) => {
+                      console.debug('===PopInfo：' + info.info.name + '==' + JSON.stringify(info.result))
+                    }, true)
+                    break
+                  case 1:
+                    this.handlePush()
+                    break
+                  case 2:
 
-                      break
-                    case 3:
-                      animateTo({ duration: 1000, curve: curves.springMotion() }, () => {
-                        this.pageStack.pushPath({ name: 'NavStandardPage' }, false)
-                      })
-                      break
-                    case 4:
-                      this.pageStack.pushPathByName('NavHarPage1', '', false)
-                      break
-                  }
-                })
-              // NavDestination() {
-              //   Text("NavDestinationContent" + item.name)
-              // }
-              // .title("NavDestinationTitle" + item.name)
-            }
+                    break
+                  case 3:
+                    animateTo({ duration: 1000, curve: curves.springMotion() }, () => {
+                      this.pageStack.pushPath({ name: 'NavStandardPage' }, false)
+                    })
+                    break
+                  case 4:
+                    this.pageStack.pushPathByName('NavHarPage', '', true)
+                    break
+                }
+              })
+            // NavDestination() {
+            //   Text("NavDestinationContent" + item.name)
+            // }
+            // .title("NavDestinationTitle" + item.name)
+            // }
           }.geometryTransition('shareId1')
         }, (item: Person) => item.id.toString())
       }.width('80%')
@@ -212,7 +212,7 @@ struct NavigationTestPage {
     .hideToolBar(this.isHideToolBar) //是否隐藏ToolBar
     .mode(this.navigationMode)
     .titleMode(this.titleMode)
-    // .navDestination(this.PageMap)
+    .navDestination(this.PageMap)
     .menus([
       {
         value: "菜单1", icon: "resources/base/media/tab_home_f.png", action: () => {

@@ -1,10 +1,25 @@
 import router from '@ohos.router'
+import { RouterUtil } from '@ohos/common'
 import { CommonButton, CommonTitle } from '../component/MyComponent'
+import { ListLearnPage } from '../list/ListLearnPage'
+import { ColumnPage } from './ColumnPage'
+import { FlexPage } from './FlexPage'
+import { OneMoreMatchPage } from './OneMoreMatchPage'
+import { RelativeContainerPage } from './RelativeContainerPage'
+import { RowPage } from './RowPage'
+import { ScrollPage } from './ScrollPage'
+import { StackPage } from './StackPage'
 
-@Entry
+@Entry({
+  routeName: 'ContainerComponentPage'
+})
 @Component
-struct ContainerComponentPage {
+export struct ContainerComponentPage {
   private scroller: Scroller = new Scroller()
+
+  static startPage() {
+    RouterUtil.pushNamedRoute('ContainerComponentPage')
+  }
 
   build() {
     Scroll(this.scroller) {
@@ -12,41 +27,31 @@ struct ContainerComponentPage {
 
         CommonButton({ text: 'Column' })
           .onClick(() => {
-            router.pushUrl({ url: 'pages/container/ColumnPage' })
+            ColumnPage.startPage()
           })
         CommonButton({ text: 'Row' })
           .onClick(() => {
-            router.pushUrl({ url: 'pages/container/RowPage' })
+            RowPage.startPage()
           })
         CommonButton({ text: '层叠布局-Stack' })
           .onClick(() => {
-            router.pushUrl({ url: 'pages/container/StackPage' })
+            StackPage.startPage()
           })
         CommonButton({ text: '弹性布局Flex' })
           .onClick(() => {
-            router.pushUrl({ url: 'pages/container/FlexPage' })
+            FlexPage.startPage()
           })
         Row() {
           CommonButton({ text: 'Scroll组件-垂直' })
             .onClick(() => {
-              router.pushUrl({
-                url: 'pages/container/ScrollPage',
-                params: {
-                  direction: 1
-                }
-              }, router.RouterMode.Single)
+              ScrollPage.startPage(1)
             })
             .layoutWeight(1)
             .height(40)
 
           CommonButton({ text: 'Scroll组件-水平' })
             .onClick(() => {
-              router.pushUrl({
-                url: 'pages/container/ScrollPage',
-                params: {
-                  direction: 2
-                }
-              }, router.RouterMode.Single)
+              ScrollPage.startPage(2)
             })
             .layoutWeight(1)
             .height(40)
@@ -54,17 +59,15 @@ struct ContainerComponentPage {
 
         CommonButton({ text: '相对布局-RelativeContainer' })
           .onClick(() => {
-            router.pushUrl({ url: 'pages/container/RelativeContainerPage' })
+            RelativeContainerPage.startPage()
           })
         CommonButton({ text: '各种列表布局-List' })
           .onClick(() => {
-            router.pushUrl({ url: 'pages/list/ListLearnPage' })
+            ListLearnPage.startPage()
           })
-        CommonButton({text:'一多适配'})
-          .onClick(()=>{
-             router.pushUrl({
-               url:'pages/container/OneMoreMatchPage'
-             })
+        CommonButton({ text: '一多适配' })
+          .onClick(() => {
+            OneMoreMatchPage.startPage()
           })
 
 
@@ -87,6 +90,12 @@ struct ContainerComponentPage {
         CommonButton({ text: '下拉刷新Refresh' })
           .onClick(() => {
             router.pushUrl({ url: 'pages/container/RefreshPage' })
+          })
+        CommonButton({ text: '状态布局和下拉刷新上拉加载' })
+          .onClick(() => {
+            router.pushUrl({
+              url: 'pages/container/RefreshStatePage'
+            })
           })
         CommonButton({ text: '侧边栏SideBarContainer' })
           .onClick(() => {

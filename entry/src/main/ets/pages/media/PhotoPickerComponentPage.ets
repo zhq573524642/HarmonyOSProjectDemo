@@ -1,4 +1,5 @@
 import {
+  BaseItemInfo,
   ClickType,
   DataType,
   ItemInfo,
@@ -16,6 +17,9 @@ import {
 } from '@ohos.file.PhotoPickerComponent'
 import { ArrayList } from '@kit.ArkTS'
 import photoAccessHelper from '@ohos.file.photoAccessHelper'
+import { LengthMetrics } from '@kit.ArkUI'
+import { CustomToggle } from '../../widget/CustomToggle'
+import { ToastUtils } from '@ohos/common'
 
 @Entry
 @Component
@@ -23,26 +27,51 @@ struct PhotoPickerComponentPage {
   pickerOptions: PickerOptions = new PickerOptions()
   @State pickerController: PickerController = new PickerController()
   @State selectedList: ArrayList<string> = new ArrayList()
+  photoBrowserBackgroundColorMode: string[] = ['AUTO', 'LIGHT', 'DARK']
+  maxSelectedReminderMode: string[] = ['MASK', 'TOAST']
+  browserGridOrientation: string[] = ['Vertical', 'Horizontal']
 
   aboutToAppear(): void {
-    this.pickerOptions.checkBoxColor = '#ffff0000'; //勾选框的背景色。格式为8位十六进制颜色代码。string
     this.pickerOptions.backgroundColor = '#ffffffff'; //picker宫格页面背景色。格式为8位十六进制颜色代码。
-    this.pickerOptions.isRepeatSelectSupported = false; //是否支持单张图片重复选择。true表示支持。
+    this.pickerOptions.checkBoxColor = '#ffff0000'; //勾选框的背景色。格式为8位十六进制颜色代码。string
     this.pickerOptions.checkboxTextColor = '#ff000000'; //勾选框内文本颜色。格式为8位十六进制颜色代码。 （该能力暂不支持）
+    this.pickerOptions.isRepeatSelectSupported = true; //是否支持单张图片重复选择。true表示支持。
     this.pickerOptions.photoBrowserBackgroundColorMode = PickerColorMode.AUTO; //大图背景颜色。包括跟随系统、浅色模式以及深色模式，默认为跟随系统。
     this.pickerOptions.maxSelectedReminderMode = ReminderMode.MASK; //选择数量达到最大时的提示方式。包括弹toast提示、不提示以及蒙层提示，默认为弹toast提示。
     this.pickerOptions.orientation = PickerOrientation.VERTICAL; //宫格页面滑动预览方向，包括水平和竖直两个方向，默认为竖直方向。（该能力暂不支持）
     this.pickerOptions.selectMode = SelectMode.MULTI_SELECT; //选择模式。包括多选和单选，默认为多选。
     this.pickerOptions.maxPhotoSelectNumber = 9; //图片最大的选择数量。最大值为500，受到最大选择总数的限制。
     this.pickerOptions.maxVideoSelectNumber = 4; //视频最大的选择数量。最大值为500，受到最大选择总数的限制。
-    this.pickerOptions.isSearchSupported = false; //是否支持搜索
-    this.pickerOptions.isPhotoTakingSupported = true;//是否支持拍照
+    this.pickerOptions.isSearchSupported = true; //是否支持搜索
+    this.pickerOptions.isPhotoTakingSupported = true; //是否支持拍照
     this.pickerOptions.MIMEType = photoAccessHelper.PhotoViewMIMETypes.IMAGE_TYPE; //picker展示的类型
   }
 
   build() {
     Column({ space: 10 }) {
-      Text('PickerController')
+      Flex({
+        wrap: FlexWrap.Wrap,
+        direction: FlexDirection.Row,
+        space: { main: LengthMetrics.vp(10), cross: LengthMetrics.vp(10) }
+      }) {
+        Button('是否支持单张图片重复选择')
+          .onClick(() => {
+            this.pickerOptions.isRepeatSelectSupported = !this.pickerOptions.isRepeatSelectSupported
+          })
+        Button('大图背景颜色模式')
+          .onClick(() => {
+            this.setPhotoBrowserBackgroundColorMode()
+          })
+        Button('选择最大数量时提示方式')
+          .onClick(() => {
+            this.setMaxSelectedReminderMode()
+          })
+        Button('宫格页面滑动预览方向')
+          .onClick(() => {
+            this.setGridBrowserOrientation()
+          })
+      }
+
       Button('setData')
         .onClick(() => {
           //DataType.SET_SELECTED_URIS
@@ -66,10 +95,11 @@ struct PhotoPickerComponentPage {
           //用户在Picker组件中勾选图片时产生的回调事件，将图片uri报给应用。
           // this.selectedList.add(uri)
           // this.pickerController.setData(DataType.SET_SELECTED_URIS, this.selectedList)
+          ToastUtils.show('图片选择：' + uri)
         },
         onDeselect: (uri: string) => {
           //用户在Picker组件中取消勾选图片时产生的回调事件，同时也会将图片uri报给应用。
-
+          ToastUtils.show('图片取消选择：' + uri)
         },
         onItemClicked: (itemInfo: ItemInfo, clickType: ClickType): boolean => {
           // 用户在picker组件中点击item产生的回调事件。
@@ -99,11 +129,17 @@ struct PhotoPickerComponentPage {
         },
         onEnterPhotoBrowser: (photoBrowserInfo: PhotoBrowserInfo): boolean => {
           //点击进入大图时产生的回调事件，将大图相关信息报给应用。
+          ToastUtils.show('进入大图浏览')
           return false
         },
         onExitPhotoBrowser: (photoBrowserInfo: PhotoBrowserInfo): boolean => {
           // 退出大图时产生的回调事件，将大图相关信息报给应用。
+          ToastUtils.show('退出大图浏览')
           return false
+        },
+        onPhotoBrowserChanged: (browserItemInfo: BaseItemInfo): boolean => {
+          ToastUtils.show('大图切换：' + browserItemInfo.uri)
+          return true
         },
         onPickerControllerReady: () => {
           //当pickerController可用时产生的回调事件。
@@ -116,5 +152,62 @@ struct PhotoPickerComponentPage {
 
     }
     .width('100%')
+  }
+
+  //设置大图浏览背景色模式
+  setPhotoBrowserBackgroundColorMode() {
+    TextPickerDialog.show({
+      range: this.photoBrowserBackgroundColorMode,
+      canLoop: false,
+      onAccept: (value: TextPickerResult) => {
+        switch (value.index) {
+          case 0:
+            this.pickerOptions.photoBrowserBackgroundColorMode = PickerColorMode.AUTO
+            break
+          case 1:
+            this.pickerOptions.photoBrowserBackgroundColorMode = PickerColorMode.LIGHT
+            break
+          case 2:
+            this.pickerOptions.photoBrowserBackgroundColorMode = PickerColorMode.DARK
+            break
+        }
+      }
+    })
+  }
+
+  //设置选择最大数量时的提示方式
+  setMaxSelectedReminderMode() {
+    TextPickerDialog.show({
+      range: this.maxSelectedReminderMode,
+      canLoop: false,
+      onAccept: (value: TextPickerResult) => {
+        switch (value.index) {
+          case 0:
+            this.pickerOptions.maxSelectedReminderMode = ReminderMode.MASK
+            break
+          case 1:
+            this.pickerOptions.maxSelectedReminderMode = ReminderMode.TOAST
+            break
+        }
+      }
+    })
+  }
+
+  //设置宫格浏览方向
+  setGridBrowserOrientation() {
+    TextPickerDialog.show({
+      range: this.browserGridOrientation,
+      canLoop: false,
+      onAccept: (value: TextPickerResult) => {
+        switch (value.index) {
+          case 0:
+            this.pickerOptions.orientation = PickerOrientation.VERTICAL
+            break
+          case 1:
+            this.pickerOptions.orientation = PickerOrientation.HORIZONTAL
+            break
+        }
+      }
+    })
   }
 }

@@ -12,7 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { ObservedArray } from './ObservedArray';
+// import { ObservedArray } from './ObservedArray';
 
 
 const TAG = '[BasicDataSource]';
@@ -94,13 +94,24 @@ export default class LazyDataSource<T> extends BasicDataSource<T> {
     this.notifyDataAdd(this.dataArray.length - 1);
   }
 
-  public pushArrayData(newData: ObservedArray<T>): void {
+  // public pushArrayData(newData: ObservedArray<T>): void {
+  //   this.clear();
+  //   this.dataArray.push(...newData);
+  //   this.notifyDataReload();
+  // }
+
+  public pushArrayData(newData: Array<T>): void {
     this.clear();
     this.dataArray.push(...newData);
     this.notifyDataReload();
   }
 
-  public appendArrayData(addData: ObservedArray<T>): void {
+  // public appendArrayData(addData: ObservedArray<T>): void {
+  //   this.dataArray.push(...addData);
+  //   this.notifyDataReload();
+  // }
+
+  public appendArrayData(addData: Array<T>): void {
     this.dataArray.push(...addData);
     this.notifyDataReload();
   }
@@ -110,7 +121,15 @@ export default class LazyDataSource<T> extends BasicDataSource<T> {
     this.notifyDataDelete(index);
   }
 
-  public getDataList(): ObservedArray<T> {
+  public changeData(index: number, data: T): void {
+    this.dataArray.splice(index, 1, data);
+    this.notifyDataChange(index);
+  }
+
+  // public getDataList(): ObservedArray<T> {
+  //   return this.dataArray;
+  // }
+  public getDataList(): Array<T> {
     return this.dataArray;
   }
 

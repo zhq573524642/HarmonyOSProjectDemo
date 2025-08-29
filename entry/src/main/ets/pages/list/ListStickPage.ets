@@ -152,7 +152,7 @@ struct ListStickPage {
 
       Stack({ alignContent: Alignment.BottomEnd }) {
         Stack() {
-          List({ space: 20, scroller: this.listScroller }) {
+          List({ scroller: this.listScroller }) {
             ForEach(this.listData, (item: UserInfo, indexGroup: number) => {
               ListItemGroup({ header: this.itemHeader(item.title) }) {
                 ForEach(item.contact, (contact: Contact, index) => {

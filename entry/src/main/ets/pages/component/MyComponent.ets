@@ -3,7 +3,7 @@ import promptAction from '@ohos.promptAction'
 
 @Component
 export struct CommonButton {
-  private text: string = '点击'
+   text: string = '点击'
 
   build() {
     Row() {
@@ -71,13 +71,14 @@ export struct Square {
 
 @Component
 export struct CommonTitle {
-  private title: string = ''
+   title: string = ''
+   fontSize:number=18
 
   build() {
     Row() {
       Text(this.title)
         .fontColor(Color.Black)
-        .fontSize(18)
+        .fontSize(this.fontSize)
         .fontWeight(FontWeight.Bold)
     }.padding(15)
   }

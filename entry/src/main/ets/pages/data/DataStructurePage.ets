@@ -1,22 +1,78 @@
-import { CommonButton } from '../component/MyComponent'
+import { CommonButton, CommonTitle } from '../component/MyComponent'
 import { router } from '@kit.ArkUI'
+import { RouterUtil } from '@ohos/common'
+import { ArrayListPage } from './ArrayListPage'
+import { ListTestPage } from './ListTestPage'
 
-@Entry
+@Entry({ routeName: 'DataStructurePage' })
 @Component
-struct DataStructurePage {
+export struct DataStructurePage {
+  static startPage() {
+    RouterUtil.pushNamedRoute('DataStructurePage')
+  }
+
   build() {
     Column() {
-      CommonButton({ text: '数组Array' })
+      CommonTitle({ title: '线性容器' })
+      CommonButton({ text: 'Array数组' })
         .onClick(() => {
           router.pushUrl({
-             url:'pages/data/ArrayTestPage'
+            url: 'pages/data/ArrayTestPage'
           })
         })
-      CommonButton({ text: '集合ArrayList' })
+      CommonButton({ text: 'ArrayList动态数组' })
         .onClick(() => {
-          router.pushUrl({
-            url:'pages/data/ArrayListPage'
-          })
+          ArrayListPage.startPage()
+        })
+      CommonButton({ text: 'List单向链表' })
+        .onClick(() => {
+          ListTestPage.startPage()
+        })
+      CommonButton({ text: 'LinkedList双向链表' })
+        .onClick(() => {
+
+        })
+      CommonButton({ text: 'Deque双向队列' })
+        .onClick(() => {
+
+        })
+      CommonButton({ text: 'Queue单向队列' })
+        .onClick(() => {
+
+        })
+      CommonButton({ text: 'Stack栈' })
+        .onClick(() => {
+
+        })
+
+      CommonTitle({ title: '非线性容器' })
+      CommonButton({ text: 'HashMap' })
+        .onClick(() => {
+
+        })
+      CommonButton({ text: 'HashSet' })
+        .onClick(() => {
+
+        })
+      CommonButton({ text: 'TreeMap' })
+        .onClick(() => {
+
+        })
+      CommonButton({ text: 'TreeSet' })
+        .onClick(() => {
+
+        })
+      CommonButton({ text: 'LightWeightMap' })
+        .onClick(() => {
+
+        })
+      CommonButton({ text: 'LightWeightSet' })
+        .onClick(() => {
+
+        })
+      CommonButton({ text: 'PlainArray' })
+        .onClick(() => {
+
         })
     }
   }

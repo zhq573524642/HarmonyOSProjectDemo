@@ -1,0 +1,56 @@
+{
+  "startupTasks": [
+    {
+      "name": "StartupTask_001",
+      "srcEntry": "./ets/startup/StartupTask_001.ets",
+      "dependencies": [
+        "StartupTask_002",
+        "StartupTask_003"
+      ],
+      "runOnThread": "taskPool",
+      "waitOnMainThread": false
+    },
+    {
+      "name": "StartupTask_002",
+      "srcEntry": "./ets/startup/StartupTask_002.ets",
+      "dependencies": [
+        "StartupTask_004"
+      ],
+      "runOnThread": "taskPool",
+      "waitOnMainThread": false
+    },
+    {
+      "name": "StartupTask_003",
+      "srcEntry": "./ets/startup/StartupTask_003.ets",
+      "dependencies": [
+        "StartupTask_004"
+      ],
+      "runOnThread": "taskPool",
+      "waitOnMainThread": false
+    },
+    {
+      "name": "StartupTask_004",
+      "srcEntry": "./ets/startup/StartupTask_004.ets",
+      "runOnThread": "taskPool",
+      "waitOnMainThread": false
+    },
+    {
+      "name": "StartupTask_005",
+      "srcEntry": "./ets/startup/StartupTask_005.ets",
+      "dependencies": [
+        "StartupTask_006"
+      ],
+      "runOnThread": "mainThread",
+      "waitOnMainThread": true,
+      "excludeFromAutoStart": true
+    },
+    {
+      "name": "StartupTask_006",
+      "srcEntry": "./ets/startup/StartupTask_006.ets",
+      "runOnThread": "mainThread",
+      "waitOnMainThread": false,
+      "excludeFromAutoStart": true
+    }
+  ],
+  "configEntry": "./ets/startup/StartupConfig.ets"
+}

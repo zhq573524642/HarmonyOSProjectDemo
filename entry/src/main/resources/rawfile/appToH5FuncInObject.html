@@ -1,0 +1,39 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<body>
+<button type="button" onclick="callArkTS()">写法1</button>
+<button type="button" onclick="callArkTS1()">写法2</button>
+<p id="demo"></p>
+<script>
+    // 写法1
+    class Student {
+        constructor(nameList) {
+            this.methodNameListForJsProxy = nameList;
+        }
+        helloCall(param) {
+        nativeCall.toString(param)
+            //document.getElementById("demo").innerHTML = '调用了hello方法：'+param;
+        }
+    }
+    var st = new Student(["hello1"])
+    // 写法2
+    //创建一个构造器，构造函数首字母大写
+    function Obj1(){
+        this.methodNameListForJsProxy=["hello2"];
+        this.helloCall=function(param){
+        nativeCall.toString(param)
+            //document.getElementById("demo").innerHTML = '调用了hello方法：'+param;
+        };
+    }
+    //利用构造器，通过new关键字生成对象
+    var st1 = new Obj1();
+    function callArkTS() {
+        nativeCall.testWithFunctionInH5Object(st);
+    }
+    function callArkTS1() {
+        nativeCall.testWithFunctionInH5Object(st1);
+    }
+</script>
+</body>
+</html>

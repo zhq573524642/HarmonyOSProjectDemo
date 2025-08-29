@@ -1,9 +1,15 @@
 import { CommonButton } from '../component/MyComponent'
 import { router } from '@kit.ArkUI'
+import { RouterUtil } from '@ohos/common'
+import { GridRowPage } from './GridRowPage'
 
-@Entry
+@Entry({ routeName: 'OneMoreMatchPage' })
 @Component
-struct OneMoreMatchPage {
+export struct OneMoreMatchPage {
+  static startPage() {
+    RouterUtil.pushNamedRoute('OneMoreMatchPage')
+  }
+
   build() {
     Column() {
       CommonButton({ text: '一多：Tab首页' })
@@ -26,9 +32,7 @@ struct OneMoreMatchPage {
         })
       CommonButton({ text: '一多：栅格布局' })
         .onClick(() => {
-          router.pushUrl({
-            url: 'pages/container/GridRowPage'
-          })
+          GridRowPage.startPage()
         })
     }
     .width('100%')

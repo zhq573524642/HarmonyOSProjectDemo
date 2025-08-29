@@ -48,18 +48,29 @@ function test(): void {
   //调用箭头函数
   arrowFun("abc", 11)
 }
+
 //剩余参数 可变参数,只能作为参数列表最后一个参数
 function test1(name: string, ...age: number[]) {
 
 }
+
 //可选参数
 function test2(name: string, age?: number) {
 
 }
+
 //箭头函数
 let arrowFun = (name: string, age: number) => {
 
 }
+//带返回值的箭头函数
+let oneFunc = (name: string, age: number): boolean => {
+
+  return false
+}
+
+//函数类型
+type twoFunc = (name: string, age: number) => boolean
 
 class Person {
   private name: string
@@ -70,7 +81,36 @@ class Person {
     this.age = age
   }
 
+  get _name():string{
+    return this.name
+  }
+
   public getInfo(className?: string): string {
-    return 'my name is ${this.name} and age is ${this.age}'
+    return `my name is ${this.name} and age is ${this.age}`
   }
 }
+
+class Point {
+  x: number = 0;
+  y: number = 0;
+}
+
+let point: Point = {
+  x: 100,
+  y: 200
+}
+
+//闭包
+function func1(): () => number {
+  let count = 0
+  let g = (): number => {
+    count++;
+    return count
+  }
+  return g
+}
+
+//调用
+let z = func1()
+let result1 = z(); //1
+let result2 = z(); //2
