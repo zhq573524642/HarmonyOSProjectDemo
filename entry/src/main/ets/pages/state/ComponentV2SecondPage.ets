@@ -1,5 +1,5 @@
 import { StudentClass } from "./ComponentV2Page"
-import { AppStorageV2, PersistenceV2 } from "@kit.ArkUI"
+import { AppStorageV2, PersistenceV2, Type } from "@kit.ArkUI"
 import { RouterUtil } from "@ohos/common"
 
 @Entry({ routeName: 'ComponentV2SecondPage' })
@@ -47,3 +47,5 @@ export struct ComponentV2SecondPage {
     .width('100%')
   }
 }
+
+

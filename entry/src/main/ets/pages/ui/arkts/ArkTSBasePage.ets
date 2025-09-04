@@ -7,6 +7,7 @@ import { productViewManager } from '@kit.StoreKit'
 import { call } from '@kit.TelephonyKit'
 import { calendarManager } from '@kit.CalendarKit'
 import { DataStructurePage } from '../../data/DataStructurePage'
+import { StateManagerPage } from '../../state/StateManagerPage'
 
 @Entry
 @Component
@@ -29,7 +30,7 @@ struct ArkTSBasePage {
           })
         CommonButton({ text: '状态控制' })
           .onClick(() => {
-            router.pushUrl({ url: 'pages/state/StateManagerPage' })
+            StateManagerPage.startPage()
           })
         CommonButton({ text: '装饰器' })
           .onClick(() => {

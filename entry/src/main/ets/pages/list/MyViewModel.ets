@@ -1,4 +1,4 @@
-import { ObservedArray } from '../mvvm/PageEntry'
+import { ObservedArray } from '../../utils/ObservedArray'
 import { MyBook, Tag } from './LazyForEachTestPage'
 
 class MyViewModel {

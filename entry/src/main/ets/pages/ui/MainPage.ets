@@ -11,6 +11,9 @@ import { PreferencePage } from '../datastore/PreferencePage'
 import { SingleVersionArkDataPage } from '../datastore/SingleVersionArkDataPage'
 import { RelationalDataStorePage } from '../datastore/RelationalDataStorePage'
 import { DistributedDataObject1Page } from '../datastore/DistributedDataObject1Page'
+import { PageEntry } from '../mvvm/pages/PageEntry'
+import { AppContinuePage } from '../continue/AppContinuePage'
+import { AcrossDevicePastePage } from '../continue/AcrossDevicePastePage'
 
 let uiAbilityLocalStorage = LocalStorage.getShared()
 
@@ -38,6 +41,10 @@ struct MainPage {
         CommonButton({ text: 'ArkUI组件' })
           .onClick(() => {
             ArkUIPage.startPage()
+          })
+        CommonButton({ text: 'MVVM示例' })
+          .onClick(() => {
+            PageEntry.startPage()
           })
         CommonButton({ text: '网络' })
           .onClick(() => {
@@ -99,6 +106,15 @@ struct MainPage {
             router.pushUrl({
               url: 'pages/datastore/DistributedDataObject2Page'
             })
+          })
+        CommonTitle({ title: '自由流转' })
+        CommonButton({ text: '应用接续' })
+          .onClick(() => {
+            AppContinuePage.startPage({ "get_continue_content": "1" })
+          })
+        CommonButton({ text: '跨设备剪切板' })
+          .onClick(() => {
+            AcrossDevicePastePage.startPage()
           })
         CommonTitle({ title: 'Core File Kit（文件基础服务）' })
         CommonButton({ text: '获取应用文件路径' })

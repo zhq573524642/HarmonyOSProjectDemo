@@ -5,11 +5,12 @@ import { BusinessError } from '@kit.BasicServicesKit';
 import AbilityConstant from '@ohos.app.ability.AbilityConstant';
 import Want from '@ohos.app.ability.Want';
 import { webview } from '@kit.ArkWeb';
-import { KeyboardAvoidMode, UIContext } from '@kit.ArkUI';
+import { IconType, KeyboardAvoidMode, promptAction, Router, router, UIContext } from '@kit.ArkUI';
 import { commonType, distributedDataObject } from '@kit.ArkData';
 import { fileIo, fileUri } from '@kit.CoreFileKit';
 import { rpc } from '@kit.IPCKit';
 import { data } from '@kit.TelephonyKit';
+import wantConstant from '@ohos.app.ability.wantConstant';
 
 const localStorage: LocalStorage = new LocalStorage('uiContext');
 
@@ -37,7 +38,8 @@ class MyParcelable implements rpc.Parcelable {
 }
 
 export default class EntryAbility extends UIAbility {
-  storage: LocalStorage = localStorage;
+  // storage: LocalStorage = localStorage;
+  storage: LocalStorage = new LocalStorage();
 
   multiDeviceDataObject: distributedDataObject.DataObject | undefined
 
@@ -45,7 +47,7 @@ export default class EntryAbility extends UIAbility {
 
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam) {
     //UIAbility创建完成
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
+    console.debug('===Ability-onCreate')
 
     /***************************卡片服务开发*********************************/
     // 通过在GlobalContext对象上绑定filesDir，可以实现UIAbility组件与UI之间的数据同步。
@@ -76,16 +78,13 @@ export default class EntryAbility extends UIAbility {
 
     //TODO 跨端迁移：分布式对象跨端同步  接收端
     // 2. 接收端在onCreate和onNewWant接口中创建分布式数据对象并加入组网进行数据恢复
-    if (launchParam.launchReason == AbilityConstant.LaunchReason.CONTINUATION) {
-      if (want.parameters && want.parameters.distributedSessionId) {
-        this.restoreDistributedDataObject(want);
+    if (launchParam.launchReason === AbilityConstant.LaunchReason.CONTINUATION) {
+      if (want.parameters) {
+        this.handleContinueRestoreData(want)
       }
     }
 
     //TODO 多端协同：被调用端被拉起后创建和恢复分布式数据对象
-    if (want.parameters) {
-      console.debug('===参数：' + want.parameters.distributedSessionId)
-    }
     if (want.parameters && want.parameters.distributedSessionId) {
       // 3.1 创建分布式数据对象实例
       let data = new Data(undefined, undefined);
@@ -105,8 +104,27 @@ export default class EntryAbility extends UIAbility {
 
   //当UIAbility实例已经创建，并且启动模式是singleton，再次调用startAbility启动时，走这个回调方法
   onNewWant(want: Want, launchParam: AbilityConstant.LaunchParam): void {
-    if (launchParam.launchReason == AbilityConstant.LaunchReason.CONTINUATION) {
-      if (want.parameters && want.parameters.distributedSessionId) {
+    console.debug('===Ability-onNewWant')
+    if (launchParam.launchReason === AbilityConstant.LaunchReason.CONTINUATION) {
+      if (want.parameters) {
+        this.handleContinueRestoreData(want)
+      }
+
+    }
+
+  }
+
+  handleContinueRestoreData(want: Want) {
+    let continueType: number = want.parameters["type"] as number
+    //应用接续
+    if (continueType == 1001) {
+      let continueContent = JSON.stringify(want.parameters.data)
+      console.debug('===onCreate应用接续的内容' + continueContent)
+      this.storage.setOrCreate("get_continue_type", continueType)
+      this.storage.setOrCreate("get_continue_content", continueContent)
+      // this.context.restoreWindowStage(this.storage)
+    } else {
+      if (want.parameters.distributedSessionId) {
         this.restoreDistributedDataObject(want);
       }
     }
@@ -115,7 +133,7 @@ export default class EntryAbility extends UIAbility {
 
   //API13开始，如果用户使用最近任务列表一键清理来关闭该UIAbility实例，将不会执行onDestroy()回调，而是会直接终止进程
   onDestroy() {
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onDestroy');
+    console.debug('===Ability-onDestroy')
     try {
       this.callee.off('functionFromWidgetCard')
       this.callee.off('functionDynamicByCall')
@@ -134,7 +152,7 @@ export default class EntryAbility extends UIAbility {
     // Main window is created, set main page for this ability
     //WindowStage已经创建完成
     this.windowStage = windowStage
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageCreate');
+    console.debug('===Ability onWindowStageCreate')
     try {
       windowStage.on('windowStageEvent', (data) => {
         let stageEventType: window.WindowStageEventType = data;
@@ -164,6 +182,7 @@ export default class EntryAbility extends UIAbility {
     } catch (exception) {
       console.error('Failed to enable the listener for window stage event changes. Cause:' + JSON.stringify(exception));
     }
+
     windowStage.loadContent('pages/ui/MainPage', this.localStorage, (err, data) => {
       // 设置虚拟键盘抬起时压缩页面大小为减去键盘的高度
       windowStage.getMainWindowSync().getUIContext().setKeyboardAvoidMode(KeyboardAvoidMode.RESIZE);
@@ -174,8 +193,8 @@ export default class EntryAbility extends UIAbility {
         hilog.error(0x0000, 'testTag', 'Failed to load the content. Cause: %{public}s', JSON.stringify(err) ?? '');
         return;
       }
-      hilog.info(0x0000, 'testTag', 'Succeeded in loading the content. Data: %{public}s', JSON.stringify(data) ?? '');
 
+      hilog.info(0x0000, 'testTag', 'Succeeded in loading the content. Data: %{public}s', JSON.stringify(data) ?? '');
     });
     // this.storage.setOrCreate<UIContext>('uiContext',windowStage.getMainWindowSync().getUIContext())
 
@@ -225,7 +244,22 @@ export default class EntryAbility extends UIAbility {
   }
 
   onWindowStageRestore(windowStage: window.WindowStage): void {
-    hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onWindowStageRestore');
+    console.debug('===Ability onWindowStageRestore')
+    // TODO 接收到应用接续，跳转到目标页面
+    let continueType = this.storage.get("get_continue_type")
+    console.debug('===接续类型：' + continueType)
+    if (continueType !== undefined && continueType === 1001) {
+      this.storage.set("get_continue_type", 0)
+      let content = this.storage.get("get_continue_content") as string
+      console.debug('===内容：' + content)
+      let param: Record<string, Object> = {
+        "get_continue_content": content
+      };
+      router.pushNamedRoute({
+        name: 'AppContinuePage',
+        params: param
+      })
+    }
   }
 
   //UIAbility销毁前执行
@@ -252,29 +286,51 @@ export default class EntryAbility extends UIAbility {
   dataObject: distributedDataObject.DataObject | undefined = undefined
 
   onContinue(wantParam: Record<string, Object>): AbilityConstant.OnContinueResult | Promise<AbilityConstant.OnContinueResult> {
-    try {
-      console.debug('===onContinue')
-      //一、分布式数据对象跨端迁移
-      // 1. 迁移发起端在onContinue接口中创建分布式数据对象并保存数据到接收端
-      // 1.1 调用create接口创建并得到一个分布式数据对象实例
-      let attachment = this.createAttachment();
-      let data = new Data('The title', 'The text', attachment);
-      this.dataObject = distributedDataObject.create(this.context, data)
+    // try {
+    //   console.debug('===onContinue')
+    //   //一、分布式数据对象跨端迁移
+    //   // 1. 迁移发起端在onContinue接口中创建分布式数据对象并保存数据到接收端
+    //   // 1.1 调用create接口创建并得到一个分布式数据对象实例
+    //   let attachment = this.createAttachment();
+    //   let data = new Data('The title', 'The text', attachment);
+    //   this.dataObject = distributedDataObject.create(this.context, data)
+    //
+    //   // 1.2 调用genSessionId接口创建一个sessionId，调用setSessionId接口设置同步的sessionId，
+    //   // 并将这个sessionId放入wantParam
+    //   let sessionId = distributedDataObject.genSessionId();
+    //   console.debug('===生成的sessionId:' + sessionId)
+    //   this.dataObject.setSessionId(sessionId);
+    //   wantParam.distributedSessionId = sessionId;
+    //
+    //   // 1.3 从wantParam获取接收端设备networkId，使用这个networkId调用save接口保存数据到接收端
+    //   let deviceId = wantParam.targetDevice as string;
+    //   console.log(`===get deviceId: ${deviceId}`);
+    //   this.dataObject.save(deviceId);
+    // } catch (e) {
+    //   console.debug(`===continue异常：${e.code}--${e.message}`)
+    // }
+    // return AbilityConstant.OnContinueResult.AGREE;
 
-      // 1.2 调用genSessionId接口创建一个sessionId，调用setSessionId接口设置同步的sessionId，
-      // 并将这个sessionId放入wantParam
-      let sessionId = distributedDataObject.genSessionId();
-      console.debug('===生成的sessionId:' + sessionId)
-      this.dataObject.setSessionId(sessionId);
-      wantParam.distributedSessionId = sessionId;
-
-      // 1.3 从wantParam获取接收端设备networkId，使用这个networkId调用save接口保存数据到接收端
-      let deviceId = wantParam.targetDevice as string;
-      console.log(`===get deviceId: ${deviceId}`);
-      this.dataObject.save(deviceId);
-    } catch (e) {
-      console.debug(`===continue异常：${e.code}--${e.message}`)
+    //TODO 应用接续
+    //获取迁移对端的应用版本号
+    const targetVersion = wantParam.version;
+    const versionThreshold: number = 1000000;
+    if (targetVersion < versionThreshold) {
+      //版本兼容性校验不通过
+      promptAction.showToast({
+        message: '目标端应用版本号过低，不支持接续，请您升级应用版本后再试',
+        duration: 2000
+      })
+      return AbilityConstant.OnContinueResult.MISMATCH;
     }
+    // 迁移数据保存
+    // 将要迁移的数据保存在wantParam的自定义字段（如：data）中;
+    let content = AppStorage.get("app_continue_content") as string
+    wantParam["type"] = 1001
+    wantParam["data"] = content;
+    console.debug('===开启应用接续' + JSON.stringify(wantParam))
+    //设置接续后源应用不退出
+    wantParam[wantConstant.Params.SUPPORT_CONTINUE_SOURCE_EXIT_KEY] = false;
     return AbilityConstant.OnContinueResult.AGREE;
   }
 

@@ -49,6 +49,10 @@
       "value": "用于获取模糊位置"
     },
     {
+      "name": "permission_reason_paste",
+      "value": "用于访问剪切板内容"
+    },
+    {
       "name": "permission_reason_location_3",
       "value": "用于应用置于后台获取位置位置"
     },

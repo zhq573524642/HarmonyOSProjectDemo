@@ -1,6 +1,7 @@
 import { CommonTitle } from '../component/MyComponent'
-import { AppStorageV2, PersistenceV2 } from '@kit.ArkUI';
+import { AppStorageV2, PersistenceV2, Type } from '@kit.ArkUI';
 import { ComponentV2SecondPage } from './ComponentV2SecondPage';
+import { ToastUtils } from '@ohos/common';
 
 @ObservedV2
 export class Person1 {
@@ -20,9 +21,9 @@ export class Person1 {
 @ObservedV2
 export class StudentClass {
   @Trace
-  name: string = '姓名：初始化';
-  @Trace
   person: Person1 = new Person1('', 0)
+  @Trace
+  name: string = '姓名：初始化';
   @Trace
   age: number = 0
 
@@ -42,7 +43,7 @@ export class StudentClass {
 
 @Entry
 @ComponentV2
-struct ComponentV2Page {
+export struct ComponentV2Page {
   /**
    * 1.在@ComponentV2装饰的自定义组件中，开发者仅可以使用全新的状态变量装饰器，
    * 包括@Local、@Param、@Once、@Event、@Provider、@Consumer等。
@@ -59,7 +60,9 @@ struct ComponentV2Page {
    *
    *1.@ComponentV2装饰的自定义组件中的非状态变量接收来自父组件传递的变量。
 
-   2.将@State、@Prop、@Link、@ObjectLink、@Provide、@Consume、@StorageLink、@StorageProp、@LocalStorageLink、@LocalStorageProp等装饰的对象类型的变量传递给@ComponentV2装饰的自定义组件里的@Param、@Event等装饰的变量。
+   2.将@State、@Prop、@Link、@ObjectLink、@Provide、@Consume、@StorageLink、@StorageProp、
+   @LocalStorageLink、@LocalStorageProp等装饰的对象类型的变量传递给@ComponentV2装饰的自定义组件里的
+   @Param、@Event等装饰的变量。
 
    3.将被@Local、@Param、@Event、@Provider、@Consumer等装饰的Array、Set、Map、Date类型的变量传递给@Component装饰的自定义组件里的@State、@Prop、@ObjectLink、@Provide等装饰的变量。
 
@@ -146,7 +149,7 @@ struct ComponentV2Page {
           .onClick(() => {
             this.doubleBindingValue++
           })
-        TestDoubleBinding({ value: this.doubleBindingValue!! })
+        TestDoubleBinding({ value: this.doubleBindingValue!!})
 
         CommonTitle({ title: 'AppStorageV2: 应用全局UI状态存储' })
         TestAppStorageV2()
@@ -163,7 +166,7 @@ struct ComponentV2Page {
 
 @ComponentV2
 struct TestParamComponent {
-  //1.@Param表示组件从外部传入的状态，使得父子组件之间的数据能够进行同步：类比@Link
+  //1.@Param表示组件从外部传入的状态，使得父子组件之间的数据能够进行同步：
   //2.@Param装饰的变量支持本地初始化，但不允许在组件内部直接修改。
   //3.被@Param装饰的变量能够在初始化自定义组件时从外部传入，当数据源也是状态变量时，数据源的修改会同步给@Param。
   //4.@Param可以接受任意类型的数据源，包括普通变量、状态变量、常量、函数返回值等。
@@ -320,6 +323,7 @@ struct TestComputed {
 struct TestDoubleBinding {
   //双向绑定
   @Param value: number = 10
+  //@Event方法名需要声明为“$”+ @Param属性名
   @Event $value: (num: number) => void = (num: number) => {
   }
 
@@ -328,7 +332,8 @@ struct TestDoubleBinding {
       Text('双向绑定-子组件' + this.value).fontSize(20).fontColor(Color.Red)
       Button('点击设置子组件value值')
         .onClick(() => {
-          this.$value(20)
+          let value = this.value + 1;
+          this.$value(value)
         })
     }
   }
@@ -341,9 +346,9 @@ struct TestAppStorageV2 {
   //不支持非buildin类型，如PixelMap、NativePointer、ArrayList等Native类型。
   //不支持存储基本类型，如string、number、boolean等。
   @Local appStorageV2Value1: StudentClass
-    = AppStorageV2.connect(StudentClass, 'student1', () => new StudentClass())!
+    = AppStorageV2.connect<StudentClass>(StudentClass, 'student1', () => new StudentClass())!
   @Local appStorageV2Value2: StudentClass
-    = AppStorageV2.connect(StudentClass, 'student2', () => new StudentClass())!
+    = AppStorageV2.connect<StudentClass>(StudentClass, 'student2', () => new StudentClass())!
 
   build() {
     Column({ space: 10 }) {

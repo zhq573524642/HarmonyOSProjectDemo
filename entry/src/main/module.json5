@@ -37,6 +37,7 @@
         "icon": "$media:ic_app_launcher",
         // UIAbility组件的图标
         "label": "$string:EntryAbility_label",
+        "launchType": "singleton",
         // UIAbility组件的标签
         "startWindowIcon": "$media:ic_app_launcher",
         //	标识当前UIAbility组件启动页面图标资源文件的索引
@@ -45,7 +46,6 @@
         // UIAbility组件启动页面背景颜色资源文件的索引
         "exported": true,
         //标识当前UIAbility组件是否可以被其他应用调用。
-        "launchType": "singleton",
         //当前UIAbility的启动模式
         "skills": [
           //标识当前ExtensionAbility组件能够接收的Want的特征集。
@@ -174,6 +174,10 @@
           ]
         }
       },
+      //      {
+      //        "name": "ohos.permission.",
+      //        "reason": "用于跨设备调度Ability任务"
+      //      },
       {
         "name": "ohos.permission.READ_CALENDAR",
         "reason": "$string:permission_reason_calendar",
@@ -213,6 +217,17 @@
             "EntryAbility"
           ]
         }
+      },
+      {
+        "name": "ohos.permission.READ_PASTEBOARD",
+        "reason": "$string:permission_reason_paste",
+        "usedScene": {
+          "when": "inuse",
+          "abilities": [
+            "EntryAbility"
+          ]
+        }
+
       },
       //      {
       //        "name": "ohos.permission.LOCATION_IN_BACKGROUND",

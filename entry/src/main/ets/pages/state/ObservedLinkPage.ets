@@ -1,9 +1,11 @@
 import { CommonButton } from '../component/MyComponent';
 import { router } from '@kit.ArkUI';
+import { RouterUtil } from '@ohos/common';
+import { ObservedLinkClassPage } from './ObservedLinkClassPage';
 
-@Entry
+@Entry({routeName:'ObservedLinkPage'})
 @Component
-struct ObservedLinkPage {
+export struct ObservedLinkPage {
   @State message: string = 'Hello World';
   //1.用于嵌套场景中实现双向数据同步
   //2.子组件中@ObjectLink装饰器装饰的状态变量用于接收@Observed装饰的类的实例，和父组件中对应的状态变量建立双向数据绑定。
@@ -21,13 +23,15 @@ struct ObservedLinkPage {
   //9.限制1：使用@Observed装饰class会改变class原始的原型链，@Observed和其他类装饰器装饰同一个class可能会带来问题
    //限制2：@ObjectLink装饰器不能在@Entry装饰的自定义组件中使用
    //限制3：@ObjectLink装饰的变量不能本地初始化，仅能通过构造参数从父组件传入初始值
+
+  static startPage(){
+    RouterUtil.pushNamedRoute('ObservedLinkPage')
+  }
   build() {
     Column() {
       CommonButton({ text: '嵌套内部数据是class' })
         .onClick(()=>{
-           router.pushUrl({
-             url:'pages/state/ObservedLinkClassPage'
-           })
+          ObservedLinkClassPage.startPage()
         })
 
       CommonButton({ text: '对象数组类型' })

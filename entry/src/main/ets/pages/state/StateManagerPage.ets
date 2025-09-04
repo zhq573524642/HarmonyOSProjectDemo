@@ -1,6 +1,10 @@
 import { CommonButton, CommonTitle } from '../component/MyComponent';
 import { promptAction, router } from '@kit.ArkUI';
 import { ToastUtils } from '@ohos/common/src/main/ets/utils/ToastUtils';
+import { RouterUtil } from '@ohos/common';
+import { PageEntry } from '../mvvm/pages/PageEntry';
+import { ComponentV2Page } from './ComponentV2Page';
+import { ObservedLinkPage } from './ObservedLinkPage';
 
 class TempClass {
   num: number
@@ -34,10 +38,10 @@ PersistentStorage.persistProps([{
   defaultValue: 18
 }])
 
-@Entry({ storage: localStorage })
+@Entry({ storage: localStorage, routeName: "StateManagerPage" })
   //uiAbilityLocalStorage
 @Component({ freezeWhenInactive: true })
-struct StateManagerPage {
+export struct StateManagerPage {
   private scroller: Scroller = new Scroller()
   @LocalStorageProp('param1') localStorageProp: number = 0
   @LocalStorageLink('param2') localStorageLink: TempClass = new TempClass(0)
@@ -52,6 +56,10 @@ struct StateManagerPage {
   @State textInputShow: string = ''
   @StorageLink('freezeWhenInactiveValue') @Watch('freezeWhenInactiveValueChange') freezeWhenInactiveValue: number = 1
   uiContext: UIContext | undefined = undefined
+
+  static startPage() {
+    RouterUtil.pushNamedRoute('StateManagerPage')
+  }
 
   freezeWhenInactiveValueChange() {
     console.debug('===页面A--freezeWhenInactiveValueChange：' + this.freezeWhenInactiveValue)
@@ -69,9 +77,7 @@ struct StateManagerPage {
           })
         CommonButton({ text: '@Observed和@ObservedLink' })
           .onClick(() => {
-            router.pushUrl({
-              url: 'pages/state/ObservedLinkPage'
-            })
+            ObservedLinkPage.startPage()
           })
         CommonButton({ text: '@ObservedV2和@Trace' })
           .onClick(() => {
@@ -121,9 +127,7 @@ struct StateManagerPage {
         Button('当前页面')
         CommonButton({ text: 'MVVM示例' })
           .onClick(() => {
-            router.pushUrl({
-              url: 'pages/mvvm/PageEntry'
-            })
+            PageEntry.startPage()
           })
 
         CommonTitle({ title: '应用的状态' })

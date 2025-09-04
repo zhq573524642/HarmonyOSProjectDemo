@@ -1,7 +1,13 @@
-@Entry
+import { RouterUtil } from '@ohos/common'
+
+@Entry({ routeName: "ObservedLinkClassPage" })
 @Component
-struct ObservedLinkClassPage {
+export struct ObservedLinkClassPage {
   @State classA: Class_A = new Class_A(1, new Class_B(1, new Class_C(1)))
+
+  static startPage() {
+    RouterUtil.pushNamedRoute('ObservedLinkClassPage')
+  }
 
   build() {
     Column({ space: 10 }) {
