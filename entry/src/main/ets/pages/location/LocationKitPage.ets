@@ -52,7 +52,7 @@ struct LocationKitPage {
           this.isLocationPermissions = true
         } else {
           PermissionUtils.getInstance()
-            .openPermissionsInSystemSettings(this.context, this.context.abilityInfo.bundleName)
+            .openPermissionsInSystemSettings()
         }
       })
   }

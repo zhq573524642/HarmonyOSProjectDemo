@@ -12,8 +12,10 @@ export default class TodoListViewModel {
   @Track things: ThingsViewModelArray = new ThingsViewModelArray();
 
   async loadTasks(context: common.UIAbilityContext) {
-    let todoList = new TodoListModel([]);
+    //获取数据
+    let todoList = new TodoListModel();
     await todoList.loadTasks(context);
+    //将数据添加到数组
     for (let things of todoList.things) {
       let todoListViewModel = new ThingsViewModel();
       todoListViewModel.updateTask(things);

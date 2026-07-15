@@ -31,6 +31,14 @@
     {
       "name": "image_info_background",
       "value": "#FFFFFF"
+    },
+    {
+      "name": "color_333333",
+      "value": "#333333"
+    },
+    {
+      "name": "theme_color",
+      "value": "#0090ff"
     }
   ]
 }

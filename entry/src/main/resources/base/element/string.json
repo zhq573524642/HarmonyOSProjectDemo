@@ -65,6 +65,10 @@
       "value": "获取保持后台运行权限"
     },
     {
+      "name": "permission_reason_get_network_info",
+      "value": "获取网络信息"
+    },
+    {
       "name": "shortcut1",
       "value": "打开UI"
     },

@@ -9,6 +9,7 @@ import { RelativeContainerPage } from './RelativeContainerPage'
 import { RowPage } from './RowPage'
 import { ScrollPage } from './ScrollPage'
 import { StackPage } from './StackPage'
+import { TabsStickPage } from './TabsStickPage'
 
 @Entry({
   routeName: 'ContainerComponentPage'
@@ -56,6 +57,7 @@ export struct ContainerComponentPage {
             .layoutWeight(1)
             .height(40)
         }.width('100%')
+
 
         CommonButton({ text: '相对布局-RelativeContainer' })
           .onClick(() => {
@@ -129,6 +131,10 @@ export struct ContainerComponentPage {
                 tabType: 3
               }
             })
+          })
+        CommonButton({ text: 'Tabs吸顶' })
+          .onClick(() => {
+            TabsStickPage.start()
           })
 
       }.width('100%')

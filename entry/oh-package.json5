@@ -10,6 +10,6 @@
     "@ohos/sharedLibrary": "../sharedLibrary",
     "@ohos/staticLibrary": "../staticLibrary",
     "@ohos/common": "../common",
-    "@ohos/zutils": "../zutils"
+    "@ohos/zutils": "../zutils",
   }
 }

@@ -5,9 +5,7 @@ import util from "@ohos.util";
 export default class TodoListModel {
   things: Array<ThingModel> = [];
 
-  constructor(things: Array<ThingModel>) {
-    this.things = things;
-  }
+
 
   async loadTasks(context: common.UIAbilityContext) {
     let getJson = await context.resourceManager.getRawFileContent('default_tasks.json');

@@ -17,7 +17,7 @@
 
 const TAG = '[BasicDataSource]';
 
-class BasicDataSource <T> implements IDataSource {
+class BasicDataSource<T> implements IDataSource {
   private listeners: DataChangeListener[] = [];
 
   public totalCount(): number {
@@ -84,6 +84,10 @@ export default class LazyDataSource<T> extends BasicDataSource<T> {
     return this.dataArray[index];
   }
 
+  public getAllData(): T[] {
+    return this.dataArray;
+  }
+
   public addData(index: number, data: T): void {
     this.dataArray.splice(index, 0, data);
     this.notifyDataAdd(index);
@@ -121,10 +125,34 @@ export default class LazyDataSource<T> extends BasicDataSource<T> {
     this.notifyDataDelete(index);
   }
 
+  public deleteMoreData(start: number, deleteCount: number) {
+    this.dataArray.splice(start, deleteCount);
+    this.notifyDataReload();
+  }
+
   public changeData(index: number, data: T): void {
     this.dataArray.splice(index, 1, data);
     this.notifyDataChange(index);
   }
+
+  //交换数据
+  public moveData(from: number, to: number): void {
+    if ((from >= 0 && from < this.dataArray.length) && (to >= 0 && to < this.dataArray.length)) {
+      let temp: T = this.dataArray[from];
+      this.dataArray[from] = this.dataArray[to];
+      this.dataArray[to] = temp;
+      this.notifyDataMove(from, to);
+    } else {
+      return
+    }
+
+  }
+  public moveDataWithoutNotify(from: number, to: number): void {
+    let tmp = this.dataArray.splice(from, 1);
+    this.dataArray.splice(to, 0, tmp[0]);
+    this.notifyDataReload()
+  }
+
 
   // public getDataList(): ObservedArray<T> {
   //   return this.dataArray;
@@ -135,6 +163,7 @@ export default class LazyDataSource<T> extends BasicDataSource<T> {
 
   public clear(): void {
     this.dataArray.splice(0, this.dataArray?.length);
+    this.notifyDataReload();
   }
 
   public isEmpty(): boolean {

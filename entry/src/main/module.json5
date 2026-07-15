@@ -66,7 +66,6 @@
             ]
           }
         ],
-        "orientation": "portrait",
         //标识当前UIAbility组件启动时的方向，支持配置枚举，或启动方向资源索引。
         "supportWindowMode": [
           "fullscreen",
@@ -218,17 +217,17 @@
           ]
         }
       },
-      {
-        "name": "ohos.permission.READ_PASTEBOARD",
-        "reason": "$string:permission_reason_paste",
-        "usedScene": {
-          "when": "inuse",
-          "abilities": [
-            "EntryAbility"
-          ]
-        }
-
-      },
+//      {
+//        "name": "ohos.permission.READ_PASTEBOARD",
+//        "reason": "$string:permission_reason_paste",
+//        "usedScene": {
+//          "when": "inuse",
+//          "abilities": [
+//            "EntryAbility"
+//          ]
+//        }
+//
+//      },
       //      {
       //        "name": "ohos.permission.LOCATION_IN_BACKGROUND",
       //        "reason": "$string:permission_reason_location_3",
@@ -254,6 +253,16 @@
         "reason": "$string:permission_reason_keep_background_running",
         "usedScene": {
           "when": "always",
+          "abilities": [
+            "EntryAbility"
+          ]
+        }
+      },
+      {
+        "name": "ohos.permission.GET_NETWORK_INFO",
+        "reason": "$string:permission_reason_get_network_info",
+        "usedScene": {
+          "when": "inuse",
           "abilities": [
             "EntryAbility"
           ]

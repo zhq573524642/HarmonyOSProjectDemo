@@ -96,21 +96,30 @@ export class PermissionUtils {
   }
 
   //打开系统权限设置页面
-  openPermissionsInSystemSettings(context: common.UIAbilityContext,bundleName:string): void {
-    let wantInfo: Want = {
-      bundleName: 'com.huawei.hmos.settings',
-      abilityName: 'com.huawei.hmos.settings.MainAbility',
-      uri: 'application_info_entry',
-      parameters: {
-        pushParams: bundleName // 打开指定应用的详情页面
+  openPermissionsInSystemSettings(): void {
+
+    AlertDialog.show({
+      title: '手动授权',
+      message: '权限获取失败，是否跳转设置手动授权',
+      primaryButton: {
+        value: '去授权',
+        action: () => {
+          let context = getContext() as common.UIAbilityContext;
+          context.startAbility({
+            bundleName: 'com.huawei.hmos.settings',
+            abilityName: 'com.huawei.hmos.settings.MainAbility', // com.huawei.hmos.settings.AppInfoAbility
+            uri: 'application_info_entry', //application_settings   application_info_entry
+            parameters: {
+              pushParams: context.abilityInfo.bundleName // 应用包名com.example.tosettingdemo  'uiAbilityContext.abilityInfo.bundleName'
+            }
+          })
+        }
+      },
+      secondaryButton: {
+        value: '取消',
+        action: () => {
+        }
       }
-    }
-    context.startAbility(wantInfo).then(() => {
-      // ...
-      console.debug('===打开了')
-    }).catch((err: BusinessError) => {
-      // ...、
-      console.debug('===错误了')
     })
   }
 

@@ -75,7 +75,7 @@ struct ArkTSBasePage {
         CommonTitle({ title: '应用间跳转' })
         CommonButton({ text: 'DeepLink：openLink()' })
           .onClick(() => {
-            let link: string = "zhq://www.zhqdemo.com:8090/home";
+            let link: string = "ybsapp://ybs.com/app/open?source=bdxxk";
             let openLinkOptions: OpenLinkOptions = {
               appLinkingOnly: false
             };
@@ -94,7 +94,7 @@ struct ArkTSBasePage {
           .onClick(() => {
             let want: Want = {
               action: 'ohos.want.action.viewData',
-              uri: 'zhq://www.zhqdemo.com:8090/home'
+              uri: 'ybsapp://ybs.com/app/open?source=bdxxk'
             }
             this.context.startAbility(want)
               .then(() => {
@@ -135,7 +135,7 @@ struct ArkTSBasePage {
                   if (result) {
                     this.createCalendar()
                   }else {
-                    PermissionUtils.getInstance().openPermissionsInSystemSettings(this.context,this.context.abilityInfo.bundleName)
+                    PermissionUtils.getInstance().openPermissionsInSystemSettings()
                   }
                 })
               }

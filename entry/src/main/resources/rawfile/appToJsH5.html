@@ -8,11 +8,13 @@
     var param = "param: JavaScript Hello World!";
     function htmlTestParam(param) {
         document.getElementById('text').style.color = 'green';
-        console.log('==='+param);
+        document.getElementById('text').innerHTML=param
+        console.log('===app端调用H5传参：'+param);
     }
     // 调用无参函数时实现。
     function htmlTest() {
         document.getElementById('text').style.color = 'yellow';
+        console.log('===打印：'+param)
     }
     // Click Me！触发前端页面callArkTS()函数执行JavaScript传递的代码。
     function callArkTS() {

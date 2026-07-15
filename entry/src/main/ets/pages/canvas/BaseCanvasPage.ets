@@ -1,4 +1,5 @@
 import { CommonTitle } from '../component/MyComponent'
+import { GradientBorderContainer } from './GradientBorderContainer'
 
 @Entry
 @Component
@@ -14,7 +15,7 @@ struct BaseCanvasPage {
           .stroke(Color.Green)//描边颜色
           .strokeWidth(10)// .strokeLineCap(LineCapStyle.Round)//设置边框端点绘制样式。
           .strokeDashArray([3, 3])//设置边框间隙。默认值：[]
-            // .strokeDashOffset(50)//边框绘制起点的偏移量。默认值：0
+          // .strokeDashOffset(50)//边框绘制起点的偏移量。默认值：0
           .fill(Color.Red)//填充
           .antiAlias(true)//抗锯齿
           .width(100)
@@ -24,7 +25,7 @@ struct BaseCanvasPage {
           .stroke(Color.Orange)//描边颜色
           .strokeWidth(10)// .strokeLineCap(LineCapStyle.Round)//设置边框端点绘制样式。
           .strokeDashArray([3, 3])//设置边框间隙。默认值：[]
-            // .strokeDashOffset(50)//边框绘制起点的偏移量。默认值：0
+          // .strokeDashOffset(50)//边框绘制起点的偏移量。默认值：0
           .fill(Color.Transparent)//填充
           .antiAlias(true)//抗锯齿
           .width(100)
@@ -108,7 +109,7 @@ struct BaseCanvasPage {
           .stroke(Color.Black)
           .strokeWidth(3)
 
-        CommonTitle({title:'矩形Rect'})
+        CommonTitle({ title: '矩形Rect' })
         Rect()
           .width(200)
           .height(100)
@@ -116,6 +117,45 @@ struct BaseCanvasPage {
           .fill(Color.Pink)
           .stroke(Color.Orange)
           .antiAlias(true)
+        CommonTitle({ title: '渐变色边框：borderImage实现' })
+        Text('渐变色边框示例')
+          .textAlign(TextAlign.Center)
+          .height(50)
+          .width(200)
+          .borderImage({
+            source: {
+              angle: 90, // 渐变角度90度（垂直方向）
+              direction: GradientDirection.Left, // 从左向右渐变
+              colors: [
+                [0xAEE1E1, 0.0], // 起始颜色（位置0.0）
+                [0xD3E0DC, 0.3], // 中间颜色（位置0.3）
+                [0xFCD1D1, 1.0]// 结束颜色（位置1.0）
+              ],
+              repeating: false  // 不重复渲染
+            },
+            slice: {
+              top: 10,
+              bottom: 10,
+              left: 10,
+              right: 10
+            }, // 边框切片
+            width: {
+              top: "10px",
+              bottom: "10px",
+              left: "10px",
+              right: "10px"
+            }, // 边框宽度
+            fill: false  // 不填充内容区域
+          })
+
+        CommonTitle({ title: '渐变色边框：布局叠加+sweepGradient' })
+        GradientBorderContainer({
+          borWidth: 200,
+          borHeight: 100,
+          contentView: () => {
+            this.gradientBorderSample()
+          }
+        })
       }.width('100%')
       .justifyContent(FlexAlign.Start)
     }
@@ -124,5 +164,13 @@ struct BaseCanvasPage {
     .scrollable(ScrollDirection.Vertical)
     .scrollBar(BarState.Auto)
     .edgeEffect(EdgeEffect.Spring)
+  }
+
+  @Builder
+  gradientBorderSample() {
+    Text('渐变色边框示例')
+      .fontColor(Color.Blue)
+      .fontSize(16)
+      .padding(20)
   }
 }

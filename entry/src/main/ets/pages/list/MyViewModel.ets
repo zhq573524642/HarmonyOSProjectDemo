@@ -53,51 +53,6 @@ const bookData: Array<MyBook> = [
       isCollected:false
     }
   },
-  {
-    id: '6',
-    name: '西游记',
-    isSelected: false,
-    tag: {
-      name:'小说',
-      isCollected:false
-    }
-  },
-  {
-    id: '7',
-    name: '水浒传',
-    isSelected: false,
-    tag: {
-      name:'小说',
-      isCollected:false
-    }
-  },
-  {
-    id: '8',
-    name: '天龙八部',
-    isSelected: false,
-    tag: {
-      name:'小说',
-      isCollected:false
-    }
-  },
-  {
-    id: '9',
-    name: '射雕英雄传',
-    isSelected: false,
-    tag: {
-      name:'小说',
-      isCollected:false
-    }
-  },
-  {
-    id: '10',
-    name: '红楼梦',
-    isSelected: false,
-    tag: {
-      name:'小说',
-      isCollected:false
-    }
-  },
 ]
 
 let mViewModel = new MyViewModel()

@@ -7,6 +7,7 @@ import { ToastUtils } from '@ohos/common';
 import { call, data } from '@kit.TelephonyKit';
 import { abilityAccessCtrl, common } from '@kit.AbilityKit';
 import { PageRouter } from '../../router/PageRouter';
+import HashMap from '@ohos.util.HashMap';
 
 class TestClass {
   test(): string {
@@ -168,6 +169,14 @@ export struct WebPage {
                 }
               });
               return true
+            } else if (url.indexOf('ybsapp:') === 0) {
+              (this.getUIContext().getHostContext() as common.UIAbilityContext).openLink(url)
+                .then(() => {
+                  console.debug('===make app succeeded.');
+                }).catch((err: BusinessError) => {
+                console.debug('===make app fail, err is:' + JSON.stringify(err));
+              });
+              return true;
             }
           }
           return false
@@ -378,9 +387,25 @@ export struct WebPage {
               })
             Button('调用htmlTestParam传参')
               .onClick(() => {
-                this.webViewController.runJavaScript('htmlTestParam("123456")')
+                let r: Record<string, string> = {
+                  "command": "gotoShare"
+                }
+                let param = "{\"command\":\"gotoShare\"}"
+
+                // this.webViewController.runJavaScript('htmlTestParam("123456")')
+                let js = "htmlTestParam(\"{'command':'gotoShare'}\")"
+                console.debug('===原生调用：' + js)
+                this.webViewController.runJavaScript(js)
               })
           }
+
+          // 传递runJavaScript侧代码方法。
+          Button('runJavaScriptCodePassed传递runJavaScript侧代码')
+            .onClick(() => {
+              // 传递runJavaScript侧代码方法。
+              this.webViewController.runJavaScript(
+                `function changeColor(){document.getElementById('text').style.color = 'red'}`);
+            })
 
           Button('加载本地网页:App调用JS中Object中的Function')
             .onClick(() => {
@@ -389,11 +414,6 @@ export struct WebPage {
               } catch (e) {
                 console.debug('===加载网页失败' + e)
               }
-            })
-          Button('runJavaScriptCodePassed')
-            .onClick(() => {
-              // 传递runJavaScript侧代码方法。
-              this.webViewController.runJavaScript(`function changeColor(){document.getElementById('text').style.color = 'red'}`);
             })
           Text('Js调用App').fontSize(18).fontWeight(FontWeight.Bold)
           Button('加载本地网页：JS调用App')
@@ -461,7 +481,7 @@ export struct WebPage {
               this.webViewController.loadUrl('https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/application-models-V5')
             })
           Button('打开预解析、预连接的网页:Web组件的onAppear回调中')
-            .onClick(()=>{
+            .onClick(() => {
               this.webViewController.loadUrl(this.preparePageUrl)
             })
           Button('打开预加载的网页')

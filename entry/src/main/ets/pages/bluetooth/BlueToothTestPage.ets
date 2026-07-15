@@ -135,7 +135,7 @@ struct BlueToothTestPage {
           this.bluetoothState = access.getState()
         } else {
           PermissionUtils.getInstance()
-            .openPermissionsInSystemSettings(this.context, this.context.abilityInfo.bundleName)
+            .openPermissionsInSystemSettings()
         }
       })
   }

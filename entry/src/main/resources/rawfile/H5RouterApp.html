@@ -1,9 +1,23 @@
 <!DOCTYPE html>
 <html>
 <body>
+<head>
+    <meta charset="UTF-8">
+</head>
 <div>
+    <h3>打开应用内原生页面</h3>
     <a href="native://pages/xxxx">跳转原生页面</a><br><br>
+    <h3>打开系统应用页面</h3>
     <a href="tel://17610676602">拨打电话</a>
+    <h3>打开其他App应用</h3>
+    <a href="ybsapp://ybs.com/app/open?source=bdxxk">方式1：a标签的href</a>
+    <button onclick="handleLinkApp()">方式2：window.open</button>
 </div>
 </body>
+
 </html>
+<script>
+    function handleLinkApp(){
+       window.open("ybsapp://ybs.com/app/open?source=bdxxk")
+    }
+</script>

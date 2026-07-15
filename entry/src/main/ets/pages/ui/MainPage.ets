@@ -14,6 +14,8 @@ import { DistributedDataObject1Page } from '../datastore/DistributedDataObject1P
 import { PageEntry } from '../mvvm/pages/PageEntry'
 import { AppContinuePage } from '../continue/AppContinuePage'
 import { AcrossDevicePastePage } from '../continue/AcrossDevicePastePage'
+import { BlockPuzzleDialog } from '../BlockPuzzle/BlockPuzzleDialog'
+import { ToastUtils } from '@ohos/common'
 
 let uiAbilityLocalStorage = LocalStorage.getShared()
 
@@ -22,6 +24,8 @@ let uiAbilityLocalStorage = LocalStorage.getShared()
 struct MainPage {
   private scroller: Scroller = new Scroller()
   @Provide('NavPathStack') pageStack: NavPathStack = new NavPathStack()
+  // 图片验证
+  private blockPuzzleUtil: BlockPuzzleDialog = new BlockPuzzleDialog()
 
   build() {
     Scroll(this.scroller) {
@@ -67,6 +71,12 @@ struct MainPage {
             //   }
             // })
             ArkWebPage.startPage()
+          })
+        CommonButton({ text: "滑块验证View" })
+          .onClick(() => {
+            this.blockPuzzleUtil.showAlockPuzzle((verify: string) => {
+              ToastUtils.show(verify)
+            })
           })
         CommonTitle({ title: 'Background Tasks Kit（后台任务开发服务）' })
         CommonButton({ text: '后台任务测试' })
@@ -202,6 +212,10 @@ struct MainPage {
             router.pushUrl({
               url: 'pages/ai/FaceDetectorPage'
             })
+          })
+        CommonButton({ text: '人脸活体检测' })
+          .onClick(() => {
+            router.pushUrl({ url: 'pages/lib_face/VisionLivenessDetectionPage' })
           })
       }
       .width('100%')

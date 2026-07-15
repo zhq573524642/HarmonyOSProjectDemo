@@ -103,6 +103,7 @@
     "pages/form/FormMenuPage",
     "pages/ui/arkui/ComponentLifecyclePage",
     "pages/web/ArkWebPage",
-    "pages/continue/AppContinuePage"
+    "pages/continue/AppContinuePage",
+    "pages/lib_face/VisionLivenessDetectionPage"
   ]
 }

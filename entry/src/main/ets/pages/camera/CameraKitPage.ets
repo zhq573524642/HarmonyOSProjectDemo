@@ -43,7 +43,7 @@ struct CameraKitPage {
             this.openCameraPreview()
           } else {
             ToastUtils.show('请自行打开权限设置')
-            PermissionUtils.getInstance().openPermissionsInSystemSettings(this.context, 'com.example.myapplication')
+            PermissionUtils.getInstance().openPermissionsInSystemSettings()
           }
         })
   }
